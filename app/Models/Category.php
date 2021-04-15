@@ -9,6 +9,11 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'label',
+    ];
+
+
     // Define the relationship with products
     public function products()
     {

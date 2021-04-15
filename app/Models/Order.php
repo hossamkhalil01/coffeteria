@@ -9,6 +9,14 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'notes',
+        'status',
+        'room_id',
+        'owner_id',
+    ];
+
+
     // Define the relationship with the user
     public function owner()
     {

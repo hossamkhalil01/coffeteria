@@ -46,7 +46,7 @@ class User extends Authenticatable
     // Define the relationship with order
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'owner_id');
     }
 
     // Define the relationship with room
