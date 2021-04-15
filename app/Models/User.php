@@ -30,6 +30,17 @@ class User extends Authenticatable
         'room_id',
     ];
 
+    // Define the relationship with order
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    // Define the relationship with room
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
