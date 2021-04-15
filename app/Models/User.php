@@ -41,4 +41,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    // Define the relationship with order
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    // Define the relationship with room
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }
