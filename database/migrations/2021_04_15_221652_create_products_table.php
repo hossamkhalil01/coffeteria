@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->timestamps();
             $table->string('name', 30);
             $table->double('price', 5, 2);
-            $table->boolean('is_available');
+            $table->boolean('is_available')->default(True);
             $table->string('image')->nullable();
             $table->foreignId('category_id')->nullable()
                 ->constrained()->onDelete('set null');
