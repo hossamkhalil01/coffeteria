@@ -1,4 +1,4 @@
-require('./bootstrap');
+import 'bootstrap';
 
 // Require Vue
 window.Vue = require('vue').default;
