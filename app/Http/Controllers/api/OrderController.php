@@ -4,7 +4,10 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Null_;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
@@ -13,9 +16,16 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
         //
+        $user = User::find($user_id);
+
+        if ($user) {
+            return new OrderResource(Order::where("owner_id", "=", $user_id)->paginate());
+        } else {
+            return response()->json(["user" => Null]);
+        }
     }
 
     /**
