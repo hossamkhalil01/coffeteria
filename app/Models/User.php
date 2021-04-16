@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'room_id',
     ];
 
     /**
@@ -40,4 +41,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    // Define the relationship with order
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'owner_id');
+    }
+
+    // Define the relationship with room
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }
