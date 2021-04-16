@@ -21,3 +21,9 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+#Laravel Mix
+/public/js
+/public/css
+/public/build
+/public/mix-manifest.json
