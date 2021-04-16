@@ -1853,9 +1853,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log("Test component mounted.");
+  },
+  props: ["user"],
+  methods: {
+    getAvatar: function getAvatar() {
+      return "storage/avatars/" + this.user.id + "_" + this.user.avatar;
+    }
   }
 });
 
@@ -19418,19 +19425,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("p", [_vm._v("Hello, Test Component!")]),
+    _vm._v(" "),
+    _c("p", [_vm._v("Test avatar:")]),
+    _vm._v(" "),
+    _c("img", { attrs: { src: _vm.getAvatar() } })
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("button", { staticClass: "btn btn-success" }, [_vm._v("test strap")]),
-      _vm._v("\n\n  Hello, Test Component!\n")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -13,8 +13,9 @@
 </head>
 
 <body>
+
     <div id="app">
-        <test-component></test-component>
+        <test-component :user="{{ Auth::user() }}"></test-component>
     </div>
 
     <!-- Scripts -->

@@ -1,8 +1,9 @@
 <template>
   <div>
-    <button class="btn btn-success">test strap</button>
+    <p>Hello, Test Component!</p>
 
-    Hello, Test Component!
+    <p>Test avatar:</p>
+    <img :src="getAvatar()" />
   </div>
 </template>
 
@@ -10,6 +11,14 @@
 export default {
   mounted() {
     console.log("Test component mounted.");
+  },
+
+  props: ["user"],
+
+  methods: {
+    getAvatar() {
+      return "storage/avatars/" + this.user.id + "_" + this.user.avatar;
+    },
   },
 };
 </script>
