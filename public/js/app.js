@@ -1854,9 +1854,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log("Test component mounted.");
+  },
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    };
   },
   props: ["user"],
   methods: {
@@ -19430,7 +19441,22 @@ var render = function() {
     _vm._v(" "),
     _c("p", [_vm._v("Test avatar:")]),
     _vm._v(" "),
-    _c("img", { attrs: { src: _vm.getAvatar() } })
+    _c("img", { attrs: { src: _vm.getAvatar() } }),
+    _vm._v(" "),
+    _c("p", [_vm._v("Test logout")]),
+    _vm._v(" "),
+    _c(
+      "form",
+      { attrs: { id: "logout-form", action: "/logout", method: "POST" } },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
+        _c("button", { attrs: { type: "submit" } }, [_vm._v("Logout")])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
