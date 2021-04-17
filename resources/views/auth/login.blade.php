@@ -60,8 +60,23 @@
 
                             <div class="form-group row align-items-center">
                                 <a href="{{ route('social.oauth', 'github') }}" role="btn"
-                                    class="w-25 m-auto btn btn-dark btn-block">
+                                    class="w-25 mb-2 m-auto btn btn-dark btn-block">
                                     Login with Github
+                                </a>
+                            </div>
+
+                            <div class="form-group row align-items-center">
+                                <a href="{{ route('social.oauth', 'google') }}" role="btn"
+                                    class="w-25 mb-2 m-auto btn btn-danger">
+                                    Login with Google
+                                </a>
+                            </div>
+
+
+                            <div class="form-group row align-items-center">
+                                <a href="{{ route('social.oauth', 'google') }}" role="btn"
+                                    class="w-25 mb-5 m-auto btn btn-primary">
+                                    Login with Facebook
                                 </a>
                             </div>
 
