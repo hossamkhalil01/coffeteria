@@ -8,7 +8,6 @@ bootstrap/compiled.php
 app/storage/
 
 # Laravel 5 & Lumen specific
-public/storage
 public/hot
 
 # Laravel 5 & Lumen specific with changed public path
@@ -21,3 +20,14 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+#Laravel Mix
+/public/js
+/public/css
+/public/build
+/public/mix-manifest.json
+
+#public storage
+public/storage
+storage/app/public
+
