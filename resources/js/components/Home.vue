@@ -32,7 +32,10 @@
                         v-for="product in products"
                         :key="product.id"
                     >
-                        <a href="#">
+                        <a
+                            href="#"
+                            @click.prevent="addOrderedProducts(product)"
+                        >
                             <img
                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/1200px-A_small_cup_of_coffee.JPG"
                                 alt=""
@@ -51,7 +54,7 @@
             </div>
             <!-- start of order section -->
             <div class="col-md-5">
-                <p>Order section</p>
+                <newordercomponent v-bind:orderedproducts="orderedProducts" />
             </div>
             <!-- end of order section -->
         </div>
@@ -61,6 +64,7 @@
 <script>
 import { csrf, user } from "../main.js";
 import axios from "axios";
+import newordercomponent from "./newOrder";
 
 export default {
     mounted() {
@@ -72,7 +76,11 @@ export default {
             user: user,
             products: [],
             latest_order: [],
+            orderedProducts: [],
         };
+    },
+    components: {
+        newordercomponent,
     },
     created() {
         axios.get("http://127.0.0.1:8000/api/").then((response) => {
@@ -93,6 +101,15 @@ export default {
                 minimumFractionDigits: 0,
             });
             return formatter.format(price);
+        },
+        addOrderedProducts(product) {
+            const foundProduct = this.orderedProducts.find((orderedProduct) => {
+                return orderedProduct.id === product.id;
+            });
+            if (!foundProduct) {
+                product.quantity = 1;
+                this.orderedProducts.push(product);
+            }
         },
     },
 };
