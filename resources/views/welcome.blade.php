@@ -15,6 +15,7 @@
 <body>
     <div id="app">
         <test-component></test-component>
+        <all-prod
     </div>
 
     <!-- Scripts -->
