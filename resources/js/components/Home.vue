@@ -23,7 +23,7 @@ export default {
 
   methods: {
     getAvatar() {
-      return "storage/avatars/" + this.user.id + "_" + this.user.avatar;
+      return this.user.avatar;
     },
   },
 };
