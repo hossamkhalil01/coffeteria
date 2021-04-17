@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\auth\SocialLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Socail auth routes
+Route::get('oauth/{driver}', [SocialLoginController::class, 'redirectToProvider'])
+    ->name('social.oauth');
+
+Route::get('oauth/{driver}/callback', [SocialLoginController::class, 'handleProviderCallback'])
+    ->name('social.callback');
+
+// main app vue routes
 Route::get('{any}', function () {
     return view('app');
 })->where('any', '.*')
