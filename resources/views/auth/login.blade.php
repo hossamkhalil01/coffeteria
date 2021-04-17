@@ -74,7 +74,7 @@
 
 
                             <div class="form-group row align-items-center">
-                                <a href="{{ route('social.oauth', 'google') }}" role="btn"
+                                <a href="{{ route('social.oauth', 'facebook') }}" role="btn"
                                     class="w-25 mb-5 m-auto btn btn-primary">
                                     Login with Facebook
                                 </a>
