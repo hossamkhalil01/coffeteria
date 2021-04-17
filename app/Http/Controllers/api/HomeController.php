@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
         // change later to get authenticated user
         $user = User::find(1);
-        $products = Product::all();
+        $products = Product::all()->toArray();
 
         $latest_order = Order::latest()->first();
 
