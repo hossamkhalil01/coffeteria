@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use App\Models\Room;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -49,7 +50,9 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::registerView(function () {
-            return view('auth.register');
+            // get all available rooms
+            $rooms = Room::all();
+            return view('auth.register', compact("rooms"));
         });
 
 

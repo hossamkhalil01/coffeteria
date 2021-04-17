@@ -33,12 +33,22 @@ class CreateNewUser implements CreatesNewUsers
             'room_id' => ['required', 'exists:rooms,id'],
         ])->validate();
 
-        return User::create([
+        // create new user
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'room_id' => $input['room_id'],
-            ''
         ]);
+
+        // check if avatar was selected
+        if (request()->hasFile('avatar')) {
+
+            $avatar = request()->file('avatar')->getClientOriginalName();
+            request()->file('avatar')->storeAs('avatars', $user->id . '_' . $avatar, '');
+            $user->update(['avatar' => $avatar]);
+        }
+
+        return $user;
     }
 }
