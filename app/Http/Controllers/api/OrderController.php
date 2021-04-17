@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Null_;
 use App\Http\Resources\OrderResource;
+use DateTime;
 
 class OrderController extends Controller
 {
@@ -24,7 +25,7 @@ class OrderController extends Controller
         if ($user) {
             return new OrderResource(Order::where("owner_id", "=", $user_id)->paginate());
         } else {
-            return response()->json(["user" => Null]);
+            return response()->json(["data" => []]);
         }
     }
 
@@ -92,5 +93,22 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function get_orders_within_date_range($user_id, Request $request)
+    {
+        //
+        $user = User::find($user_id);
+        // dd(date_add(new DateTime($request->from), date_interval_create_from_date_string('1 day')));
+
+        // $from = date_add(new DateTime($request->from), date_interval_create_from_date_string('1 day'));
+        $from = new DateTime($request->from);
+        $to = date_add(new DateTime($request->to), date_interval_create_from_date_string('1 day'));
+
+        if ($user) {
+            return new OrderResource(Order::where([["owner_id", "=", $user_id], ["created_at", ">=", $from],  ["created_at", "<=", $to]])->paginate());
+        } else {
+            return response()->json(["user" => Null]);
+        }
     }
 }
