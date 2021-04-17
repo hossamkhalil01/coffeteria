@@ -3,8 +3,7 @@ export const user = JSON.parse(document.querySelector('meta[name="user"]').getAt
 
 // Require Vue
 import { createApp } from 'vue';
-import App from './components/App.vue'
-createApp(App).mount("#app");
+import App from './components/App.vue';
+import router from './router';
 
-
-1
+createApp(App).use(router).mount("#app");
