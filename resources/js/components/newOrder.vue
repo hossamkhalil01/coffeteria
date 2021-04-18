@@ -38,7 +38,12 @@
                         <p style="display: inline" class="ms-3">
                             {{ product.price }}
                         </p>
-                        <a href="#" class="ms-3">delete</a>
+                        <a
+                            href="#"
+                            @click.prevent="removeFromOrderedProducts(product)"
+                            class="ms-3"
+                            >delete</a
+                        >
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -148,6 +153,14 @@ export default {
             } else if (product.quantity >= 100) {
                 product.quantity = 100;
             }
+        },
+        removeFromOrderedProducts(product) {
+            const removeProductIndex = this.orderedproducts.findIndex(
+                (orderedProduct) => {
+                    return orderedProduct.id === product.id;
+                }
+            );
+            this.orderedproducts.splice(removeProductIndex, 1);
         },
     },
     computed: {
