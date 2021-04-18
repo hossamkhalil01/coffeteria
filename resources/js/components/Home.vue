@@ -83,12 +83,14 @@ export default {
         newordercomponent,
     },
     created() {
-        axios.get("http://127.0.0.1:8000/api/").then((response) => {
-            this.products = response.data.products;
-            this.latest_order = response.data.latest_order;
-            console.log(this.products);
-            console.log(this.latest_order);
-        });
+        axios
+            .get("http://127.0.0.1:8000/api/" + this.user.id)
+            .then((response) => {
+                this.products = response.data.products;
+                this.latest_order = response.data.latest_order;
+                console.log(this.products);
+                console.log(this.latest_order);
+            });
     },
     methods: {
         getAvatar() {

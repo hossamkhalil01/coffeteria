@@ -13,14 +13,16 @@ class HomeController extends Controller
 {
     function index($user_id)
     {
-        // change later to get authenticated user
-        $user = User::find($user_id);
         $products = Product::all()->toArray();
 
         $latest_order = Order::where("owner_id", "=", $user_id)->latest()->first();
 
         $data["products"] = $products;
-        $data["latest_order"] = $latest_order->products;
+        if ($latest_order) {
+            $data["latest_order"] = $latest_order->products;
+        } else {
+            $data["latest_order"] = [];
+        }
 
         return $data;
     }
