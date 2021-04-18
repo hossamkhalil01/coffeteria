@@ -66,10 +66,14 @@
                     >
                     <div class="col-sm-8">
                         <select class="form-select" id="rooms">
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option selected disabled>Choose A Room</option>
+                            <option
+                                v-for="room in rooms"
+                                :key="room.id"
+                                :value="room.id"
+                            >
+                                {{ room.land_mark }} - {{ room.number }}
+                            </option>
                         </select>
                     </div>
                 </div>
