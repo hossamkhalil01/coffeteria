@@ -102,13 +102,19 @@ export default {
         return {
             csrf: csrf,
             user: user,
+            rooms: [],
             totalPrice: 0,
         };
     },
     props: {
         orderedproducts: Array,
     },
-    created() {},
+    created() {
+        axios.get("http://127.0.0.1:8000/api/rooms").then((response) => {
+            this.rooms = response.data;
+            console.log(this.rooms);
+        });
+    },
     methods: {
         getAvatar() {
             return this.user.avatar;
