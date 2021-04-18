@@ -21,7 +21,7 @@
                     <td>{{ user.room_id }}</td>
                     <td>
                         <img
-                            :src="`${user.avatar}`"
+                            :src="`../${user.avatar}`"
                             class="profile-user-img img-fluid img-circle"
                             style="height: 40px; width: 40px"
                         />
@@ -29,13 +29,14 @@
                     <td>{{user.room_id}}</td>
 
                     <td>
-                        <a type="button" style="margin-right:50px" class="btn btn-primary"  @click="editPhotoModal(item)"> Edit </a>
+             <a type="button" style="margin-right:50px" class="btn btn-primary"  @click="editPhotoModal(item)"> Edit </a> 
                         
                         <a type="button" class="btn btn-danger"  @click="deletePhoto(item.id)"> Delete </a>
                     </td>
                 </tr>
             </tbody>
         </table>
+        
     </div>
 </template>
 

@@ -1,8 +1,9 @@
-import { createWebHistory, createRouter } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+import NotFound from './components/404.vue';
+import adminUsers from './components/admin/AllUsers.vue';
+import adminEditUser from './components/admin/editUser.vue';
 import Home from './components/Home.vue';
 import Order from './components/Order.vue';
-import NotFound from './components/404.vue';
-
 const routes = [
     {
         path: '/',
@@ -13,6 +14,16 @@ const routes = [
         path: '/order',
         name: 'Order',
         component: Order,
+    },
+    {
+        path: '/admin/getusers',
+        name: 'adminUsers',
+        component: adminUsers,
+    },
+    { 
+        path: '/admin/edituser/:id',
+        name: 'adminEditUser',
+        component: adminEditUser
     },
     {
         path: '/404',
