@@ -88,8 +88,6 @@ export default {
             .then((response) => {
                 this.products = response.data.products;
                 this.latest_order = response.data.latest_order;
-                console.log(this.products);
-                console.log(this.latest_order);
             });
     },
     methods: {

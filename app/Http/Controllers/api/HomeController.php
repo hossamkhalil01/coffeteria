@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,5 +26,15 @@ class HomeController extends Controller
         }
 
         return $data;
+    }
+
+    function get_rooms()
+    {
+        $rooms = Room::all();
+        if ($rooms) {
+            return $rooms;
+        } else {
+            return response()->json([]);
+        }
     }
 }
