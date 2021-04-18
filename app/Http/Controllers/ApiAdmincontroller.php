@@ -9,8 +9,8 @@ class ApiAdmincontroller extends Controller
 {
     //
     public function GetAllUsers(){
-        $users=User::all()->toArray();
-        return array($users);
+        $users=User::all();
+        return response()->json($users);
 
 
     }

@@ -14,9 +14,9 @@ use App\Http\Controllers\auth\SocialLoginController;
 |
 */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
 // Socail auth routes
 Route::get('oauth/{driver}', [SocialLoginController::class, 'redirectToProvider'])
     ->name('social.oauth');
