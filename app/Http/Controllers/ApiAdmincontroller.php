@@ -9,7 +9,7 @@ class ApiAdmincontroller extends Controller
 {
     //
     public function GetAllUsers(){
-        $users=User::all();
+        $users=User::where('is_admin','=',0)->get();
         return response()->json($users);
 
 
@@ -19,5 +19,13 @@ class ApiAdmincontroller extends Controller
         $user=User::find($id);
         $user->delete();
         return response()->json('user deleted');
+    }
+
+
+    public function update($id,Request $req){
+        $user=User::find($id);
+        $user->update($req->all());
+
+        return response()->json('user updated');
     }
 }
