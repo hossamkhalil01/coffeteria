@@ -21,6 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource("/", HomeController::class);
+Route::get("/{user_id}", [HomeController::class, "index"])->name("index");
 Route::get("{user_id}/orders/range", [OrderController::class,  "get_orders_within_date_range"])->name("orders.range");
 Route::apiResource("{user_id}/orders", OrderController::class);
