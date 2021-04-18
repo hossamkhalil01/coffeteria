@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/admin/getusers',[ApiAdmincontroller::class,'GetAllUsers']);
+Route::delete('/admin/deleteuser/{id}',[ApiAdmincontroller::class,'destroy']);

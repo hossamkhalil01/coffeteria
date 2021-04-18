@@ -16,7 +16,7 @@
             </thead>
 
             <tbody>
-                <tr v-for="user in tabledata">
+                <tr v-for="user in users">
                     <td>{{ user.name }}</td>
                     <td>{{ user.room_id }}</td>
                     <td>
@@ -31,7 +31,7 @@
                     <td>
              <a type="button" style="margin-right:50px" class="btn btn-primary"  @click="editPhotoModal(item)"> Edit </a> 
                         
-                        <a type="button" class="btn btn-danger"  @click="deletePhoto(item.id)"> Delete </a>
+                        <a type="button" class="btn btn-danger"  @click="deleteUser(user.id)"> Delete </a>
                     </td>
                 </tr>
             </tbody>
@@ -45,19 +45,31 @@ import axios from "axios";
 export default {
     data() {
         return {
-            tabledata: {},
+            users: {},
         };
     },
     methods: {
         getUsers() {
             axios
                 .get("http://localhost:8000/api/admin/getusers")
-                .then((data) => (this.tabledata = data.data))
+                .then((data) => (this.users = data.data))
                 .catch(() => {
                     console.log("Error...");
                 });
         },
+         deleteUser(id){
+        axios
+                .delete(`http://localhost:8000/api/admin/deleteuser/${id}`)
+                .then(response => {
+                        let i = this.users.map(data => data.id).indexOf(id);
+                        this.users.splice(i, 1)
+                    });
+
+
+    }
     },
+
+   
 
     created() {
         this.getUsers();
