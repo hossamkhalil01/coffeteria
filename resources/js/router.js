@@ -30,6 +30,7 @@ const routes = [
         name: 'NotFound',
         component: NotFound,
     },
+    
     {
         path: "/:catchAll(.*)",
         redirect: '/404',

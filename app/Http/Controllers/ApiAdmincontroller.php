@@ -28,7 +28,13 @@ class ApiAdmincontroller extends Controller
 
     public function update($id,Request $req){
         $user=User::find($id);
-        $user->update($req->all());
+        $user->name=$req->name;
+        $user->email=$req->email;
+        $user->room_id=$req->room_id;
+        $user->save();
+
+        // $req->file('image')->store("avatars");
+        // $user->update($req->all());
 
         return response()->json('user updated');
     }
