@@ -14,6 +14,7 @@ class Order extends Model
         'status',
         'room_id',
         'owner_id',
+        'total_price'
     ];
 
 

@@ -14,7 +14,7 @@ class HomeController extends Controller
 {
     function index($user_id)
     {
-        $products = Product::all()->toArray();
+        $products = Product::where("is_available", "=", true)->get();
 
         $latest_order = Order::where("owner_id", "=", $user_id)->latest()->first();
 

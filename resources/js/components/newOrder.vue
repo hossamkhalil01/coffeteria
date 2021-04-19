@@ -227,6 +227,7 @@ export default {
                 room_id: this.room_id,
                 notes: this.notes,
                 ordered_products: ordered_products,
+                total_price: this.totalPrice,
             };
             axios
                 .post(
