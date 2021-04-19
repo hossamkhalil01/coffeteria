@@ -1,6 +1,7 @@
 <template>
     <div class="container-fluid mt-3">
         <div class="row justify-content-center">
+            <h3 class="fw-bold text-center">New Order</h3>
             <form
                 @submit.prevent="storeOrder"
                 method="POST"
@@ -51,11 +52,13 @@
                         >
                     </div>
                 </div>
-                <div
-                    class="alert alert-danger p-1 mt-2"
-                    v-if="errors.ordered_products"
-                >
-                    Please add products to order.
+                <div class="row d-flex justify-content-center">
+                    <div
+                        class="col-sm-8 alert alert-danger p-1 mt-2"
+                        v-if="errors.ordered_products"
+                    >
+                        Please add products to order.
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <label for="notes" class="col-sm-2 col-form-label"
@@ -112,7 +115,13 @@
                         </p>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Order</button>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-primary">
+                            Order
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -206,18 +215,14 @@ export default {
             this.orderedproducts.splice(removeProductIndex, 1);
         },
         storeOrder() {
-            const ordered_products = this.orderedproducts;
-            ordered_products.map((ordered_product) => {
-                delete ordered_product.id;
-                delete ordered_product.name;
-                delete ordered_product.created_at;
-                delete ordered_product.category_id;
-                delete ordered_product.image;
-                delete ordered_product.is_available;
-                delete ordered_product.price;
-                delete ordered_product.updated_at;
+            let ordered_products = [];
+            this.orderedproducts.forEach((ordered_product) => {
+                let product = {};
+                product.product_id = ordered_product.id;
+                product.quantity = ordered_product.quantity;
+                ordered_products.push(product);
             });
-            console.log(this.orderedproducts);
+
             const formData = {
                 room_id: this.room_id,
                 notes: this.notes,
@@ -229,7 +234,6 @@ export default {
                     formData
                 )
                 .then((res) => {
-                    console.log("sucess");
                     this.onSuccess(res.data.message);
                 })
                 .catch((error) => {
@@ -237,7 +241,7 @@ export default {
                 });
         },
         onSuccess(message) {
-            this.success = true;
+            this.$router.push({ name: "Order" });
         },
         onFailure(errorData) {
             this.errors = errorData.errors;
