@@ -44,7 +44,7 @@
                             </th>
                             <td>{{ order.status }}</td>
                             <td>{{ order.total_price }}</td>
-                            <td v-if="order.status == 'processing'">
+                            <td v-if="order.status == 'Processing'">
                                 <a href="#">Cancel</a>
                             </td>
                             <td v-else></td>
