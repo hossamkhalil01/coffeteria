@@ -139,7 +139,7 @@ export default {
                     this.form.price = "";
                     this.form.is_available = "";
                     this.form.category_id = "";
-                    this.form.image=""
+                    this.form.image="";
                 })
                 .catch((e) => {
                     console.log(e);

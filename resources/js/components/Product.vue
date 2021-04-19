@@ -26,7 +26,7 @@
                                         
                                         <td>
                                             <img
-                                                :src="`img/profile/${item.photo}`"
+                                                :src="`img/${item.image}`"
                                                 class="profile-user-img img-fluid img-circle"
                                                 style="
                                                     height: 40px;
