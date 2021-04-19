@@ -4,7 +4,7 @@
             <div class="col-md-7">
                 <!-- start of latest order section -->
                 <div class="row justify-content-center">
-                    <h3 class="fw-bold text-center">Latest Order</h3>
+                    <h3 class="fw-bold text-center mt-3">Latest Order</h3>
                     <div
                         class="col-lg-2 mt-3"
                         v-for="order_product in latest_order"

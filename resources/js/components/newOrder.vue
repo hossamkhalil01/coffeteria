@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mt-3 border">
         <div class="row justify-content-center">
             <h3 class="fw-bold text-center">New Order</h3>
             <form
@@ -270,5 +270,9 @@ export default {
 .container-fluid {
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 600;
+}
+
+.border {
+    border-radius: 2%;
 }
 </style>
