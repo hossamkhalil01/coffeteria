@@ -23,7 +23,7 @@ class ProductController extends Controller
 
         $Product->delete();
 
-        $currentPhoto = $Product->photo;
+        $currentPhoto = $Product->image;
 
         $userPhoto = public_path('img/profile/').$currentPhoto;
 
@@ -39,14 +39,19 @@ class ProductController extends Controller
     }
     public function store(Request $request)
     {
+        $name = "";
         // $this->validate($request,[
         //     'name' => 'required|string|max:191',
         // ]);
+        
+        // var_dump($request->image);
+
 
         if($request->image){
 
             $name = time().'.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-            \Image::make($request->image)->save(public_path('img/profile/').$name);
+            \Image::make($request->image)->save(public_path('img/').$name);
+           
             $request->merge(['image' => $name]);
            
         }

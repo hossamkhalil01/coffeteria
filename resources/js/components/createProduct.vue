@@ -52,13 +52,18 @@
           > {{ option.label}}</option>
             </select> -->
             <select name="category_id"  v-model="form.category_id">
-                <option v-for="i in tabledata" :value="i.id">{{ i.label }}</option>
+                <option v-for="i in tabledata" :value="i.id" :key="i.id">{{ i.label }}</option>
             </select>
         </div>
 
-        <!-- <div class="form-group">
+        <div class="form-group">
             <label for="Image">Product Picture</label>
-            <br />
+             <div
+      class="imagePreviewWrapper"
+      :style="{ 'background-image': `url(${previewImage})` }"
+      @click="selectImage">
+    </div>
+
             <input
                 name="image"
                 ref="fileInput"
@@ -67,12 +72,7 @@
                 
                
             />
-            <div
-                class="imagePreviewWrapper"
-                :style="{ 'background-image': `url(${image})` }"
-                @click="selectImage"
-            ></div>
-        </div> -->
+        </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="Reset" class="btn btn-primary">Reset</button>
@@ -86,13 +86,13 @@ export default {
     mounted() {},
     data() {
         return {
-            // previewImage: null,
+            previewImage: null,
             tabledata: {},
             form: {
                 name: "",
                 price: "",
                 is_available: "",
-                // image: ""
+                image: "",
                 category_id: "",
             },
         };
@@ -116,7 +116,8 @@ export default {
             if (file && file[0]) {
                 let reader = new FileReader();
                 reader.onload = (e) => {
-                    this.form.image = e.target.result;
+                    this.previewImage = e.target.result;
+                    this.form.image = this.previewImage;
                 };
                 reader.readAsDataURL(file[0]);
                 this.$emit("input", file[0]);
@@ -138,6 +139,7 @@ export default {
                     this.form.price = "";
                     this.form.is_available = "";
                     this.form.category_id = "";
+                    this.form.image=""
                 })
                 .catch((e) => {
                     console.log(e);
