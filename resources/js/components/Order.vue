@@ -5,11 +5,23 @@
             <!-- start of date pickers -->
             <div class="col-md-3 mt-3">
                 <label for="date-from" class="me-3">Date From: </label>
-                <input type="date" name="date-from" id="date-from" />
+                <input
+                    type="date"
+                    name="date-from"
+                    id="date-from"
+                    v-model="from"
+                    @change="getOrdersWithinRange"
+                />
             </div>
             <div class="col-md-3 mt-3">
                 <label for="date-to" class="me-3">Date To: </label>
-                <input type="date" name="date-to" id="date-to" />
+                <input
+                    type="date"
+                    name="date-to"
+                    id="date-to"
+                    v-model="to"
+                    @change="getOrdersWithinRange"
+                />
             </div>
         </div>
         <!-- end of date pickers -->
@@ -27,7 +39,9 @@
                     </thead>
                     <tbody>
                         <tr v-for="order in orders" :key="order.id">
-                            <th scope="row">{{ Date(order.created_at) }}</th>
+                            <th scope="row">
+                                {{ Date(order.created_at) }}
+                            </th>
                             <td>{{ order.status }}</td>
                             <td>{{ order.total_price }}</td>
                             <td v-if="order.status == 'processing'">
@@ -126,28 +140,52 @@ export default {
             pagination_links: {},
             from: null,
             to: null,
+            errors: {},
         };
     },
     created() {
-        axios
-            .get("http://127.0.0.1:8000/api/" + this.user.id + "/orders")
-            .then((response) => {
-                this.orders = response.data.data;
-                this.pagination_links = response.data.meta.links;
-
-                console.log(this.orders);
-                console.log(this.pagination_links);
-            });
+        this.getAllOrders();
     },
     methods: {
         paginate(new_url) {
             axios.get(new_url).then((response) => {
                 this.orders = response.data.data;
                 this.pagination_links = response.data.meta.links;
-
-                console.log(this.orders);
-                console.log(this.pagination_links);
             });
+        },
+        getAllOrders() {
+            axios
+                .get("http://127.0.0.1:8000/api/" + this.user.id + "/orders")
+                .then((response) => {
+                    this.orders = response.data.data;
+                    this.pagination_links = response.data.meta.links;
+                });
+        },
+        getOrdersWithinRange() {
+            if (this.from && this.to) {
+                axios
+                    .get(
+                        "http://127.0.0.1:8000/api/" +
+                            this.user.id +
+                            "/orders/range",
+                        {
+                            params: {
+                                from: this.from,
+                                to: this.to,
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        this.orders = response.data.data;
+                        this.pagination_links = response.data.meta.links;
+                    })
+                    .catch((error) => {
+                        this.errors = error.response.data.errors;
+                    });
+            }
+            if (!this.from && !this.to) {
+                this.getAllOrders();
+            }
         },
     },
 };
