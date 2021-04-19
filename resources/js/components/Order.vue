@@ -76,6 +76,7 @@
 
 <script>
 import { csrf, user } from "../main.js";
+import axios from "axios";
 
 export default {
     mounted() {
@@ -85,14 +86,21 @@ export default {
         return {
             csrf: csrf,
             user: user,
+            orders: [],
+            pagination_links: {},
         };
     },
-
-    methods: {
-        getAvatar() {
-            return "storage/avatars/" + this.user.id + "_" + this.user.avatar;
-        },
+    created() {
+        axios
+            .get("http://127.0.0.1:8000/api/" + this.user.id + "/orders")
+            .then((response) => {
+                this.orders = response.data.data;
+                this.pagination_links = response.data.links;
+                console.log(this.orders);
+                console.log(this.pagination_links);
+            });
     },
+    methods: {},
 };
 </script>
 <style scoped>
