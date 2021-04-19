@@ -4,6 +4,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
+                         <router-link to="/createProduct" class="nav-item nav-link"> create Product </router-link>
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover">
                                 <tbody>
@@ -22,6 +23,7 @@
                                         <td>{{ item.id }}</td>
                                         <td>{{ item.name }}</td>
                                         <td>{{ item.price }}</td>
+                                        
                                         <td>
                                             <img
                                                 :src="`img/profile/${item.photo}`"
@@ -59,6 +61,7 @@
                                 :data="tabledata"
                                 @pagination-change-page="getResults"
                             ></pagination>
+                           
                         </div>
 
                         <div
@@ -104,8 +107,9 @@
 </template>
 
 <script>
-import Pagination from 'v-pagination-3';
+
 export default {
+   
     data() {
         return {
             tabledata: {},
@@ -118,6 +122,7 @@ export default {
         };
     },
     methods: {
+  
         //get Table data
         loadTableData() {
             this.$http

@@ -36,6 +36,25 @@ class ProductController extends Controller
          'message' => 'Photo deleted successfully'
         ];
     }
+    public function store(Request $request)
+    {
+        // $this->validate($request,[
+        //     'name' => 'required|string|max:191',
+        // ]);
+
+        if($request->image){
+
+            $name = time().'.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+            \Image::make($request->image)->save(public_path('img/profile/').$name);
+            $request->merge(['image' => $name]);
+           
+        }
+
+        Product::create($request->all());
+
+        return ['message' => 'Success'];
+
+    }
 
     
 }

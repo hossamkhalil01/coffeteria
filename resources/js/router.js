@@ -3,7 +3,7 @@ import Home from './components/Home.vue';
 import Order from './components/Order.vue';
 import NotFound from './components/404.vue';
 import Product from './components/Product.vue';
-
+import createProduct from './components/createProduct.vue';
 
 const routes = [
     {
@@ -25,6 +25,11 @@ const routes = [
         path: '/products',
         name: 'products',
         component: Product,
+    },
+    {
+        path: '/createProduct',
+        name: 'createProduct',
+        component: createProduct,
     },
     {
         path: "/:catchAll(.*)",
