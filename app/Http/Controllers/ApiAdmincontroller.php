@@ -21,6 +21,10 @@ class ApiAdmincontroller extends Controller
         return response()->json('user deleted');
     }
 
+    public function showuser($id){
+        $user=User::find($id);
+        return response()->json($user);
+    }
 
     public function update($id,Request $req){
         $user=User::find($id);

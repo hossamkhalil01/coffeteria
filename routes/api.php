@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAdmincontroller;
-
+use App\Http\Controllers\roomcontroller;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,3 +23,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/admin/getusers',[ApiAdmincontroller::class,'GetAllUsers']);
 Route::delete('/admin/deleteuser/{id}',[ApiAdmincontroller::class,'destroy']);
 Route::patch('/admin/edituser/{id}',[ApiAdmincontroller::class,'update']);
+Route::resource('/rooms',roomcontroller::class);
+Route::get('/admin/getusers/{id}',[ApiAdmincontroller::class,'showuser']);
