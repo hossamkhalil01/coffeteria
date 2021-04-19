@@ -21,9 +21,9 @@
 
             </div>
 
-            <div class="form-group">
+            <div class="form-group" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage">
                 <lable>Image</lable>
-                <input type="file" class="form-control" name="image"  @input="onImageChange" />
+                <input type="file" ref="fileInput" class="form-control" name="image" v-on:change="pickFile" />
             </div>
 
             <button type="submit" class="btn btn-primary">Update</button>
@@ -33,9 +33,12 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+
     data() {
         return {
+            previewImage: null,
             user: [],
             rooms: []
         }
@@ -44,6 +47,8 @@ export default {
     methods: {
 
         updateUser() {
+           
+
             axios
                 .patch(`http://localhost:8000/api/admin/edituser/${this.$route.params.id}`, this.user)
                 .then((res) => {
@@ -54,22 +59,21 @@ export default {
                 })
 
         },
-        onImageChange(e) {
-            //  let reader = new FileReader();
-            //  let file = input.files;
-            // reader.onload = (e) => {
-                this.avatar = e.target.files[0]
-            this.user.avatar = `storage/avatars/${this.user.id}/` + this.avatar.name
-            // };
-            
-            // reader.readAsDataURL(file[0]);
-            // this.$emit("input", file[0]);
-           
-
-            // console.log(e.target.files[0]);
-
-            // this.user.avatar = e.target.files[0];
-
+        selectImage() {
+            this.$refs.fileInput.click();
+        },
+        pickFile() {
+            let input = this.$refs.fileInput;
+            let file = input.files;
+            if (file && file[0]) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    this.previewImage = e.target.result;
+                    this.user.avatar = this.previewImage;
+                };
+                reader.readAsDataURL(file[0]);
+                this.$emit("input", file[0]);
+            }
         },
         getrooms() {
             axios
