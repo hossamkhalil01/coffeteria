@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <h2>All users</h2>
-    <a type="button" class="btn btn-success" style="float: right">Add user</a>
+    <router-link :to="{name: 'createuser', }" style="margin-right: 50px;float:right" class="btn btn-success">Add user</router-link> 
     <br />
     <br />
     <table class="table table-hover" style="border: 1px solid">
@@ -24,8 +24,8 @@
                 <td>
                     <img :src="`../${user.avatar}`" class="profile-user-img img-fluid img-circle" style="height: 40px; width: 40px" />
                 </td>
-                <td >
-                {{ user.room_id }}</td>
+                <td>
+                    {{ user.room_id }}</td>
 
                 <td>
                     <router-link :to="{

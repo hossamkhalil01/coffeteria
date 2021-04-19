@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import NotFound from './components/404.vue';
 import adminUsers from './components/admin/AllUsers.vue';
+import createuser from './components/admin/createuser.vue';
 import adminEditUser from './components/admin/editUser.vue';
 import Home from './components/Home.vue';
 import Order from './components/Order.vue';
@@ -24,6 +25,11 @@ const routes = [
         path: '/admin/edituser/:id',
         name: 'adminEditUser',
         component: adminEditUser
+    },
+    { 
+        path: '/admin/create',
+        name: 'createuser',
+        component: createuser
     },
     {
         path: '/404',
