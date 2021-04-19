@@ -115,7 +115,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="row d-flex justify-content-center">
+                <div class="row d-flex justify-content-center mb-3">
                     <div class="col-sm-3">
                         <button type="submit" class="btn btn-primary">
                             Order

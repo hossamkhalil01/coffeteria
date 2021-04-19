@@ -3,10 +3,12 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav">
-                    <router-link to="/" class="nav-item nav-link"
+                    <router-link to="/" class="nav-item nav-link text-white"
                         >Home</router-link
                     >
-                    <router-link to="/order" class="nav-item nav-link"
+                    <router-link
+                        to="/order"
+                        class="nav-item nav-link text-white"
                         >Orders</router-link
                     >
                 </div>
