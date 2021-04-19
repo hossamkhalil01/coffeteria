@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 // use App\Product;
 use App\Models\Product;
+use App\Models\Category;
 
 
 class ProductController extends Controller
@@ -54,6 +55,10 @@ class ProductController extends Controller
 
         return ['message' => 'Success'];
 
+    }
+
+    public function getCategories(){
+        return Category::all();
     }
 
     

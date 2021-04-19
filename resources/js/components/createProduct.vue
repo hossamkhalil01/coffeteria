@@ -29,19 +29,32 @@
             />
         </div>
         <div>
-             <label for="is_available">Product Price</label>
-            <input  class="form-group" name="is_available" type="checkbox" id="is_available" v-model="form.is_available" />
-<label for="checkbox">{{ checked }}</label>
+            <label for="is_available">Is Available </label>
+            <input
+                class="form-group"
+                name="is_available"
+                type="checkbox"
+                id="is_available"
+                v-model="form.is_available"
+            />
+            <label for="checkbox">{{ checked }}</label>
         </div>
-        <!-- <div class="form-group">
-    <label for="Category">category</label>
-     <select class="form-select" aria-label="Default select example" v-for="item in tabledata.data" :key="item.name" v-model="form.category_id">
-        <select class="form-select" aria-label="Default select example">  
 
-   <option>{{ item.category_id }}</option>
- 
-</select>
-    </div> -->
+        <div class="form-group">
+            <label for="Category">category</label>
+            <!-- <select
+                class="form-select"
+                aria-label="Default select example"
+                name="category_id"
+                v-model="form.category_id"
+            >
+                <option v-for="option in tabledata" :value="option.id" :key="option.id"
+          > {{ option.label}}</option>
+            </select> -->
+            <select name="category_id"  v-model="form.category_id">
+                <option v-for="i in tabledata" :value="i.id">{{ i.label }}</option>
+            </select>
+        </div>
 
         <!-- <div class="form-group">
             <label for="Image">Product Picture</label>
@@ -51,6 +64,7 @@
                 ref="fileInput"
                 type="file"
                 @input="pickFile"
+                
                
             />
             <div
@@ -69,21 +83,30 @@
 
 <script>
 export default {
-    mounted() {
-    },
+    mounted() {},
     data() {
         return {
             // previewImage: null,
+            tabledata: {},
             form: {
                 name: "",
                 price: "",
                 is_available: "",
                 // image: ""
-                // category_id:''
+                category_id: "",
             },
         };
     },
     methods: {
+        //get Table data
+        loadCategoryData() {
+            this.$http
+                .get("api/categories")
+                .then(({ data }) => (this.tabledata = data))
+                .catch(() => {
+                    console.log("Error...");
+                });
+        },
         selectImage() {
             this.$refs.fileInput.click();
         },
@@ -110,16 +133,20 @@ export default {
                 .post("api/products", this.form)
                 .then((resp) => {
                     console.log(resp);
-                    this.loadTableData();
                     //reset form
                     this.form.name = "";
                     this.form.price = "";
-                    // this.form.image = "";
+                    this.form.is_available = "";
+                    this.form.category_id = "";
                 })
                 .catch((e) => {
                     console.log(e);
                 });
         },
+    },
+    created() {
+        //LoadTableData
+        this.loadCategoryData();
     },
 };
 </script>
