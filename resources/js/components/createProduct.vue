@@ -28,11 +28,11 @@
                 v-model="form.price"
             />
         </div>
-        <!-- <div>
+        <div>
              <label for="is_available">Product Price</label>
             <input  class="form-group" name="is_available" type="checkbox" id="is_available" v-model="form.is_available" />
 <label for="checkbox">{{ checked }}</label>
-        </div> -->
+        </div>
         <!-- <div class="form-group">
     <label for="Category">category</label>
      <select class="form-select" aria-label="Default select example" v-for="item in tabledata.data" :key="item.name" v-model="form.category_id">
