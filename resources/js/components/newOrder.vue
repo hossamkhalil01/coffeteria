@@ -1,7 +1,12 @@
 <template>
     <div class="container-fluid mt-3">
         <div class="row justify-content-center">
-            <form>
+            <form
+                @submit.prevent="storeOrder"
+                method="POST"
+                class="need-validation"
+                novalidate
+            >
                 <div
                     class="row mb-3"
                     v-for="product in orderedproducts"
@@ -46,6 +51,12 @@
                         >
                     </div>
                 </div>
+                <div
+                    class="alert alert-danger p-1 mt-2"
+                    v-if="errors.ordered_products"
+                >
+                    Please add products to order.
+                </div>
                 <div class="row mb-3">
                     <label for="notes" class="col-sm-2 col-form-label"
                         >Notes</label
@@ -57,6 +68,7 @@
                             cols="10"
                             rows="5"
                             class="form-control"
+                            v-model="notes"
                         ></textarea>
                     </div>
                 </div>
@@ -65,7 +77,13 @@
                         >Rooms</label
                     >
                     <div class="col-sm-8">
-                        <select class="form-select" id="rooms">
+                        <select
+                            class="form-select"
+                            id="rooms"
+                            v-model="room_id"
+                            required
+                            @change="removeRoomError"
+                        >
                             <option selected disabled>Choose A Room</option>
                             <option
                                 v-for="room in rooms"
@@ -75,6 +93,12 @@
                                 {{ room.land_mark }} - {{ room.number }}
                             </option>
                         </select>
+                        <div
+                            class="alert alert-danger p-1 mt-2"
+                            v-if="errors.room_id"
+                        >
+                            Please select a room.
+                        </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -108,15 +132,24 @@ export default {
             user: user,
             rooms: [],
             totalPrice: 0,
+            room_id: null,
+            notes: "",
+            success: false,
+            error: false,
+            errors: {},
         };
     },
     props: {
         orderedproducts: Array,
     },
+    updated() {
+        if (this.orderedproducts.length > 0) {
+            delete this.errors.ordered_products;
+        }
+    },
     created() {
         axios.get("http://127.0.0.1:8000/api/rooms").then((response) => {
             this.rooms = response.data;
-            console.log(this.rooms);
         });
     },
     methods: {
@@ -171,6 +204,47 @@ export default {
                 }
             );
             this.orderedproducts.splice(removeProductIndex, 1);
+        },
+        storeOrder() {
+            const ordered_products = this.orderedproducts;
+            ordered_products.map((ordered_product) => {
+                delete ordered_product.id;
+                delete ordered_product.name;
+                delete ordered_product.created_at;
+                delete ordered_product.category_id;
+                delete ordered_product.image;
+                delete ordered_product.is_available;
+                delete ordered_product.price;
+                delete ordered_product.updated_at;
+            });
+            console.log(this.orderedproducts);
+            const formData = {
+                room_id: this.room_id,
+                notes: this.notes,
+                ordered_products: ordered_products,
+            };
+            axios
+                .post(
+                    "http://127.0.0.1:8000/api/" + this.user.id + "/orders",
+                    formData
+                )
+                .then((res) => {
+                    console.log("sucess");
+                    this.onSuccess(res.data.message);
+                })
+                .catch((error) => {
+                    this.onFailure(error.response.data);
+                });
+        },
+        onSuccess(message) {
+            this.success = true;
+        },
+        onFailure(errorData) {
+            this.errors = errorData.errors;
+            this.error = true;
+        },
+        removeRoomError() {
+            delete this.errors.room_id;
         },
     },
     computed: {

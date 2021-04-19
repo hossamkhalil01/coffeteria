@@ -108,6 +108,7 @@ export default {
             });
             if (!foundProduct) {
                 product.quantity = 1;
+                product.product_id = product.id;
                 this.orderedProducts.push(product);
             }
         },

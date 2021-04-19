@@ -42,7 +42,7 @@ class OrderController extends Controller
             $validatedData = $request->validate([
                 'room_id' => 'required',
                 'ordered_products' => 'required|array|min:1',
-                'notes' => 'required'
+                'notes' => 'nullable'
             ]);
             // dd($validatedData);
             // return $validatedData;
