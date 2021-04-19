@@ -30,24 +30,27 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($user_id, Request $request)
     {
-        //
+        $user = User::find($user_id);
+        if ($user) {
+            $validatedData = $request->validate([
+                'room_id' => 'required',
+                'ordered_products' => 'required|array|min:1',
+                'notes' => 'required'
+            ]);
+            // dd($validatedData);
+            // return $validatedData;
+            $order = new Order(["notes" => $validatedData["notes"], "room_id" => $validatedData["room_id"]]);
+            $user->orders()->save($order)->products()->attach($validatedData["ordered_products"]);
+
+            return response()->json(["message" => "Order Created"]);
+        }
     }
 
     /**

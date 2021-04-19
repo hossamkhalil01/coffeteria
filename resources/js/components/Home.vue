@@ -139,4 +139,8 @@ img {
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 300;
 }
+
+.bg-info {
+    background-color: #1edaff !important;
+}
 </style>
