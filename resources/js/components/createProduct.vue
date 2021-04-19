@@ -84,21 +84,21 @@ export default {
         };
     },
     methods: {
-        selectImage() {
-            this.$refs.fileInput.click();
-        },
-        pickFile() {
-            let input = this.$refs.fileInput;
-            let file = input.files;
-            if (file && file[0]) {
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    this.form.image = e.target.result;
-                };
-                reader.readAsDataURL(file[0]);
-                this.$emit("input", file[0]);
-            }
-        },
+        // selectImage() {
+        //     this.$refs.fileInput.click();
+        // },
+        // pickFile() {
+        //     let input = this.$refs.fileInput;
+        //     let file = input.files;
+        //     if (file && file[0]) {
+        //         let reader = new FileReader();
+        //         reader.onload = (e) => {
+        //             this.form.image = e.target.result;
+        //         };
+        //         reader.readAsDataURL(file[0]);
+        //         this.$emit("input", file[0]);
+        //     }
+        // },
         //  getPhoto(){
         //            let image = (this.form.image.length > 100) ? this.form.image : "img/profile/"+ this.form.image;
         //             return image;
