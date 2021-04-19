@@ -30,33 +30,80 @@
                             <th scope="row">{{ Date(order.created_at) }}</th>
                             <td>{{ order.status }}</td>
                             <td>{{ order.total_price }}</td>
-                            <td>Cancel</td>
+                            <td v-if="order.status == 'processing'">
+                                <a href="#">Cancel</a>
+                            </td>
+                            <td v-else></td>
                         </tr>
                     </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
+                <!-- start of pagination links -->
+                <nav
+                    v-if="pagination_links.length > 0"
+                    aria-label="Page navigation example"
+                >
                     <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                        <li
+                            :class="[
+                                pagination_links[0].url == null
+                                    ? 'disabled'
+                                    : '',
+                            ]"
+                            class="page-item"
+                        >
+                            <a
+                                class="page-link"
+                                href="#"
+                                @click.prevent="
+                                    paginate(pagination_links[0].url)
+                                "
+                                aria-label="Previous"
+                            >
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
+                        <li
+                            v-for="(link, index) in pagination_links.slice(
+                                1,
+                                pagination_links.length - 1
+                            )"
+                            :key="index"
+                            :class="[link.active == true ? 'active' : '']"
+                            class="page-item"
+                        >
+                            <a
+                                class="page-link"
+                                @click.prevent="paginate(link.url)"
+                                >{{ link.label }}</a
+                            >
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                        <li
+                            :class="[
+                                pagination_links[pagination_links.length - 1]
+                                    .url == null
+                                    ? 'disabled'
+                                    : '',
+                            ]"
+                            class="page-item"
+                        >
+                            <a
+                                class="page-link"
+                                href="#"
+                                @click.prevent="
+                                    paginate(
+                                        pagination_links[
+                                            pagination_links.length - 1
+                                        ].url
+                                    )
+                                "
+                                aria-label="Next"
+                            >
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
                     </ul>
                 </nav>
+                <!-- end of pagination links -->
             </div>
         </div>
         <!-- end of orders table -->
@@ -84,12 +131,23 @@ export default {
             .get("http://127.0.0.1:8000/api/" + this.user.id + "/orders")
             .then((response) => {
                 this.orders = response.data.data;
-                this.pagination_links = response.data.links;
+                this.pagination_links = response.data.meta.links;
+
                 console.log(this.orders);
                 console.log(this.pagination_links);
             });
     },
-    methods: {},
+    methods: {
+        paginate(new_url) {
+            axios.get(new_url).then((response) => {
+                this.orders = response.data.data;
+                this.pagination_links = response.data.meta.links;
+
+                console.log(this.orders);
+                console.log(this.pagination_links);
+            });
+        },
+    },
 };
 </script>
 <style scoped>
@@ -98,5 +156,9 @@ export default {
 .container-fluid {
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 600;
+}
+
+li:hover {
+    cursor: pointer;
 }
 </style>

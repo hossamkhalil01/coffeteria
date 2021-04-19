@@ -25,7 +25,9 @@
                 </form>
             </div>
         </nav>
-        <router-view />
+        <div class="row">
+            <router-view class="col-12"></router-view>
+        </div>
     </div>
 </template>
 
