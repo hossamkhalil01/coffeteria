@@ -124,6 +124,8 @@ export default {
             user: user,
             orders: [],
             pagination_links: {},
+            from: null,
+            to: null,
         };
     },
     created() {

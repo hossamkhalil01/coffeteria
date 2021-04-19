@@ -65,17 +65,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -100,16 +89,18 @@ class OrderController extends Controller
 
     public function get_orders_within_date_range($user_id, Request $request)
     {
-        //
         $user = User::find($user_id);
-        // dd(date_add(new DateTime($request->from), date_interval_create_from_date_string('1 day')));
-
-        // $from = date_add(new DateTime($request->from), date_interval_create_from_date_string('1 day'));
-        $from = new DateTime($request->from);
-        $to = date_add(new DateTime($request->to), date_interval_create_from_date_string('1 day'));
 
         if ($user) {
-            return new OrderResource(Order::where([["owner_id", "=", $user_id], ["created_at", ">=", $from],  ["created_at", "<=", $to]])->paginate());
+            $validatedData = $request->validate([
+                "from" => 'required|Date',
+                "to" => 'required|Date'
+            ]);
+
+            $from = new DateTime($validatedData["from"]);
+            $to = date_add(new DateTime($validatedData["to"]), date_interval_create_from_date_string('1 day'));
+
+            return new OrderResource(Order::where([["owner_id", "=", $user_id], ["created_at", ">=", $from],  ["created_at", "<=", $to]])->paginate(5));
         } else {
             return response()->json(["user" => Null]);
         }
