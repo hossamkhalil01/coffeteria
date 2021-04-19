@@ -23,7 +23,7 @@ class OrderController extends Controller
         $user = User::find($user_id);
 
         if ($user) {
-            return new OrderResource(Order::where("owner_id", "=", $user_id)->paginate());
+            return new OrderResource(Order::where("owner_id", "=", $user_id)->paginate(5));
         } else {
             return response()->json(["data" => []]);
         }
