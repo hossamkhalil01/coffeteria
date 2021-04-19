@@ -45,10 +45,8 @@ class OrderController extends Controller
                 'notes' => 'nullable',
                 'total_price' => 'required'
             ]);
-            // dd($validatedData);
-            // return $validatedData;
+
             $order = new Order(["notes" => $validatedData["notes"], "room_id" => $validatedData["room_id"], "total_price" => $validatedData["total_price"]]);
-            // dd($order);
             $user->orders()->save($order)->products()->attach($validatedData["ordered_products"]);
 
             return response()->json(["message" => "Order Created"]);
