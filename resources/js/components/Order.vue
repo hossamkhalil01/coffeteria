@@ -40,10 +40,14 @@
                     <tbody>
                         <tr v-for="order in orders" :key="order.id">
                             <th scope="row">
-                                {{ Date(order.created_at) }}
+                                <a
+                                    href="#"
+                                    @click.prevent="getOrderProducts(order)"
+                                    >{{ Date(order.created_at) }}</a
+                                >
                             </th>
                             <td>{{ order.status }}</td>
-                            <td>{{ order.total_price }}</td>
+                            <td>{{ currencyFormatter(order.total_price) }}</td>
                             <td v-if="order.status == 'Processing'">
                                 <a href="#" @click.prevent="cancelOrder(order)"
                                     >Cancel</a
@@ -123,6 +127,38 @@
             </div>
         </div>
         <!-- end of orders table -->
+        <!-- start of order's products -->
+        <div
+            class="row justify-content-center"
+            v-if="ordered_products.length > 0"
+        >
+            <h3 class="fw-bold text-center mt-3">Ordered Products</h3>
+            <div
+                class="col-lg-2 mt-3"
+                v-for="ordered_product in ordered_products"
+                :key="ordered_product.id"
+            >
+                <img
+                    src="https://www.telegraph.co.uk/content/dam/health-fitness/2020/01/09/TELEMMGLPICT000169578515_trans_NvBQzQNjv4BqbTl4D02iCM3NuMfK2RT0HTjsyN2j3JnAYXPi059mk8g.jpeg"
+                    alt=""
+                />
+                <p class="product-name text-center">
+                    {{ ordered_product.name }}
+                </p>
+                <p class="product-name text-center">
+                    Quantity: {{ ordered_product.pivot.quantity }}
+                </p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <p class="text-center">
+                        Total Price:
+                        {{ currencyFormatter(clickedOrder.total_price) }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- end of order's products -->
     </div>
 </template>
 
@@ -143,12 +179,22 @@ export default {
             from: null,
             to: null,
             errors: {},
+            ordered_products: [],
+            clickedOrder: 0,
         };
     },
     created() {
         this.getAllOrders();
     },
     methods: {
+        currencyFormatter(price) {
+            let formatter = Intl.NumberFormat("eg-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+            });
+            return formatter.format(price);
+        },
         paginate(new_url) {
             axios.get(new_url).then((response) => {
                 this.orders = response.data.data;
@@ -202,6 +248,19 @@ export default {
                     this.getAllOrders();
                 });
         },
+        getOrderProducts(order) {
+            axios
+                .get(
+                    "http://127.0.0.1:8000/api/" +
+                        this.user.id +
+                        "/orders/" +
+                        order.id
+                )
+                .then((response) => {
+                    this.clickedOrder = order;
+                    this.ordered_products = response.data.data.products;
+                });
+        },
     },
 };
 </script>
@@ -215,5 +274,18 @@ export default {
 
 li:hover {
     cursor: pointer;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+}
+
+.product-name {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 300;
 }
 </style>
