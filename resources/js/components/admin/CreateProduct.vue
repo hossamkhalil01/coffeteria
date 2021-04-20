@@ -81,10 +81,12 @@
 
 <script>
 import axios from "axios";
+import { apiBase } from "@helpers/urls.js";
 export default {
   mounted() {},
   data() {
     return {
+      apiBase: apiBase,
       previewImage: null,
       tabledata: {},
       form: {
@@ -100,7 +102,7 @@ export default {
     //get Table data
     loadCategoryData() {
       axios
-        .get("api/categories")
+        .get(apiBase + "categories")
         .then(({ data }) => (this.tabledata = data))
         .catch(() => {
           console.log("Error...");
@@ -130,7 +132,7 @@ export default {
     create_product() {
       console.log("f", this.form);
       axios
-        .post("http://localhost:8000/api/products", this.form)
+        .post(apiBase + "products", this.form)
         .then((resp) => {
           console.log(resp);
           //reset form

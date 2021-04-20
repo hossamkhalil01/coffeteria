@@ -20,10 +20,13 @@
 
 <script>
 import axios from "axios";
+import { apiBase, imgBase } from "@helpers/urls.js";
 export default {
   mounted() {},
   data() {
     return {
+      apiBase: apiBase,
+      imgBase: imgBase,
       form: {
         label: "",
       },
@@ -33,7 +36,7 @@ export default {
     addCategory() {
       console.log("f", this.form);
       axios
-        .post("http://localhost:8000/api/addCategory", this.form)
+        .post(apiBase + "addCategory", this.form)
         .then((resp) => {
           console.log(resp);
           //reset form
