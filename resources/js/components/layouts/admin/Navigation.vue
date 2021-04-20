@@ -29,7 +29,7 @@
           aria-expanded="false"
         >
           <img
-            :src="getAvatar()"
+            :src="currentUser.avatar"
             alt="avatar"
             width="32"
             height="32"
@@ -37,8 +37,13 @@
           />
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li>
+            <router-link :to="{ name: 'UserView' }" class="dropdown-item"
+              >User View</router-link
+            >
+          </li>
           <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
           <li><hr class="dropdown-divider" /></li>
           <li>
             <form action="/logout" method="post">
@@ -55,20 +60,17 @@
 
 
 <script>
-import { csrf, user } from "../../../main.js";
+import * as currentUser from "@helpers/currentUser.js";
+import { csrf } from "@services/authenticationService.js";
 
 export default {
   data() {
     return {
       csrf: csrf,
-      user: user,
+      currentUser: currentUser,
     };
   },
 
-  methods: {
-    getAvatar() {
-      return this.user.avatar;
-    },
-  },
+  methods: {},
 };
 </script>

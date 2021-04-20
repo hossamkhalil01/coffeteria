@@ -1,29 +1,39 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-import NotFound from "./components/404.vue";
+import NotFound from "@components/404.vue";
 
 const loadComponent = (view, component) => {
-    return import(`./components/${view}/${component}`);
+    return import(`@components/${view}/${component}`);
+};
+
+const loadPage = (view, page) => {
+    return import(`@pages/${view}/${page}`);
 };
 
 const routes = [
     {
         path: "/",
-        name: "Home",
-        component: loadComponent("user", "Home"),
+        name: "UserView",
+        component: loadPage("user", "UserView"),
+        redirect: { name: "UserHome" },
         children: [
             {
+                path: "/home",
+                name: "UserHome",
+                component: loadComponent("user", "Home"),
+            },
+            {
                 path: "/order",
-                name: "Order",
+                name: "UserOrder",
                 component: loadComponent("user", "Order"),
             },
         ],
     },
     {
         path: "/admin",
-        name: "Admin",
-        component: loadComponent("admin", "Index"),
-        redirect: "/admin/home",
+        name: "AdminView",
+        component: loadPage("admin", "AdminView"),
+        redirect: { name: "AdminHome" },
         children: [
             {
                 path: "/admin/home",
@@ -59,7 +69,7 @@ const routes = [
     },
     {
         path: "/:catchAll(.*)",
-        redirect: "/404",
+        redirect: { name: "NotFound" },
     },
 ];
 

@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import Navigation from "./layouts/Navigation";
+import Navigation from "@layouts/admin/Navigation";
 
 export default {
   components: {
@@ -18,11 +18,7 @@ export default {
     };
   },
 
-  methods: {
-    getAvatar() {
-      //   return "storage/avatars/" + this.user.id + "_" + this.user.avatar;
-    },
-  },
+  methods: {},
 };
 </script>
 
