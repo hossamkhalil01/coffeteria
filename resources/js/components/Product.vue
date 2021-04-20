@@ -6,12 +6,15 @@
                     <div class="card-body">
                         <router-link
                             to="/createProduct"
-                            class="nav-item nav-link "
+                            class="nav-item nav-link"
                         >
                             create Product
                         </router-link>
 
-                        <div class="card-body table-responsive p-0" v-if="viewproducts">
+                        <div
+                            class="card-body table-responsive p-0"
+                            v-if="viewproducts"
+                        >
                             <table class="table table-hover">
                                 <tbody>
                                     <tr>
@@ -72,7 +75,6 @@
                                             <!-- <router-link :to="{ name: 'editProduct', params: {id: item.id } }">edit</router-link> -->
                                             <!-- <router-link :to="'/editProduct/'+ item.id">edit </router-link>  -->
 
-                                           
                                             <a
                                                 href="#"
                                                 class="btn btn-danger m-2"
@@ -85,57 +87,136 @@
                                 </tbody>
                             </table>
 
-                            <pagination
+                            <!-- <pagination
                                 :data="tabledata"
                                 @pagination-change-page="getResults"
-                            ></pagination>
-                        </div>
-                         </div>
-                           </div>
-                           </div>
-                                   
-        </div>
-          
-        <div v-if="editproduct">
-        <h2>Edit Product</h2>
-        <form v-on:submit.prevent="update(upd_product.id)">
-            <div class="form-group">
-                <label for="Name">Product</label>
-                <input
-                    type="text"
-                    name=" name"
-                    class="form-control"
-                    id="Name"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter Productname"
-                    v-model="upd_product.name"
-                />
-            </div>
-            <div class="form-group">
-                <label for="Price">Product Price</label>
-                <input
-                    type="number"
-                    name="price"
-                    class="form-control"
-                    id="Price"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter Product price"
-                    v-model="upd_product.price"
-                />
-            </div>
-            <div>
-                <label for="is_available">Is Available </label>
-                <input
-                    class="form-group"
-                    name="is_available"
-                    type="checkbox"
-                    id="is_available"
-                    v-model="upd_product.is_available"
-                />
-                <label for="checkbox">{{ checked }}</label>
-            </div>
+                            ></pagination> -->
 
-            <!-- <div class="form-group">
+                            <!-- start of pagination links -->
+                            <nav
+                                v-if="pagination_links.length > 0"
+                                aria-label="Page navigation example"
+                            >
+                                <ul class="pagination justify-content-center">
+                                    <li
+                                        :class="[
+                                            pagination_links[0].url == null
+                                                ? 'disabled'
+                                                : '',
+                                        ]"
+                                        class="page-item"
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="#"
+                                            @click.prevent="
+                                                paginate(
+                                                    pagination_links[0].url
+                                                )
+                                            "
+                                            aria-label="Previous"
+                                        >
+                                            <span aria-hidden="true"
+                                                >&laquo;</span
+                                            >
+                                        </a>
+                                    </li>
+                                    <li
+                                        v-for="(
+                                            link, index
+                                        ) in pagination_links.slice(
+                                            1,
+                                            pagination_links.length - 1
+                                        )"
+                                        :key="index"
+                                        :class="[
+                                            link.active == true ? 'active' : '',
+                                        ]"
+                                        class="page-item"
+                                    >
+                                        <a
+                                            class="page-link"
+                                            @click.prevent="paginate(link.url)"
+                                            >{{ link.label }}</a
+                                        >
+                                    </li>
+                                    <li
+                                        :class="[
+                                            pagination_links[
+                                                pagination_links.length - 1
+                                            ].url == null
+                                                ? 'disabled'
+                                                : '',
+                                        ]"
+                                        class="page-item"
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="#"
+                                            @click.prevent="
+                                                paginate(
+                                                    pagination_links[
+                                                        pagination_links.length -
+                                                            1
+                                                    ].url
+                                                )
+                                            "
+                                            aria-label="Next"
+                                        >
+                                            <span aria-hidden="true"
+                                                >&raquo;</span
+                                            >
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!-- end of pagination links -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="editproduct">
+            <h2>Edit Product</h2>
+            <form v-on:submit.prevent="update(upd_product.id)">
+                <div class="form-group">
+                    <label for="Name">Product</label>
+                    <input
+                        type="text"
+                        name=" name"
+                        class="form-control"
+                        id="Name"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter Productname"
+                        v-model="upd_product.name"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="Price">Product Price</label>
+                    <input
+                        type="number"
+                        name="price"
+                        class="form-control"
+                        id="Price"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter Product price"
+                        v-model="upd_product.price"
+                    />
+                </div>
+                <div>
+                    <label for="is_available">Is Available </label>
+                    <input
+                        class="form-group"
+                        name="is_available"
+                        type="checkbox"
+                        id="is_available"
+                        v-model="upd_product.is_available"
+                    />
+                    <label for="checkbox">{{ checked }}</label>
+                </div>
+
+                <!-- <div class="form-group">
             <label for="Category">category</label>
             <select name="category_id" v-model="upd_product.category_id">
                 <option v-for="i in tabledata.data" :value="i.id" :key="i.id">
@@ -143,7 +224,7 @@
                 </option>
             </select>
         </div> -->
-            <!-- 
+                <!-- 
         <div class="form-group">
             <label for="Image">Product Picture</label>
             <div
@@ -155,11 +236,10 @@
             <input name="image" ref="fileInput" type="file" @input="pickFile" />
         </div> -->
 
-            <button type="submit" class="btn btn-primary">update</button>
-            <button type="Reset" class="btn btn-primary">Reset</button>
-        </form>
+                <button type="submit" class="btn btn-primary">update</button>
+                <button type="Reset" class="btn btn-primary">Reset</button>
+            </form>
         </div>
-
     </div>
 </template>
 
@@ -167,10 +247,11 @@
 export default {
     data() {
         return {
-              editproduct:false,
-             viewproducts:true,
+            editproduct: false,
+            viewproducts: true,
             previewImage: null,
             tabledata: {},
+            pagination_links: {},
             form: {
                 name: "",
                 price: "",
@@ -196,18 +277,28 @@ export default {
         loadTableData() {
             this.$http
                 .get("api/products")
-                .then(({ data }) => (this.tabledata = data))
-                .catch(() => {
-                    console.log("Error...");
+                .then(({ data }) => {
+                    console.log("d",data);
+                    this.tabledata = data;
+                    this.pagination_links = data.links;
                 });
+                
         },
 
         //Pagination
-        getResults(page = 1) {
-            this.$http.get("api/products?page=" + page).then((response) => {
-                this.tabledata = response.data;
-            });
-        },
+        // getResults(page = 1) {
+        //     this.$http.get("api/products?page=" + page).then((response) => {
+        //         this.tabledata = response.data;
+        //     });
+        // },
+
+        // paginate(new_url) {
+        //      this.$http(new_url).then((response) => {
+        //          console.log("res" , response);
+        //         this.tabledata = response.data;
+        //         this.pagination_links = response.data.links;
+        //     });
+        // },
 
         loadCategoryData() {
             this.$http
@@ -235,8 +326,7 @@ export default {
         },
         //get user dtails to show inside edit form
         get_product(id, name, price, is_available, image, category_id) {
-             this.editproduct = true,
-             this.viewproducts = false
+            (this.editproduct = true), (this.viewproducts = false);
             this.upd_product.id = id;
             this.upd_product.name = name;
             this.upd_product.price = price;
@@ -247,18 +337,17 @@ export default {
         },
         //update user
         update(id) {
-            this.editproduct = true,
-             this.viewproducts = false
+            (this.editproduct = true), (this.viewproducts = false);
             console.log(id);
             this.$http
-                .put("api/products/"+id, this.upd_product)
+                .put("api/products/" + id, this.upd_product)
                 .then((resp) => {
                     console.log(resp);
                     this.loadTableData();
                 })
                 .catch((e) => {
                     console.log(e);
-                    console.log("bazeeeeet")
+                    console.log("bazeeeeet");
                 });
         },
 
