@@ -292,13 +292,13 @@ export default {
         //     });
         // },
 
-        // paginate(new_url) {
-        //      this.$http(new_url).then((response) => {
-        //          console.log("res" , response);
-        //         this.tabledata = response.data;
-        //         this.pagination_links = response.data.links;
-        //     });
-        // },
+        paginate(new_url) {
+             this.$http(new_url).then((response) => {
+                 console.log("res" , response);
+                this.tabledata = response.data;
+                this.pagination_links = response.data.links;
+            });
+        },
 
         loadCategoryData() {
             this.$http
