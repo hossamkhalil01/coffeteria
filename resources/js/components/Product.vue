@@ -192,75 +192,75 @@ export default {
         };
     },
     methods: {
-        // //get Table data
-        // loadTableData() {
-        //     this.$http
-        //         .get("api/products")
-        //         .then(({ data }) => (this.tabledata = data))
-        //         .catch(() => {
-        //             console.log("Error...");
-        //         });
-        // },
+        //get Table data
+        loadTableData() {
+            this.$http
+                .get("api/products")
+                .then(({ data }) => (this.tabledata = data))
+                .catch(() => {
+                    console.log("Error...");
+                });
+        },
 
-        // //Pagination
-        // getResults(page = 1) {
-        //     this.$http.get("api/products?page=" + page).then((response) => {
-        //         this.tabledata = response.data;
-        //     });
-        // },
+        //Pagination
+        getResults(page = 1) {
+            this.$http.get("api/products?page=" + page).then((response) => {
+                this.tabledata = response.data;
+            });
+        },
 
-        // loadCategoryData() {
-        //     this.$http
-        //         .get("api/categories")
-        //         .then(({ data }) => (this.tabledata = data))
-        //         .catch(() => {
-        //             console.log("Error...");
-        //         });
-        // },
-        // selectImage() {
-        //     this.$refs.fileInput.click();
-        // },
-        // pickFile() {
-        //     let input = this.$refs.fileInput;
-        //     let file = input.files;
-        //     if (file && file[0]) {
-        //         let reader = new FileReader();
-        //         reader.onload = (e) => {
-        //             this.previewImage = e.target.result;
-        //             this.upd_product.image = this.previewImage;
-        //         };
-        //         reader.readAsDataURL(file[0]);
-        //         this.$emit("input", file[0]);
-        //     }
-        // },
-        // //get user dtails to show inside edit form
-        // get_product(id, name, price, is_available, image, category_id) {
-        //      this.editproduct = true,
-        //      this.viewproducts = false
-        //     this.upd_product.id = id;
-        //     this.upd_product.name = name;
-        //     this.upd_product.price = price;
-        //     // this.upd_product.is_available = is_available;
-        //     // this.upd_product.category_id = category_id;
-        //     // this.upd_product.image = image;
-        //     // console.log(this.upd_product);
-        // },
-        // //update user
-        // update(id) {
-        //     this.editproduct = true,
-        //      this.viewproducts = false
-        //     console.log(id);
-        //     this.$http
-        //         .put("api/products/"+id, this.upd_product)
-        //         .then((resp) => {
-        //             console.log(resp);
-        //             this.loadTableData();
-        //         })
-        //         .catch((e) => {
-        //             console.log(e);
-        //             console.log("bazeeeeet")
-        //         });
-        // },
+        loadCategoryData() {
+            this.$http
+                .get("api/categories")
+                .then(({ data }) => (this.tabledata = data))
+                .catch(() => {
+                    console.log("Error...");
+                });
+        },
+        selectImage() {
+            this.$refs.fileInput.click();
+        },
+        pickFile() {
+            let input = this.$refs.fileInput;
+            let file = input.files;
+            if (file && file[0]) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    this.previewImage = e.target.result;
+                    this.upd_product.image = this.previewImage;
+                };
+                reader.readAsDataURL(file[0]);
+                this.$emit("input", file[0]);
+            }
+        },
+        //get user dtails to show inside edit form
+        get_product(id, name, price, is_available, image, category_id) {
+             this.editproduct = true,
+             this.viewproducts = false
+            this.upd_product.id = id;
+            this.upd_product.name = name;
+            this.upd_product.price = price;
+            // this.upd_product.is_available = is_available;
+            // this.upd_product.category_id = category_id;
+            // this.upd_product.image = image;
+            // console.log(this.upd_product);
+        },
+        //update user
+        update(id) {
+            this.editproduct = true,
+             this.viewproducts = false
+            console.log(id);
+            this.$http
+                .put("api/products/"+id, this.upd_product)
+                .then((resp) => {
+                    console.log(resp);
+                    this.loadTableData();
+                })
+                .catch((e) => {
+                    console.log(e);
+                    console.log("bazeeeeet")
+                });
+        },
 
         /////end of ediiiiiiiiit//////////////////////
         //Delete photo
