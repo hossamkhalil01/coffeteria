@@ -1,28 +1,66 @@
-import { createWebHistory, createRouter } from 'vue-router';
-import Home from './components/Home.vue';
-import Order from './components/Order.vue';
-import NotFound from './components/404.vue';
+import { createWebHistory, createRouter } from "vue-router";
+
+import NotFound from "./components/404.vue";
+
+const loadComponent = (view, component) => {
+    return import(`./components/${view}/${component}`);
+};
 
 const routes = [
     {
-        path: '/',
-        name: 'Home',
-        component: Home,
+        path: "/",
+        name: "Home",
+        component: loadComponent("user", "Home"),
+        children: [
+            {
+                path: "/order",
+                name: "Order",
+                component: loadComponent("user", "Order"),
+            },
+        ],
     },
     {
-        path: '/order',
-        name: 'Order',
-        component: Order,
+        path: "/admin",
+        name: "Admin",
+        component: loadComponent("admin", "Index"),
+        redirect: "/admin/home",
+        children: [
+            {
+                path: "/admin/home",
+                component: loadComponent("admin", "Home"),
+                name: "AdminHome",
+            },
+            {
+                path: "/admin/checks",
+                component: loadComponent("admin", "Checks"),
+                name: "AdminChecks",
+            },
+            {
+                path: "/admin/order",
+                component: loadComponent("admin", "Order"),
+                name: "AdminOrder",
+            },
+            {
+                path: "/admin/products",
+                component: loadComponent("admin", "Products"),
+                name: "AdminProducts",
+            },
+            {
+                path: "/admin/users",
+                component: loadComponent("admin", "Users"),
+                name: "AdminUsers",
+            },
+        ],
     },
     {
-        path: '/404',
-        name: 'NotFound',
+        path: "/404",
+        name: "NotFound",
         component: NotFound,
     },
     {
         path: "/:catchAll(.*)",
-        redirect: '/404',
-    }
+        redirect: "/404",
+    },
 ];
 
 const router = createRouter({
