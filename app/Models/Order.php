@@ -14,6 +14,7 @@ class Order extends Model
         'status',
         'room_id',
         'owner_id',
+        'total_price'
     ];
 
 
@@ -33,6 +34,6 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)
-            ->withPivot(['quantity']);
+            ->withPivot(['quantity'])->withTimestamps();
     }
 }
