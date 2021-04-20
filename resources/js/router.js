@@ -28,6 +28,11 @@ const routes = [
                 name: "UserOrder",
                 component: loadComponent("user", "Order"),
             },
+            {
+                path: "/neworder",
+                name: "newOrder",
+                component: loadComponent("user", "newOrder"),
+            },
         ],
     },
     {
