@@ -45,7 +45,9 @@
                             <td>{{ order.status }}</td>
                             <td>{{ order.total_price }}</td>
                             <td v-if="order.status == 'Processing'">
-                                <a href="#">Cancel</a>
+                                <a href="#" @click.prevent="cancelOrder(order)"
+                                    >Cancel</a
+                                >
                             </td>
                             <td v-else></td>
                         </tr>
@@ -186,6 +188,19 @@ export default {
             if (!this.from && !this.to) {
                 this.getAllOrders();
             }
+        },
+        cancelOrder(order) {
+            axios
+                .put(
+                    "http://127.0.0.1:8000/api/" +
+                        this.user.id +
+                        "/orders/" +
+                        order.id,
+                    { status: "Cancelled" }
+                )
+                .then((response) => {
+                    this.getAllOrders();
+                });
         },
     },
 };

@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <!-- start of latest order section -->
                 <div class="row justify-content-center">
                     <h3 class="fw-bold text-center mt-3">Latest Order</h3>
