@@ -138,10 +138,15 @@
                 v-for="ordered_product in ordered_products"
                 :key="ordered_product.id"
             >
-                <img
-                    src="https://www.telegraph.co.uk/content/dam/health-fitness/2020/01/09/TELEMMGLPICT000169578515_trans_NvBQzQNjv4BqbTl4D02iCM3NuMfK2RT0HTjsyN2j3JnAYXPi059mk8g.jpeg"
-                    alt=""
-                />
+                <a href="">
+                    <img
+                        src="https://www.telegraph.co.uk/content/dam/health-fitness/2020/01/09/TELEMMGLPICT000169578515_trans_NvBQzQNjv4BqbTl4D02iCM3NuMfK2RT0HTjsyN2j3JnAYXPi059mk8g.jpeg"
+                        alt=""
+                    />
+                    <span class="badge rounded-pill bg-info text-dark">{{
+                        currencyFormatter(ordered_product.price)
+                    }}</span>
+                </a>
                 <p class="product-name text-center">
                     {{ ordered_product.name }}
                 </p>
@@ -287,5 +292,16 @@ img {
 .product-name {
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 300;
+}
+
+.badge {
+    position: relative;
+    top: -50%;
+    right: -60%;
+    font-size: 15px;
+}
+
+.bg-info {
+    background-color: #1edaff !important;
 }
 </style>
