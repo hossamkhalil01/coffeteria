@@ -29,7 +29,10 @@
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
           <li>
-            <router-link :to="{ name: 'AdminView' }" class="dropdown-item"
+            <router-link
+              :to="{ name: 'AdminView' }"
+              class="dropdown-item"
+              v-if="currentUser.role == 'admin'"
               >Admin View</router-link
             >
           </li>

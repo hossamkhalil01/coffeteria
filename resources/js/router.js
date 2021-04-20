@@ -1,13 +1,14 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 import NotFound from "@components/404.vue";
+import { role } from "@helpers/currentUser.js";
 
 const loadComponent = (view, component) => {
-    return import(`@components/${view}/${component}`);
+    return () => import(`@components/${view}/${component}`);
 };
 
 const loadPage = (view, page) => {
-    return import(`@pages/${view}/${page}`);
+    return () => import(`@pages/${view}/${page}`);
 };
 
 const routes = [
@@ -34,6 +35,16 @@ const routes = [
         name: "AdminView",
         component: loadPage("admin", "AdminView"),
         redirect: { name: "AdminHome" },
+        beforeEnter: (to, from, next) => {
+            // check if admin
+            if (role == "admin") {
+                next();
+            } else {
+                next({
+                    name: "UserHome",
+                });
+            }
+        },
         children: [
             {
                 path: "/admin/home",
