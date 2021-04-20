@@ -61,9 +61,20 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($user_id, $order_id)
     {
-        //
+        $user = User::find($user_id);
+        if ($user) {
+            $order = Order::find($order_id);
+            if ($order) {
+                $products = $order->products;
+                return response()->json(["data" => ["products" => $products]]);
+            } else {
+                return response()->json(["data" => []]);
+            }
+        } else {
+            return response()->json(["data" => []]);
+        }
     }
 
     /**
