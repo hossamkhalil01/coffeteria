@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Null_;
 use App\Http\Resources\OrderResource;
 use DateTime;
+use DateTimeZone;
+use Illuminate\Support\Facades\Date;
 
 class OrderController extends Controller
 {
@@ -71,9 +73,19 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update($user_id, Request $request, Order $order)
     {
-        //
+        $user = User::find($user_id);
+        if ($user) {
+            try {
+                $order->update($request->all());
+                return response()->json(["data" => "succeeded"]);
+            } catch (\Illuminate\Database\QueryException $ex) {
+                return response()->json(["data" => "failed"]);
+            }
+        } else {
+            return response()->json(["data" => "failed"]);
+        }
     }
 
     /**
@@ -102,7 +114,7 @@ class OrderController extends Controller
 
             return new OrderResource(Order::where([["owner_id", "=", $user_id], ["created_at", ">=", $from],  ["created_at", "<=", $to]])->paginate(5));
         } else {
-            return response()->json(["user" => Null]);
+            return response()->json(["data" => []]);
         }
     }
 }
