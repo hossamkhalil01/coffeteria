@@ -91,7 +91,7 @@ export default {
             form: {
                 name: "",
                 price: "",
-                is_available: "",
+                is_available: 0 ,
                 image: "",
                 category_id: "",
             },
