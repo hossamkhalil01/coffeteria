@@ -23,6 +23,7 @@
         "vue-loader": "^16.2.0"
     },
     "dependencies": {
+        "filereader": "^0.10.3",
         "sass-loader": "^11.0.1",
         "v-axios": "^3.0.6",
         "vue-axios": "^3.2.4",

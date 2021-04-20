@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 
 class admincontroller extends Controller
@@ -39,17 +40,28 @@ class admincontroller extends Controller
         
 
         // $fileUpload = new FileUpload;
-    
-        if($req->image)
-       {
-        $file = $request->file('image');
-        // $name = Str::random(10);
-        $url = \Storage::putFileAs('avatars', $file, $name.'.'.$file->extension());
-        // $name = time().'.' . explode('/', explode(':', substr($request->avatar, 0, strpos($request->avatar, ';')))[1])[1];
-        // \Image::make($req->image)->save(public_path('avatar/').$name);
-        // $req->merge(['avatar' => $name]);
+        if (request()->hasFile('avatar')) {
+
+            $avatar = request()->file('avatar')->getClientOriginalName();
+            $avatar_path =  $user->id . '/' . $avatar;
+
+            //save the avatar
+            request()->file('avatar')->storeAs('avatars', $avatar_path, '');
+
+            // update the path
+            $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
         }
-        $user->avatar=$url;
+    
+    //     if($req->image)
+    //    {
+    //     $file = $request->file('image');
+    //     // $name = Str::random(10);
+    //     $url = \Storage::putFileAs('avatars', $file, $name.'.'.$file->extension());
+    //     // $name = time().'.' . explode('/', explode(':', substr($request->avatar, 0, strpos($request->avatar, ';')))[1])[1];
+    //     // \Image::make($req->image)->save(public_path('avatar/').$name);
+    //     // $req->merge(['avatar' => $name]);
+    //     }
+        // $user->avatar=$url;
         $user->save();
 
         // $req->file('image')->store("avatars");
@@ -58,7 +70,26 @@ class admincontroller extends Controller
         return response()->json('user updated');
     }
 
-    public function create(){
-        
+    public function create(Request $req){
+        $user = User::create([
+            'name' => $req->input('name'),
+            'email' => $req->input('email'),
+            'password' => Hash::make($req->input('password')),
+            'room_id' => $req->input('room_id'),
+            'avatar' => 'storage/avatars/default.png',
+        ]);
+        if (request()->hasFile('avatar')) {
+
+            $avatar = request()->file('avatar')->getClientOriginalName();
+            $avatar_path =  $user->id . '/' . $avatar;
+
+            //save the avatar
+            request()->file('avatar')->storeAs('avatars', $avatar_path, '');
+
+            // update the path
+            $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
+        }
+        return $user;
+    
     }
 }
