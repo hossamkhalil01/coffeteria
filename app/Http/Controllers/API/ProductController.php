@@ -88,4 +88,11 @@ return $product;
 }   
 else{ return ['message' => 'failed'];}
 }
+public function addCategory(Request $request)
+{
+    Category::create($request->all());
+
+    return ['message' => 'Success'];
+
+}
 }
