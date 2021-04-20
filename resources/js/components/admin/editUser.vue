@@ -47,14 +47,10 @@ export default {
     methods: {
 
         updateUser() {
-            const config = {
-
-                    headers: { 'content-type': 'multipart/form-data' }
-
-                }
+           
 
             axios
-                .patch(`http://localhost:8000/api/admin/edituser/${this.$route.params.id}`, this.user,config)
+                .patch(`http://localhost:8000/api/admin/edituser/${this.$route.params.id}`, this.user)
                 .then((res) => {
                     this.$router.push({
                         name: 'adminUsers'

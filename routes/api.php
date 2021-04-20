@@ -28,7 +28,7 @@ Route::delete('/admin/deleteuser/{id}',[admincontroller::class,'destroy']);
 Route::patch('/admin/edituser/{id}',[admincontroller::class,'update']);
 
 Route::get('/admin/getusers/{id}',[admincontroller::class,'showuser']);
-Route::post('/admin/create',[admincontroller::class,'create']);
+Route::post('/admin/create',[admincontroller::class,'adduser']);
 
 Route::resource('/rooms',roomcontroller::class);
 

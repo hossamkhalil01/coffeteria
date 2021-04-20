@@ -40,17 +40,17 @@ class admincontroller extends Controller
         
 
         // $fileUpload = new FileUpload;
-        if (request()->hasFile('avatar')) {
+        // if ($req->hasFile('avatar')) {
 
-            $avatar = request()->file('avatar')->getClientOriginalName();
-            $avatar_path =  $user->id . '/' . $avatar;
+        //     $avatar = $req->file('avatar')->getClientOriginalName();
+        //     $avatar_path =  $user->id . '/' . $avatar;
 
-            //save the avatar
-            request()->file('avatar')->storeAs('avatars', $avatar_path, '');
+        //     //save the avatar
+        //     $req->file('avatar')->storeAs('avatars', $avatar_path, '');
 
-            // update the path
-            $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
-        }
+        //     // update the path
+        //     $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
+        // }
     
     //     if($req->image)
     //    {
@@ -70,26 +70,41 @@ class admincontroller extends Controller
         return response()->json('user updated');
     }
 
-    public function create(Request $req){
-        $user = User::create([
-            'name' => $req->input('name'),
-            'email' => $req->input('email'),
-            'password' => Hash::make($req->input('password')),
-            'room_id' => $req->input('room_id'),
-            'avatar' => 'storage/avatars/default.png',
-        ]);
-        if (request()->hasFile('avatar')) {
+    public function adduser(Request $req){
+        // $user = User::create([
+        //     'name' => $req->input('name'),
+        //     'email' => $req->input('email'),
+        //     'password' => Hash::make($req->input('password')),
+        //     'room_id' => $req->input('room_id'),
+        //     'avatar' => 'storage/avatars/default.png',
+        // ]);
 
-            $avatar = request()->file('avatar')->getClientOriginalName();
-            $avatar_path =  $user->id . '/' . $avatar;
+        // $user=new User();
+        // $user->name=$req->name;
+        // $user->email=$req->email;
 
-            //save the avatar
-            request()->file('avatar')->storeAs('avatars', $avatar_path, '');
+        // $user->password=$req->password;
+        // $user->room_id=$req->room_id;
+        // $user->avatar='storage/avatars/default.png';
 
-            // update the path
-            $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
-        }
-        return $user;
+
+
+
+
+        // if ($req->file('avatar')) {
+
+        //     $avatar = $req->file('avatar')->getClientOriginalName();
+        //     $avatar_path =  $user->id . '/' . $avatar;
+
+        //     //save the avatar
+        //     $req->file('avatar')->storeAs('avatars', $avatar_path, '');
+
+        //     // update the path
+        //     $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
+        // }
+        $user->save();
+        return response()->json('user created!');
+        // return $user;
     
     }
 }

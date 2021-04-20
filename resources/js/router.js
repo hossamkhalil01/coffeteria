@@ -27,7 +27,7 @@ const routes = [
         component: adminEditUser
     },
     { 
-        path: '/admin/create',
+        path: '/admin/createuser',
         name: 'createuser',
         component: createuser
     },
