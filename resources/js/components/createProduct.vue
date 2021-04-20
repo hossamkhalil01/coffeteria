@@ -146,6 +146,35 @@ export default {
                 });
         },
     },
+
+
+      //get user dtails to show inside edit form
+   get_user(id,name,email){
+      
+      this.edituser = true,
+      this.adduser = false
+      console.log(id,name,email);
+      this.upd_user.id = id;
+      this.upd_user.name = name;
+      this.upd_user.email = email;
+    },
+    //update user
+    update(id){
+      console.log(id);
+      axios
+      .post('http://127.0.0.1:8000/user/update/'+id,this.upd_user )
+      .then((resp) =>{
+          console.log(resp);
+           this.edituser = false,
+          this.adduser = true
+          this.loadlist();
+          
+          
+      })
+      .catch((e)=>{
+          console.log(e);
+      })
+    },
     created() {
         //LoadTableData
         this.loadCategoryData();

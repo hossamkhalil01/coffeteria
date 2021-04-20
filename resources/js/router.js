@@ -5,6 +5,7 @@ import NotFound from './components/404.vue';
 import Product from './components/Product.vue';
 import createProduct from './components/createProduct.vue';
 
+
 const routes = [
     {
         path: '/',
@@ -27,10 +28,11 @@ const routes = [
         component: Product,
     },
     {
-        path: '/createProduct',
+        path: '/createProduct/',
         name: 'createProduct',
         component: createProduct,
     },
+  
     {
         path: "/:catchAll(.*)",
         redirect: '/404',

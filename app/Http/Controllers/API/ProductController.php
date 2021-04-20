@@ -66,5 +66,26 @@ class ProductController extends Controller
         return Category::all();
     }
 
-    
+    public function edit($id){
+        //get single user details
+$product  = Product::findOrfail($id);
+// console.log($product);
+return $product;
+
+}
+public function update(Request $request, $id)
+{
+//update user data
+if ($request->isMethod('post')) {
+
+$product  = Product::findOrfail($id);
+$product->name = $request->get('name');
+$product->price = $request->get('price');
+// $product->price = $request->get('price');
+// console.log($product);
+    $product->save();
+return $product;  
+}   
+else{ return ['message' => 'failed'];}
+}
 }
