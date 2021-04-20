@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="row">
-        <form @submit.prevent="adduser">
+        <form v-on:submit.prevent="adduser">
             <div class="form-group">
                 <lable>Name</lable>
                 <input type="text" class="form-control" name="name" v-model="user.name" />
@@ -15,7 +15,7 @@
 
             <div class="form-group">
                 <lable>Room number</lable>
-                <select name="room_id" class="form-control " v-model="user.room_id">
+                <select name="room_id" class="form-control " >
 
                     <option v-for="room in rooms" :value="room.id">{{room['number']}}</option>
                 </select>
@@ -23,7 +23,7 @@
             </div>
 
           
-            <button type="submit" class="btn btn-primary">create</button>
+            <button type="submit" name="submit" class="btn btn-primary">create</button>
         </form>
     </div>
 </div>
@@ -37,7 +37,11 @@ import axios from "axios";
     data() {
         return {
             previewImage: null,
-            user: [],
+            user: {name:"",
+            email:"",
+            password:"",
+            image:"",
+            },
             rooms: []
         }
 
@@ -45,11 +49,11 @@ import axios from "axios";
     methods: {
 
         adduser() {
-        
 
             axios
                 .post("http://localhost:8000/api/admin/create",this.user)
                 .then((res) => {
+                    
                     this.$router.push({
                         name: 'adminUsers'
                     });

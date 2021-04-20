@@ -70,7 +70,7 @@ class admincontroller extends Controller
         return response()->json('user updated');
     }
 
-    public function adduser(Request $req){
+    public function store(Request $req){
         // $user = User::create([
         //     'name' => $req->input('name'),
         //     'email' => $req->input('email'),
@@ -79,17 +79,13 @@ class admincontroller extends Controller
         //     'avatar' => 'storage/avatars/default.png',
         // ]);
 
-        // $user=new User();
-        // $user->name=$req->name;
-        // $user->email=$req->email;
+        $user=new User();
+        $user->name=$req->name;
+        $user->email=$req->email;
 
-        // $user->password=$req->password;
+        $user->password=$req->password;
         // $user->room_id=$req->room_id;
-        // $user->avatar='storage/avatars/default.png';
-
-
-
-
+        $user->avatar='storage/avatars/default.png';
 
         // if ($req->file('avatar')) {
 

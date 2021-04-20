@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <h2>All users</h2>
-    <router-link :to="{name: 'createuser', }" style="margin-right: 50px;float:right" class="btn btn-success">Add user</router-link> 
+    <router-link :to="'/admin/createuser'" style="margin-right: 50px;float:right" class="btn btn-success">Add user</router-link> 
     <br />
     <br />
     <table class="table table-hover" style="border: 1px solid">
