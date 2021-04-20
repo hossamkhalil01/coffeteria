@@ -108,17 +108,15 @@
 </template>
 
 <script>
-import { csrf } from "@services/authenticationService.js";
+import { apiBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
 import axios from "axios";
 
 export default {
-  mounted() {
-    console.log("newOrder component mounted.");
-  },
+  mounted() {},
   data() {
     return {
-      csrf: csrf,
+      apiBase: apiBase,
       user: user,
       rooms: [],
       totalPrice: 0,
@@ -138,7 +136,7 @@ export default {
     }
   },
   created() {
-    axios.get("http://127.0.0.1:8000/api/rooms").then((response) => {
+    axios.get(apiBase + "rooms").then((response) => {
       this.rooms = response.data;
     });
   },
@@ -211,7 +209,7 @@ export default {
         total_price: this.totalPrice,
       };
       axios
-        .post("http://127.0.0.1:8000/api/" + this.user.id + "/orders", formData)
+        .post(apiBase + this.user.id + "/orders", formData)
         .then((res) => {
           this.onSuccess(res.data.message);
         })

@@ -29,7 +29,7 @@
 
                     <td>
                       <img
-                        :src="`http://localhost:8000/storage/img/${item.image}`"
+                        :src="imgBase + item.image"
                         class="profile-user-img img-fluid img-circle"
                         style="height: 40px; width: 40px"
                       />
@@ -211,9 +211,12 @@
 
 <script>
 import axios from "axios";
+import { apiBase, imgBase } from "@helpers/urls.js";
 export default {
   data() {
     return {
+      apiBase: apiBase,
+      imgBase: imgBase,
       editproduct: false,
       viewproducts: true,
       previewImage: null,
@@ -242,7 +245,7 @@ export default {
   methods: {
     //get Table data
     loadTableData() {
-      axios.get("http://localhost:8000/api/products").then(({ data }) => {
+      axios.get(apiBase + "products").then(({ data }) => {
         this.tabledata = data;
         this.pagination_links = data.links;
       });
@@ -264,7 +267,7 @@ export default {
 
     loadCategoryData() {
       axios
-        .get("http://localhost:8000/api/categories")
+        .get(apiBase + "categories")
         .then(({ data }) => (this.tabledata = data))
         .catch(() => {
           console.log("Error...");
@@ -302,7 +305,7 @@ export default {
       (this.editproduct = true), (this.viewproducts = false);
       console.log(id);
       axios
-        .put("api/products/" + id, this.upd_product)
+        .put(apiBase + "products/" + id, this.upd_product)
         .then((resp) => {
           console.log(resp);
           this.loadTableData();
@@ -330,7 +333,7 @@ export default {
           if (result.value) {
             //Send Request to server
             axios
-              .delete("http://localhost:8000/api/products/" + id)
+              .delete(apiBase + "products/" + id)
               .then((response) => {
                 this.$swal.fire(
                   "Deleted!",

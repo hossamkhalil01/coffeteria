@@ -33,10 +33,7 @@
             :key="product.id"
           >
             <a href="#" @click.prevent="addOrderedProducts(product)">
-              <img
-                :src="'http://localhost:8000/storage/img/' + product.image"
-                :alt="product.name"
-              />
+              <img :src="imgBase + product.image" :alt="product.name" />
               <span class="badge rounded-pill bg-info text-dark">{{
                 currencyFormatter(product.price)
               }}</span>
@@ -58,18 +55,17 @@
 </template>
 
 <script>
-import { csrf } from "@services/authenticationService.js";
 import * as user from "@helpers/currentUser.js";
+import { apiBase, imgBase } from "@helpers/urls.js";
 import axios from "axios";
 import newordercomponent from "@components/user/newOrder";
 
 export default {
-  mounted() {
-    console.log("Home component mounted.");
-  },
+  mounted() {},
   data() {
     return {
-      csrf: csrf,
+      apiBase: apiBase,
+      imgBase: imgBase,
       user: user,
       products: [],
       latest_order: [],
@@ -80,7 +76,7 @@ export default {
     newordercomponent,
   },
   created() {
-    axios.get("http://127.0.0.1:8000/api/" + this.user.id).then((response) => {
+    axios.get(apiBase + this.user.id).then((response) => {
       this.products = response.data.products;
       this.latest_order = response.data.latest_order;
     });
