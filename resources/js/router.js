@@ -4,7 +4,7 @@ import Order from './components/Order.vue';
 import NotFound from './components/404.vue';
 import Product from './components/Product.vue';
 import createProduct from './components/createProduct.vue';
-
+import addCategory from  './components/addCategory.vue'
 
 const routes = [
     {
@@ -31,6 +31,11 @@ const routes = [
         path: '/createProduct/',
         name: 'createProduct',
         component: createProduct,
+    },
+    {
+        path: '/addCategory/',
+        name: 'addCategory',
+        component:addCategory,
     },
   
     {

@@ -54,6 +54,7 @@
             <select name="category_id"  v-model="form.category_id">
                 <option v-for="i in tabledata" :value="i.id" :key="i.id">{{ i.label }}</option>
             </select>
+               <router-link to="/addCategory" class="nav-item nav-link"> add Category </router-link>
         </div>
 
         <div class="form-group">
