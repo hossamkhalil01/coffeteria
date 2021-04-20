@@ -5,4 +5,13 @@ import { createApp } from "vue";
 import App from "@components/App.vue";
 import router from "@src/router.js";
 
-createApp(App).use(router).mount("#app");
+// import Pagination from 'v-pagination-3';
+
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
+const app = createApp(App).use(router);
+
+// app.component('pagination', Pagination);
+app.use(VueSweetalert2);
+app.mount("#app");

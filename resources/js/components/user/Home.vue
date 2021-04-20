@@ -34,8 +34,8 @@
           >
             <a href="#" @click.prevent="addOrderedProducts(product)">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/1200px-A_small_cup_of_coffee.JPG"
-                alt=""
+                :src="'http://localhost:8000/storage/img/' + product.image"
+                :alt="product.name"
               />
               <span class="badge rounded-pill bg-info text-dark">{{
                 currencyFormatter(product.price)
@@ -86,9 +86,6 @@ export default {
     });
   },
   methods: {
-    getAvatar() {
-      return this.user.avatar;
-    },
     currencyFormatter(price) {
       let formatter = Intl.NumberFormat("eg-US", {
         style: "currency",

@@ -67,14 +67,24 @@ const routes = [
                 name: "AdminOrder",
             },
             {
-                path: "/admin/products",
-                component: loadComponent("admin", "Products"),
-                name: "AdminProducts",
-            },
-            {
                 path: "/admin/users",
                 component: loadComponent("admin", "Users"),
                 name: "AdminUsers",
+            },
+            {
+                path: "admin/products",
+                name: "AdminProducts",
+                component: loadComponent("admin", "Products"),
+            },
+            {
+                path: "admin/product/create",
+                name: "AdminCreateProduct",
+                component: loadComponent("admin", "CreateProduct"),
+            },
+            {
+                path: "admin/category/add",
+                name: "AdminAddCategory",
+                component: loadComponent("admin", "AddCategory"),
             },
         ],
     },
