@@ -41,14 +41,14 @@
         </div>
 
        
-    <!-- <div class="form-group">
+    <div class="form-group">
       <label for="Category">category</label>
       <select name="category_id" v-model="product.category_id">
         <option v-for="i in tabledata" :value="i.id" :key="i.id">
           {{ i.label }}
                  </option>
             </select>
-        </div>   -->
+        </div>  
 
     
        <div class="form-group">
@@ -90,14 +90,14 @@ export default {
     };
   },
   methods: {
-    //   loadCategoryData() {
-    //  axios
-    //     .get("http://localhost:8000/api/categories")
-    //     .then(({ data }) => (this.tabledata = data))
-    //     .catch(() => {
-    //       console.log("Error...");
-    //     });
-    // },
+      loadCategoryData() {
+     axios
+        .get("http://localhost:8000/api/categories")
+        .then(({ data }) => (this.tabledata = data))
+        .catch(() => {
+          console.log("Error...");
+        });
+    },
 
     selectImage() {
       this.$refs.fileInput.click();
