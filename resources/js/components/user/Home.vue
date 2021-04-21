@@ -8,6 +8,9 @@
           v-bind:latest_order="latest_order"
         />
         <!-- end latest order section -->
+        <!-- start of users dropdwon section -->
+        <users-drop-down v-if="checkUserIsAdmin" />
+        <!-- end of users dropdown section -->
         <div class="row justify-content-center">
           <hr class="text-center w-50" />
         </div>
@@ -49,6 +52,7 @@ import axios from "axios";
 import newordercomponent from "@components/user/newOrder";
 import latestOrderComponent from "@components/user/LatestOrder";
 import { csrf } from "@services/authenticationService.js";
+import UsersDropDown from "../admin/UsersDropDown.vue";
 
 export default {
   mounted() {},
@@ -66,6 +70,7 @@ export default {
   components: {
     newordercomponent,
     latestOrderComponent,
+    UsersDropDown,
   },
   created() {
     axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
