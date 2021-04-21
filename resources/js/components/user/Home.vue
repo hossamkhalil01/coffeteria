@@ -3,7 +3,10 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <!-- start of latest order section -->
-        <latestOrderComponent v-bind:latest_order="latest_order" />
+        <latestOrderComponent
+          v-if="!checkUserIsAdmin"
+          v-bind:latest_order="latest_order"
+        />
         <!-- end latest order section -->
         <div class="row justify-content-center">
           <hr class="text-center w-50" />
@@ -66,10 +69,12 @@ export default {
   },
   created() {
     axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
-    axios.get(apiBase + this.user.id).then((response) => {
-      this.products = response.data.products;
-      this.latest_order = response.data.latest_order;
-    });
+    if (!this.checkUserIsAdmin) {
+      axios.get(apiBase + this.user.id).then((response) => {
+        this.products = response.data.products;
+        this.latest_order = response.data.latest_order;
+      });
+    }
   },
   methods: {
     currencyFormatter(price) {
@@ -89,6 +94,10 @@ export default {
         product.product_id = product.id;
         this.orderedProducts.push(product);
       }
+    },
+    checkUserIsAdmin() {
+      if (this.user.role !== "admin") return false;
+      return true;
     },
   },
 };
