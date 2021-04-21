@@ -41,7 +41,7 @@
             <tr v-for="order in orders" :key="order.id">
               <th scope="row">
                 <a href="#" @click.prevent="getOrderProducts(order)">{{
-                  Date(order.created_at)
+                  convertDate(order.created_at)
                 }}</a>
               </th>
               <td>{{ order.status }}</td>
@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import { apiBase } from "@helpers/urls.js";
+import { apiBase, imgBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
 import axios from "axios";
 import { csrf } from "@services/authenticationService.js";
@@ -158,6 +158,7 @@ export default {
   data() {
     return {
       apiBase: apiBase,
+      imgBase: imgBase,
       user: user,
       csrf: csrf,
       orders: [],
@@ -186,6 +187,7 @@ export default {
         this.orders = response.data.data;
         this.pagination_links = response.data.meta.links;
       });
+      this.ordered_products = [];
     },
     getAllOrders() {
       axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
@@ -193,6 +195,7 @@ export default {
         this.orders = response.data.data;
         this.pagination_links = response.data.meta.links;
       });
+      this.ordered_products = [];
     },
     getOrdersWithinRange() {
       axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
@@ -215,6 +218,7 @@ export default {
       if (!this.from && !this.to) {
         this.getAllOrders();
       }
+      this.ordered_products = [];
     },
     cancelOrder(order) {
       axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
@@ -234,6 +238,10 @@ export default {
           this.clickedOrder = order;
           this.ordered_products = response.data.data.products;
         });
+    },
+    convertDate(order_date) {
+      const new_date = new Date(order_date);
+      return new_date.toString();
     },
   },
 };
