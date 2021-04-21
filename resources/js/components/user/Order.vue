@@ -151,6 +151,7 @@
 import { apiBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
 import axios from "axios";
+import { csrf } from "@services/authenticationService.js";
 
 export default {
   mounted() {},
@@ -158,6 +159,7 @@ export default {
     return {
       apiBase: apiBase,
       user: user,
+      csrf: csrf,
       orders: [],
       pagination_links: {},
       from: null,
@@ -186,12 +188,14 @@ export default {
       });
     },
     getAllOrders() {
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios.get(apiBase + this.user.id + "/orders").then((response) => {
         this.orders = response.data.data;
         this.pagination_links = response.data.meta.links;
       });
     },
     getOrdersWithinRange() {
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       if (this.from && this.to) {
         axios
           .get(apiBase + this.user.id + "/orders/range", {
@@ -213,6 +217,7 @@ export default {
       }
     },
     cancelOrder(order) {
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .put(apiBase + this.user.id + "/orders/" + order.id, {
           status: "Cancelled",
@@ -222,6 +227,7 @@ export default {
         });
     },
     getOrderProducts(order) {
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .get(apiBase + this.user.id + "/orders/" + order.id)
         .then((response) => {

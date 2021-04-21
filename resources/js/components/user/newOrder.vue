@@ -111,6 +111,7 @@
 import { apiBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
 import axios from "axios";
+import { csrf } from "@services/authenticationService.js";
 
 export default {
   mounted() {},
@@ -136,6 +137,7 @@ export default {
     }
   },
   created() {
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
     axios.get(apiBase + "rooms").then((response) => {
       this.rooms = response.data;
     });
@@ -208,6 +210,7 @@ export default {
         ordered_products: ordered_products,
         total_price: this.totalPrice,
       };
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .post(apiBase + this.user.id + "/orders", formData)
         .then((res) => {

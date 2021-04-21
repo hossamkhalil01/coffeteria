@@ -59,6 +59,7 @@ import * as user from "@helpers/currentUser.js";
 import { apiBase, imgBase } from "@helpers/urls.js";
 import axios from "axios";
 import newordercomponent from "@components/user/newOrder";
+import { csrf } from "@services/authenticationService.js";
 
 export default {
   mounted() {},
@@ -67,6 +68,7 @@ export default {
       apiBase: apiBase,
       imgBase: imgBase,
       user: user,
+      csrf: csrf,
       products: [],
       latest_order: [],
       orderedProducts: [],
@@ -76,6 +78,7 @@ export default {
     newordercomponent,
   },
   created() {
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
     axios.get(apiBase + this.user.id).then((response) => {
       this.products = response.data.products;
       this.latest_order = response.data.latest_order;
