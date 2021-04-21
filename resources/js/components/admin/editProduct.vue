@@ -56,7 +56,7 @@
             <!-- {{product.image}} -->
             <!-- <div
                 class="imagePreviewWrapper"
-                :style="{ 'background-image': url(http://localhost:8000/storage/img/${product.image}')`}"
+                :style="{ 'background-image': url(`http://localhost:8000/storage/img/${product.image}`)'}"
                 @click="selectImage"
             ></div> -->
         

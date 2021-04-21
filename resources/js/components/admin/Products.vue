@@ -11,7 +11,7 @@
               create Product
             </router-link>
 
-            <div class="card-body table-responsive p-0" v-if="viewproducts">
+            <div class="card-body table-responsive p-0">
               <table class="table table-hover">
                 <tbody>
                   <tr>
@@ -136,7 +136,7 @@
       </div>
     </div>
 
-    <div v-if="editproduct">
+    <!-- <div v-if="editproduct">
       <h2>Edit Product</h2>
       <form v-on:submit.prevent="update(upd_product.id)">
         <div class="form-group">
@@ -182,7 +182,7 @@
                     {{ i.label }}
                 </option>
             </select>
-        </div> 
+        </div>  -->
 
        
     <!-- <div class="form-group">
@@ -195,7 +195,7 @@
         </div>   -->
 
     
-       <div class="form-group">
+       <!-- <div class="form-group">
             <label for="Image">Product Picture</label>
             <div
                 class="imagePreviewWrapper"
@@ -208,8 +208,8 @@
 
         <button type="submit" class="btn btn-primary">update</button>
         <button type="Reset" class="btn btn-primary">Reset</button>
-      </form>
-    </div>
+      </form> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -218,8 +218,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      editproduct: false,
-      viewproducts: true,
+      // editproduct: false,
+      // viewproducts: true,
       previewImage: null,
       tabledata: {},
       pagination_links: {},
@@ -232,16 +232,16 @@ export default {
         category_id: "",
       },
 
-      //edit product
-      upd_product: {
-        id: null,
-        name: "",
-        price: "",
-        is_available: "",
-        image: "",
-        category_id: "",
-      },
-      //end of edit product
+      // //edit product
+      // upd_product: {
+      //   id: null,
+      //   name: "",
+      //   price: "",
+      //   is_available: "",
+      //   image: "",
+      //   category_id: "",
+      // },
+      // //end of edit product
     };
   },
   methods: {
@@ -268,58 +268,58 @@ export default {
           console.log("Error...");
         });
     },
-    selectImage() {
-      this.$refs.fileInput.click();
-    },
-    pickFile() {
-      let input = this.$refs.fileInput;
-      let file = input.files;
-      if (file && file[0]) {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          this.previewImage = e.target.result;
-          this.upd_product.image = this.previewImage;
-        };
-        reader.readAsDataURL(file[0]);
-        this.$emit("input", file[0]);
-      }
-    },
-    //get user dtails to show inside edit form
-    get_product(id, name, price, is_available, image, category_id) {
-      (this.editproduct = true), (this.viewproducts = false);
-      this.upd_product.id = id;
-      this.upd_product.name = name;
-      this.upd_product.price = price;
-      this.upd_product.is_available = is_available;
-      this.upd_product.category_id = category_id;
-      this.upd_product.image = image;
-      console.log(this.upd_product);
-    },
-    //update product
-    update(id) {
-      (this.editproduct = true), (this.viewproducts = false);
-      console.log(id);
-      axios
-        .put("http://localhost:8000/api/products/" + id, this.upd_product)
+    // selectImage() {
+    //   this.$refs.fileInput.click();
+    // },
+    // pickFile() {
+    //   let input = this.$refs.fileInput;
+    //   let file = input.files;
+    //   if (file && file[0]) {
+    //     let reader = new FileReader();
+    //     reader.onload = (e) => {
+    //       this.previewImage = e.target.result;
+    //       this.upd_product.image = this.previewImage;
+    //     };
+    //     reader.readAsDataURL(file[0]);
+    //     this.$emit("input", file[0]);
+    //   }
+    // },
+    // //get user dtails to show inside edit form
+    // get_product(id, name, price, is_available, image, category_id) {
+    //   (this.editproduct = true), (this.viewproducts = false);
+    //   this.upd_product.id = id;
+    //   this.upd_product.name = name;
+    //   this.upd_product.price = price;
+    //   this.upd_product.is_available = is_available;
+    //   this.upd_product.category_id = category_id;
+    //   this.upd_product.image = image;
+    //   console.log(this.upd_product);
+    // },
+    // //update product
+    // update(id) {
+    //   (this.editproduct = true), (this.viewproducts = false);
+    //   console.log(id);
+    //   axios
+    //     .put("http://localhost:8000/api/products/" + id, this.upd_product)
         
-        .then((resp) => {
-          console.log(resp);
-          console.log("sha8alaaa");
-          this.loadTableData();
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log("bazeeeeet");
-        });
-    },
-       loadCategoryData() {
-     axios
-        .get("http://localhost:8000/api/categories")
-        .then(({ data }) => (this.tabledata = data))
-        .catch(() => {
-          console.log("Error...");
-        });
-    },
+    //     .then((resp) => {
+    //       console.log(resp);
+    //       console.log("sha8alaaa");
+    //       this.loadTableData();
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //       console.log("bazeeeeet");
+    //     });
+    // },
+    //    loadCategoryData() {
+    //  axios
+    //     .get("http://localhost:8000/api/categories")
+    //     .then(({ data }) => (this.tabledata = data))
+    //     .catch(() => {
+    //       console.log("Error...");
+    //     });
+    // },
 
 
     /////end of ediiiiiiiiit//////////////////////
