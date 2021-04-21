@@ -28,6 +28,16 @@ class HomeController extends Controller
         return $data;
     }
 
+    function admin_index()
+    {
+        $products = Product::where("is_available", "=", true)->get();
+        $users = User::select("id", "name")->where("is_admin", "=", false)->get();
+        $data["products"] = $products;
+        $data["users"] = $users;
+
+        return $data;
+    }
+
     function get_rooms()
     {
         $rooms = Room::all();
