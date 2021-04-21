@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 
 class admincontroller extends Controller
 {
@@ -82,26 +83,22 @@ class admincontroller extends Controller
         //     'avatar' => 'storage/avatars/default.png',
         // ]);
 
-        $user = new User();
-        $user->name = $req->name;
-        $user->email = $req->email;
+        // $user = new User();
+        // $user->name = $req->name;
+        // $user->email = $req->email;
 
-        $user->password = $req->password;
-        // $user->room_id=$req->room_id;
-        $user->avatar = 'storage/avatars/default.png';
+        // $user->password = $req->password;
+        // // $user->room_id=$req->room_id;
+        // $user->avatar = $req->avatar;
+        $input=$req->all();
 
-        // if ($req->file('avatar')) {
-
-        //     $avatar = $req->file('avatar')->getClientOriginalName();
-        //     $avatar_path =  $user->id . '/' . $avatar;
-
-        //     //save the avatar
-        //     $req->file('avatar')->storeAs('avatars', $avatar_path, '');
-
-        //     // update the path
-        //     $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
-        // }
-        $user->save();
+        if ($image = $req->file('avatar')) {
+            $destinationPath = 'avatars/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['avatar'] = "$profileImage";
+        }
+        User::create($input);
         return response()->json('user created!');
         // return $user;
 

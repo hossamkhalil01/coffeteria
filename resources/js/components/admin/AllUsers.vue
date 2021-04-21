@@ -28,7 +28,7 @@
           </td>
           <td>
             <img
-              :src="`${user.avatar}`"
+              :src="`../${user.avatar}`"
               class="profile-user-img img-fluid img-circle"
               style="height: 40px; width: 40px"
             />
