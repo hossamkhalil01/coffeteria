@@ -36,15 +36,13 @@
                     </td>
                     <td v-if="item.is_available == 1">Avaiblile</td>
                     <td v-else>Not Available😢</td>
+                   <td>
+                                         <!-- <router-link  :to="{ name: 'AdminEditProduct' }"  class="nav-item nav-link">
+                                        edit
+                                              </router-link> -->
+                                    <router-link :to="{name: 'AdminEditProduct', params: { id: item.id }}" class="btn btn-success">Edit</router-link>
+                                         
                     <!-- <td>
-                                            <a
-                                                href="#"
-                                                @click="editPhotoModal(item)"
-                                            >
-                                                Edit
-                                            </a>
-                                            </td> -->
-                    <td>
                       <a
                         href="#"
                         class="btn btn-warning"
@@ -59,7 +57,7 @@
                           )
                         "
                         >Edit</a
-                      >
+                      > -->
                       <!-- <router-link to="/editProduct" class="nav-item nav-link"> edit </router-link> -->
                       <!-- <router-link :to="{ name: 'editProduct', params: {id: item.id } }">edit</router-link> -->
                       <!-- <router-link :to="'/editProduct/'+ item.id">edit </router-link>  -->
@@ -204,8 +202,8 @@
                 :style="{ 'background-image': `url(${previewImage})` }"
                 @click="selectImage"
             ></div>
-
-            <input name="image" ref="fileInput" type="file" @input="pickFile" />
+        
+            <input name="image" ref="fileInput"  type="file" @input="pickFile" />
         </div>  
 
         <button type="submit" class="btn btn-primary">update</button>
@@ -226,6 +224,7 @@ export default {
       tabledata: {},
       pagination_links: {},
       form: {
+        id: null,
         name: "",
         price: "",
         is_available: "",
@@ -293,7 +292,7 @@ export default {
       this.upd_product.price = price;
       this.upd_product.is_available = is_available;
       this.upd_product.category_id = category_id;
-      // this.upd_product.image = image;
+      this.upd_product.image = image;
       console.log(this.upd_product);
     },
     //update product

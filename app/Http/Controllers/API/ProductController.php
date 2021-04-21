@@ -102,23 +102,14 @@ class ProductController extends Controller
             return ['message' => 'failed'];
         }
     }
+  
+    public function show($id)
+    {
+        $product = Product::find($id);
+        return response()->json($product);
+    }
 
 
-
-    // public function update($id, Request $request,Product $product)
-    // {
-       
-    //     if ($id) {
-    //         try {
-    //             $product->update($request->all());
-    //             return response()->json(["data" => "succeeded"]);
-    //         } catch (\Illuminate\Database\QueryException $ex) {
-    //             return response()->json(["data" => "failed"]);
-    //         }
-    //     } else {
-    //         return response()->json(["data" => "failed"]);
-    //     }
-    // }
 
     public function addCategory(Request $request)
     {
