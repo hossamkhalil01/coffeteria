@@ -183,10 +183,25 @@ export default {
       return formatter.format(price);
     },
     paginate(new_url) {
-      axios.get(new_url).then((response) => {
-        this.orders = response.data.data;
-        this.pagination_links = response.data.meta.links;
-      });
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
+      if (this.from && this.to) {
+        axios
+          .get(new_url, {
+            params: {
+              from: this.from,
+              to: this.to,
+            },
+          })
+          .then((response) => {
+            this.orders = response.data.data;
+            this.pagination_links = response.data.meta.links;
+          });
+      } else {
+        axios.get(new_url).then((response) => {
+          this.orders = response.data.data;
+          this.pagination_links = response.data.meta.links;
+        });
+      }
       this.ordered_products = [];
     },
     getAllOrders() {

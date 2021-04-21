@@ -1,4 +1,25 @@
-<template>users drop down</template>
+<template>
+  <div class="row justify-content-center mb-3">
+    <h3 class="fw-bold text-center mt-3">Users</h3>
+    <div class="col-sm-8">
+      <select
+        class="form-select"
+        id="users"
+        required
+        v-model="user_id"
+        @change="userChoosen"
+      >
+        <option selected disabled>Select A User</option>
+        <option v-for="user in users" :key="user.id" :value="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+      <div class="alert alert-danger p-1 mt-2" v-if="user_error">
+        Please select a user.
+      </div>
+    </div>
+  </div>
+</template>
 <script>
 import * as user from "@helpers/currentUser.js";
 import { apiBase, imgBase } from "@helpers/urls.js";
@@ -13,11 +34,21 @@ export default {
       imgBase: imgBase,
       user: user,
       csrf: csrf,
+      user_id: null,
     };
   },
-  props: {},
+  props: {
+    users: Array,
+    user_error: Boolean,
+  },
   created() {},
-  methods: {},
+  methods: {
+    userChoosen() {
+      console.log("hello");
+      console.log(this.user_id);
+      this.$emit("userChoosen", this.user_id);
+    },
+  },
 };
 </script>
 <style scoped>
