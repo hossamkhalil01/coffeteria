@@ -79,7 +79,7 @@ class ProductController extends Controller
             $product  = Product::findOrfail($id);
             $product->name = $request->get('name');
             $product->price = $request->get('price');
-            $product->is_available = $request->get('is_available');
+            // $product->is_available = $request->get('is_available');
             // $product->category_id = $request->get('category_id');
          
            
