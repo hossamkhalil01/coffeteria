@@ -80,8 +80,20 @@ class ProductController extends Controller
             $product->name = $request->get('name');
             $product->price = $request->get('price');
             $product->is_available = $request->get('is_available');
-            // $product->category_id = $request->get('category_id');
-         
+            $product->category_id = $request->get('category_id');
+            
+            $name = "";
+    
+    
+            if ($request->image) {
+    
+                $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+                \Image::make($request->image)->save('storage/img/' . $name);
+    
+                $request->merge(['image' => $name]);
+            }
+            $product->image= $request->get('image');
+
            
             // console.log($product);
             $product->save();

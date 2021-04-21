@@ -177,16 +177,27 @@
           <label for="checkbox">{{ checked }}</label>
         </div>
 
-        <!-- <div class="form-group">
+    <div class="form-group">
             <label for="Category">category</label>
             <select name="category_id" v-model="upd_product.category_id">
                 <option v-for="i in tabledata.data" :value="i.id" :key="i.id">
                     {{ i.label }}
                 </option>
             </select>
-        </div>  -->
-        <!--
-        <div class="form-group">
+        </div> 
+
+       
+    <!-- <div class="form-group">
+      <label for="Category">category</label>
+      <select name="category_id" v-model="upd_product.category_id">
+        <option v-for="i in tabledata" :value="i.id" :key="i.id">
+          {{ i.label }}
+                 </option>
+            </select>
+        </div>   -->
+
+    
+       <div class="form-group">
             <label for="Image">Product Picture</label>
             <div
                 class="imagePreviewWrapper"
@@ -195,7 +206,7 @@
             ></div>
 
             <input name="image" ref="fileInput" type="file" @input="pickFile" />
-        </div> -->
+        </div>  
 
         <button type="submit" class="btn btn-primary">update</button>
         <button type="Reset" class="btn btn-primary">Reset</button>
@@ -302,7 +313,15 @@ export default {
           console.log("bazeeeeet");
         });
     },
-  
+       loadCategoryData() {
+     axios
+        .get("http://localhost:8000/api/categories")
+        .then(({ data }) => (this.tabledata = data))
+        .catch(() => {
+          console.log("Error...");
+        });
+    },
+
 
     /////end of ediiiiiiiiit//////////////////////
     //Delete photo
@@ -347,5 +366,6 @@ export default {
     //LoadTableData
     this.loadTableData();
   },
+  
 };
 </script>
