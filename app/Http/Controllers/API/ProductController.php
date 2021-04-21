@@ -80,7 +80,7 @@ class ProductController extends Controller
             $product->name = $request->get('name');
             $product->price = $request->get('price');
             // $product->is_available = $request->get('is_available');
-            // $product->category_id = $request->get('category_id');
+            $product->category_id = $request->get('category_id');
          
            
             // console.log($product);
