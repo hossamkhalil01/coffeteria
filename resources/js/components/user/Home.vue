@@ -3,22 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <!-- start of latest order section -->
-        <div class="row justify-content-center">
-          <h3 class="fw-bold text-center mt-3">Latest Order</h3>
-          <div
-            class="col-lg-2 mt-3"
-            v-for="order_product in latest_order"
-            :key="order_product.id"
-          >
-            <img
-              :src="imgBase + order_product.image"
-              :alt="order_product.name"
-            />
-            <p class="product-name text-center">
-              {{ order_product.name }}
-            </p>
-          </div>
-        </div>
+        <latestOrderComponent v-bind:latest_order="latest_order" />
         <!-- end latest order section -->
         <div class="row justify-content-center">
           <hr class="text-center w-50" />
@@ -59,6 +44,7 @@ import * as user from "@helpers/currentUser.js";
 import { apiBase, imgBase } from "@helpers/urls.js";
 import axios from "axios";
 import newordercomponent from "@components/user/newOrder";
+import latestOrderComponent from "@components/user/LatestOrder";
 import { csrf } from "@services/authenticationService.js";
 
 export default {
@@ -76,6 +62,7 @@ export default {
   },
   components: {
     newordercomponent,
+    latestOrderComponent,
   },
   created() {
     axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
