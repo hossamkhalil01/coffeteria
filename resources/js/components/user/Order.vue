@@ -148,17 +148,15 @@
 </template>
 
 <script>
-import { csrf } from "@services/authenticationService.js";
+import { apiBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
 import axios from "axios";
 
 export default {
-  mounted() {
-    console.log("Order component mounted.");
-  },
+  mounted() {},
   data() {
     return {
-      csrf: csrf,
+      apiBase: apiBase,
       user: user,
       orders: [],
       pagination_links: {},
@@ -188,17 +186,15 @@ export default {
       });
     },
     getAllOrders() {
-      axios
-        .get("http://127.0.0.1:8000/api/" + this.user.id + "/orders")
-        .then((response) => {
-          this.orders = response.data.data;
-          this.pagination_links = response.data.meta.links;
-        });
+      axios.get(apiBase + this.user.id + "/orders").then((response) => {
+        this.orders = response.data.data;
+        this.pagination_links = response.data.meta.links;
+      });
     },
     getOrdersWithinRange() {
       if (this.from && this.to) {
         axios
-          .get("http://127.0.0.1:8000/api/" + this.user.id + "/orders/range", {
+          .get(apiBase + this.user.id + "/orders/range", {
             params: {
               from: this.from,
               to: this.to,
@@ -218,19 +214,16 @@ export default {
     },
     cancelOrder(order) {
       axios
-        .put(
-          "http://127.0.0.1:8000/api/" + this.user.id + "/orders/" + order.id,
-          { status: "Cancelled" }
-        )
+        .put(apiBase + this.user.id + "/orders/" + order.id, {
+          status: "Cancelled",
+        })
         .then((response) => {
           this.getAllOrders();
         });
     },
     getOrderProducts(order) {
       axios
-        .get(
-          "http://127.0.0.1:8000/api/" + this.user.id + "/orders/" + order.id
-        )
+        .get(apiBase + this.user.id + "/orders/" + order.id)
         .then((response) => {
           this.clickedOrder = order;
           this.ordered_products = response.data.data.products;
