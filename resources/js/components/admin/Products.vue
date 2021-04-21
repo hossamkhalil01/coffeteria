@@ -76,11 +76,6 @@
                 </tbody>
               </table>
 
-              <!-- <pagination
-                                :data="tabledata"
-                                @pagination-change-page="getResults"
-                            ></pagination> -->
-
               <!-- start of pagination links -->
               <nav
                 v-if="pagination_links.length > 0"
@@ -189,7 +184,7 @@
                     {{ i.label }}
                 </option>
             </select>
-        </div> -->
+        </div>  -->
         <!--
         <div class="form-group">
             <label for="Image">Product Picture</label>
@@ -248,13 +243,6 @@ export default {
       });
     },
 
-    //Pagination
-    // getResults(page = 1) {
-    //     axios.get("api/products?page=" + page).then((response) => {
-    //         this.tabledata = response.data;
-    //     });
-    // },
-
     paginate(new_url) {
       axios(new_url).then((response) => {
         this.tabledata = response.data;
@@ -292,19 +280,21 @@ export default {
       this.upd_product.id = id;
       this.upd_product.name = name;
       this.upd_product.price = price;
-      // this.upd_product.is_available = is_available;
-      // this.upd_product.category_id = category_id;
+      this.upd_product.is_available = is_available;
+      this.upd_product.category_id = category_id;
       // this.upd_product.image = image;
-      // console.log(this.upd_product);
+      console.log(this.upd_product);
     },
-    //update user
+    //update product
     update(id) {
       (this.editproduct = true), (this.viewproducts = false);
       console.log(id);
       axios
-        .put("api/products/" + id, this.upd_product)
+        .put("http://localhost:8000/api/products/" + id, this.upd_product)
+        
         .then((resp) => {
           console.log(resp);
+          console.log("sha8alaaa");
           this.loadTableData();
         })
         .catch((e) => {
@@ -312,6 +302,7 @@ export default {
           console.log("bazeeeeet");
         });
     },
+  
 
     /////end of ediiiiiiiiit//////////////////////
     //Delete photo

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 // use App\Product;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\User;
 
 
 class ProductController extends Controller
@@ -73,12 +74,15 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //update user data
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('put')) {
 
             $product  = Product::findOrfail($id);
             $product->name = $request->get('name');
             $product->price = $request->get('price');
-            // $product->price = $request->get('price');
+            $product->is_available = $request->get('is_available');
+            // $product->category_id = $request->get('category_id');
+         
+           
             // console.log($product);
             $product->save();
             return $product;
@@ -86,6 +90,24 @@ class ProductController extends Controller
             return ['message' => 'failed'];
         }
     }
+
+
+
+    // public function update($id, Request $request,Product $product)
+    // {
+       
+    //     if ($id) {
+    //         try {
+    //             $product->update($request->all());
+    //             return response()->json(["data" => "succeeded"]);
+    //         } catch (\Illuminate\Database\QueryException $ex) {
+    //             return response()->json(["data" => "failed"]);
+    //         }
+    //     } else {
+    //         return response()->json(["data" => "failed"]);
+    //     }
+    // }
+
     public function addCategory(Request $request)
     {
         Category::create($request->all());

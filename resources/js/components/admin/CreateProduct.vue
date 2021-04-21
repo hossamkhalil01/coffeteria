@@ -42,15 +42,6 @@
 
     <div class="form-group">
       <label for="Category">category</label>
-      <!-- <select
-                class="form-select"
-                aria-label="Default select example"
-                name="category_id"
-                v-model="form.category_id"
-            >
-                <option v-for="option in tabledata" :value="option.id" :key="option.id"
-          > {{ option.label}}</option>
-            </select> -->
       <select name="category_id" v-model="form.category_id">
         <option v-for="i in tabledata" :value="i.id" :key="i.id">
           {{ i.label }}
@@ -123,10 +114,7 @@ export default {
         this.$emit("input", file[0]);
       }
     },
-    //  getPhoto(){
-    //            let image = (this.form.image.length > 100) ? this.form.image : "img/profile/"+ this.form.image;
-    //             return image;
-    //         },
+   
 
     create_product() {
       console.log("f", this.form);
@@ -147,28 +135,6 @@ export default {
     },
   },
 
-  //get user dtails to show inside edit form
-  get_user(id, name, email) {
-    (this.edituser = true), (this.adduser = false);
-    console.log(id, name, email);
-    this.upd_user.id = id;
-    this.upd_user.name = name;
-    this.upd_user.email = email;
-  },
-  //update user
-  update(id) {
-    console.log(id);
-    axios
-      .post("http://localhost:8000/user/update/" + id, this.upd_user)
-      .then((resp) => {
-        console.log(resp);
-        (this.edituser = false), (this.adduser = true);
-        this.loadlist();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  },
   created() {
     //LoadTableData
     this.loadCategoryData();
