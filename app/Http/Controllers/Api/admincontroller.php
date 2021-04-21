@@ -11,33 +11,35 @@ use Illuminate\Support\Facades\Hash;
 class admincontroller extends Controller
 {
     //
-     //
-     public function GetAllUsers(){
-        $users=User::where('is_admin','=',0)->get();
+    //
+    public function GetAllUsers()
+    {
+        $users = User::where('is_admin', '=', 0)->get();
         return response()->json($users);
-
-
     }
 
-    public function destroy($id){
-        $user=User::find($id);
+    public function destroy($id)
+    {
+        $user = User::find($id);
         $user->delete();
         return response()->json('user deleted');
     }
 
-    public function showuser($id){
-        $user=User::find($id);
+    public function showuser($id)
+    {
+        $user = User::find($id);
         return response()->json($user);
     }
 
-    public function update($id,Request $req){
-        $url ="";
-        $user=User::find($id);
-        $user->name=$req->name;
-        $user->email=$req->email;
-        $user->room_id=$req->room_id;
+    public function update($id, Request $req)
+    {
+        $url = "";
+        $user = User::find($id);
+        $user->name = $req->name;
+        $user->email = $req->email;
+        $user->room_id = $req->room_id;
         // $user->avatar=$req->file('image');
-        
+
 
         // $fileUpload = new FileUpload;
         // if ($req->hasFile('avatar')) {
@@ -51,16 +53,16 @@ class admincontroller extends Controller
         //     // update the path
         //     $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
         // }
-    
-    //     if($req->image)
-    //    {
-    //     $file = $request->file('image');
-    //     // $name = Str::random(10);
-    //     $url = \Storage::putFileAs('avatars', $file, $name.'.'.$file->extension());
-    //     // $name = time().'.' . explode('/', explode(':', substr($request->avatar, 0, strpos($request->avatar, ';')))[1])[1];
-    //     // \Image::make($req->image)->save(public_path('avatar/').$name);
-    //     // $req->merge(['avatar' => $name]);
-    //     }
+
+        //     if($req->image)
+        //    {
+        //     $file = $request->file('image');
+        //     // $name = Str::random(10);
+        //     $url = \Storage::putFileAs('avatars', $file, $name.'.'.$file->extension());
+        //     // $name = time().'.' . explode('/', explode(':', substr($request->avatar, 0, strpos($request->avatar, ';')))[1])[1];
+        //     // \Image::make($req->image)->save(public_path('avatar/').$name);
+        //     // $req->merge(['avatar' => $name]);
+        //     }
         // $user->avatar=$url;
         $user->save();
 
@@ -70,7 +72,8 @@ class admincontroller extends Controller
         return response()->json('user updated');
     }
 
-    public function store(Request $req){
+    public function store(Request $req)
+    {
         // $user = User::create([
         //     'name' => $req->input('name'),
         //     'email' => $req->input('email'),
@@ -79,13 +82,13 @@ class admincontroller extends Controller
         //     'avatar' => 'storage/avatars/default.png',
         // ]);
 
-        $user=new User();
-        $user->name=$req->name;
-        $user->email=$req->email;
+        $user = new User();
+        $user->name = $req->name;
+        $user->email = $req->email;
 
-        $user->password=$req->password;
+        $user->password = $req->password;
         // $user->room_id=$req->room_id;
-        $user->avatar='storage/avatars/default.png';
+        $user->avatar = 'storage/avatars/default.png';
 
         // if ($req->file('avatar')) {
 
@@ -101,6 +104,6 @@ class admincontroller extends Controller
         $user->save();
         return response()->json('user created!');
         // return $user;
-    
+
     }
 }

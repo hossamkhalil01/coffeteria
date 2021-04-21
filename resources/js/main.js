@@ -1,17 +1,18 @@
-export const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-export const user = JSON.parse(document.querySelector('meta[name="user"]').getAttribute("content"));
+import "bootstrap";
+import "./bootstrap";
+
 // Require Vue
-// import axios from 'axios';
-// import VueAxios from 'v-axios';
-import { createApp } from 'vue';
-import App from './components/App.vue';
-// import adminallusers from './components/admin/AllUsers.vue';
-import router from './router';
-// const routes=[
-//     {path:'/',component:adminallusers}
-// ]
-// createApp(adminallusers).use(router, axios, VueAxios).mount("#app");
-// import App from './components/App.vue';
+import { createApp } from "vue";
+import App from "@components/App.vue";
+import router from "@src/router.js";
 
+// import Pagination from 'v-pagination-3';
 
-createApp(App).use(router).mount("#app");
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
+const app = createApp(App).use(router);
+
+// app.component('pagination', Pagination);
+app.use(VueSweetalert2);
+app.mount("#app");

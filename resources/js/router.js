@@ -1,46 +1,118 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import NotFound from './components/404.vue';
-import adminUsers from './components/admin/AllUsers.vue';
-import createuser from './components/admin/createuser.vue';
-import adminEditUser from './components/admin/editUser.vue';
-import Home from './components/Home.vue';
-import Order from './components/Order.vue';
+import { createWebHistory, createRouter } from "vue-router";
+
+import NotFound from "@components/404.vue";
+import { role } from "@helpers/currentUser.js";
+
+const loadComponent = (view, component) => {
+    return () => import(`@components/${view}/${component}`);
+};
+
+const loadPage = (view, page) => {
+    return () => import(`@pages/${view}/${page}`);
+};
+
 const routes = [
     {
-        path: '/',
-        name: 'Home',
-        component: Home,
+        path: "/",
+        name: "UserView",
+        component: loadPage("user", "UserView"),
+        redirect: { name: "UserHome" },
+        children: [
+            {
+                path: "/home",
+                name: "UserHome",
+                component: loadComponent("user", "Home"),
+            },
+            {
+                path: "/order",
+                name: "UserOrder",
+                component: loadComponent("user", "Order"),
+            },
+            {
+                path: "/neworder",
+                name: "newOrder",
+                component: loadComponent("user", "newOrder"),
+            },
+        ],
     },
     {
-        path: '/order',
-        name: 'Order',
-        component: Order,
+        path: "/admin",
+        name: "AdminView",
+        component: loadPage("admin", "AdminView"),
+        redirect: { name: "AdminHome" },
+        beforeEnter: (to, from, next) => {
+            // check if admin
+            if (role == "admin") {
+                next();
+            } else {
+                next({
+                    name: "UserHome",
+                });
+            }
+        },
+        children: [
+            {
+                path: "/admin/home",
+                component: loadComponent("admin", "Home"),
+                name: "AdminHome",
+            },
+            {
+                path: "/admin/checks",
+                component: loadComponent("admin", "Checks"),
+                name: "AdminChecks",
+            },
+            {
+                path: "/admin/order",
+                component: loadComponent("admin", "Order"),
+                name: "AdminOrder",
+            },
+            {
+                path: "/admin/users",
+                component: loadComponent("admin", "Users"),
+                name: "AdminUsers",
+            },
+            {
+                path: "admin/products",
+                name: "AdminProducts",
+                component: loadComponent("admin", "Products"),
+            },
+            {
+                path: "admin/product/create",
+                name: "AdminCreateProduct",
+                component: loadComponent("admin", "CreateProduct"),
+            },
+            {
+                path: "admin/category/add",
+                name: "AdminAddCategory",
+                component: loadComponent("admin", "AddCategory"),
+            },
+            {
+                path: "/admin/users",
+                name: "AdminUsers",
+                component: loadComponent("admin", "AllUsers"),
+            },
+            {
+                path: "/admin/edituser/:id",
+                name: "AdminEditUser",
+                component: loadComponent("admin", "EditUser"),
+            },
+            {
+                path: "/admin/createuser",
+                name: "AdminCreateUser",
+                component: loadComponent("admin", "CreateUser"),
+            },
+        ],
     },
     {
-        path: '/admin/getusers',
-        name: 'adminUsers',
-        component: adminUsers,
-    },
-    { 
-        path: '/admin/edituser/:id',
-        name: 'adminEditUser',
-        component: adminEditUser
-    },
-    { 
-        path: '/admin/createuser',
-        name: 'createuser',
-        component: createuser
-    },
-    {
-        path: '/404',
-        name: 'NotFound',
+        path: "/404",
+        name: "NotFound",
         component: NotFound,
     },
-    
+
     {
         path: "/:catchAll(.*)",
-        redirect: '/404',
-    }
+        redirect: { name: "NotFound" },
+    },
 ];
 
 const router = createRouter({

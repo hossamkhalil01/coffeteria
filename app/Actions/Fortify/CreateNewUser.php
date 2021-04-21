@@ -52,7 +52,7 @@ class CreateNewUser implements CreatesNewUsers
             request()->file('avatar')->storeAs('avatars', $avatar_path, '');
 
             // update the path
-            $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
+            $user->update(['avatar' => 'storage/images/avatars/' . $avatar_path]);
         }
         return $user;
     }
