@@ -79,26 +79,29 @@ class admincontroller extends Controller
         //     'name' => $req->input('name'),
         //     'email' => $req->input('email'),
         //     'password' => Hash::make($req->input('password')),
+            
         //     'room_id' => $req->input('room_id'),
-        //     'avatar' => 'storage/avatars/default.png',
+        //     // 'avatar' => 'storage/avatars/default.png',
         // ]);
 
-        // $user = new User();
-        // $user->name = $req->name;
-        // $user->email = $req->email;
+        $user = new User();
+        $user->name = $req->name;
+        $user->email = $req->email;
 
-        // $user->password = $req->password;
-        // // $user->room_id=$req->room_id;
+        $user->password = Hash::make($req->password);
+        $user->room_id=$req->room_id;
         // $user->avatar = $req->avatar;
-        $input=$req->all();
+        // $input=$req->all();
 
         if ($image = $req->file('avatar')) {
             $destinationPath = 'avatars/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
-            $input['avatar'] = "$profileImage";
+            $user->avatar = "$profileImage";
+            $user->save();
         }
-        User::create($input);
+        // User::create($input);
+        $user->save();
         return response()->json('user created!');
         // return $user;
 

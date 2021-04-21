@@ -11,11 +11,15 @@
                 <lable>Email</lable>
                 <input type="email" class="form-control" name="email" v-model="user.email" />
             </div>
+            <div class="form-group">
+                <lable>password</lable>
+                <input type="password" class="form-control" name="email" v-model="user.password" />
+            </div>
 
             <div class="form-group">
                 <lable>Room number</lable>
-                <select name="room_id" class="form-control">
-                    <option v-for="room in rooms" :value="room.id">
+                <select name="room_id" class="form-control" v-model="user.room_id">
+                    <option v-for="room in rooms" :value="room.id" >
                         {{ room["number"] }}
                     </option>
                 </select>
@@ -50,8 +54,9 @@ export default {
             user: {
                 name: "",
                 email: "",
-                password: "default@admin",
-                image: ""
+                password: "",
+                image: null,
+                room_id:"",
             },
             rooms: [],
         };
@@ -70,6 +75,7 @@ export default {
                 formData.append('name', this.user.name)
                 formData.append('email', this.user.email)
                 formData.append('password', this.user.password)
+                formData.append('room_id', this.user.room_id)
             axios.post(apiBase + "admin/create", formData, config).then((res) => {
                 this.$router.push({
                     name: "AdminUsers",
