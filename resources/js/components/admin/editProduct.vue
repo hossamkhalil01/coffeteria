@@ -131,12 +131,12 @@ export default {
       (this.editproduct = true), (this.viewproducts = false);
       console.log(id);
       axios
-        .put("http://localhost:8000/api/products/" + id, this.upd_product)
+        .put("http://localhost:8000/api/products/" + id, this.product)
         
         .then((resp) => {
           console.log(resp);
           console.log("sha8alaaa");
-          this.loadTableData();
+          // this.loadTableData();
         })
         .catch((e) => {
           console.log(e);
