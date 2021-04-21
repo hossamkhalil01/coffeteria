@@ -11,7 +11,7 @@
             :key="order_product.id"
           >
             <img
-              :src="'http://localhost:8000/storage/img/' + order_product.image"
+              :src="imgBase + order_product.image"
               :alt="order_product.name"
             />
             <p class="product-name text-center">

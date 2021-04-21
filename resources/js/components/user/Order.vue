@@ -120,7 +120,7 @@
       >
         <a href="">
           <img
-            :src="'http://localhost:8000/storage/img/' + ordered_product.image"
+            :src="imgBase + ordered_product.image"
             :alt="ordered_product.name"
           />
           <span class="badge rounded-pill bg-info text-dark">{{
