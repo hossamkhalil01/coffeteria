@@ -128,10 +128,18 @@ export default {
           this.form.is_available = "";
           this.form.category_id = "";
           this.form.image = "";
+          if(resp.status === 200) {
+         
+               this.$router.push({ name: "AdminProducts" });
+            }
+         
         })
+        
         .catch((e) => {
           console.log(e);
         });
+       
+         
     },
   },
 

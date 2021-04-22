@@ -38,6 +38,10 @@ export default {
           console.log(resp);
           //reset form
           this.form.label = "";
+            if(resp.status === 200) {
+         
+               this.$router.push({ name: "AdminCreateProduct" });
+            }
         })
         .catch((e) => {
           console.log(e);

@@ -138,6 +138,10 @@ export default {
         .then((resp) => {
           console.log(resp);
           console.log("sha8alaaa");
+            if(resp.status === 200) {
+         
+               this.$router.push({ name: "AdminProducts" });
+            }
           // this.loadTableData();
         })
         .catch((e) => {
@@ -152,6 +156,7 @@ export default {
         .catch(() => {
           console.log("Error...");
         });
+        
     },
   } , 
    created() {
@@ -160,7 +165,7 @@ export default {
                 .get(`http://localhost:8000/api/products/${this.$route.params.id}`)
                 .then((res) => {
                     this.product = res.data;
-                    // $router.push({name:'AdminCreateProduct'});
+                  
                 });
         },
 
