@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\User;
 
 
+
 class ProductController extends Controller
 {
     public function index()
@@ -44,7 +45,26 @@ class ProductController extends Controller
         // ]);
 
         // var_dump($request->image);
+///////////////////////////////////////
+$request->validate(
+    [
+        'name' => 'required',
+        'price' => 'required',
+        'image' => 'required',
+        'category_id' => 'required',
+    ]
+      
+  );
 
+
+
+
+
+
+
+
+
+/////////////////////////////
 
         if ($request->image) {
 
@@ -112,7 +132,7 @@ class ProductController extends Controller
 
 
     public function addCategory(Request $request)
-    {
+    {     
         Category::create($request->all());
 
         return ['message' => 'Success'];

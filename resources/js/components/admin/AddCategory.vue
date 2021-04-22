@@ -8,6 +8,7 @@
         name="label"
         class="form-control"
         id="Name"
+        required
         aria-describedby="emailHelp"
         placeholder="Enter Categoryname"
         v-model="form.label"

@@ -21,6 +21,7 @@
             type="number"
             name="price"
             class="form-control"
+            min="1"
             id="Price"
             aria-describedby="emailHelp"
             placeholder="Enter Product price"
@@ -54,6 +55,8 @@
        <div class="form-group">
             <label for="Image">Product Picture</label>
             <!-- {{product.image}} -->
+                   <!-- <input type="file" name="image" ref="fileInput" id="img" style="display:none;" @input="pickFile"  />
+            <label for="img">{{product.image}}</label> -->
             <div
                 class="imagePreviewWrapper"
               
@@ -62,7 +65,10 @@
                 @click="selectImage"
             ></div>
       
-            <input name="image" ref="fileInput"  type="file" @input="pickFile" />
+            <!-- <input name="image" ref="fileInput"  type="file" @input="pickFile" /> -->
+            <input type="file" id="files" class="hidden" name="image" ref="fileInput"   @input="pickFile"/>
+             <label for="files">{{product.image}} </label>
+            
         </div>  
 
         <button type="submit" class="btn btn-primary">update</button>
@@ -77,6 +83,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+     
       previewImage: null,
 
       //edit product
@@ -105,6 +112,7 @@ export default {
       this.$refs.fileInput.click();
     },
     pickFile() {
+      this.hide =true;
       let input = this.$refs.fileInput;
       let file = input.files;
       if (file && file[0]) {
@@ -181,4 +189,10 @@ export default {
   background-size: cover;
   background-position: center center;
 }
+input[type='file'] {
+  color: rgba(0, 0, 0, 0)
+}
+
 </style>
+
+              

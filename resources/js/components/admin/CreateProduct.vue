@@ -3,8 +3,8 @@
       <div class="col-md-12" v-if="adduser"> -->
 
   <h2>Add Product</h2>
-  <form v-on:submit.prevent="create_product">
-    <div class="form-group">
+  <form v-on:submit.prevent="create_product" >
+    <div :class="['form-group', allerros.name ? 'has-error' : '']">
       <label for="Name">Product</label>
       <input
         type="text"
@@ -15,13 +15,18 @@
         placeholder="Enter Productname"
         v-model="form.name"
       />
+     
+      
+       
     </div>
-    <div class="form-group">
+    
+    <div :class="['form-group', allerros.name ? 'has-error' : '']">
       <label for="Price">Product Price</label>
       <input
         type="number"
         name="price"
         class="form-control"
+        min="1"
         id="Price"
         aria-describedby="emailHelp"
         placeholder="Enter Product price"
@@ -40,7 +45,7 @@
       <label for="checkbox">{{ checked }}</label>
     </div>
 
-    <div class="form-group">
+    <div :class="['form-group', allerros.category_id ? 'has-error' : '']">
       <label for="Category">category</label>
       <select name="category_id" v-model="form.category_id">
         <option v-for="i in tabledata" :value="i.id" :key="i.id">
@@ -53,7 +58,7 @@
       </router-link>
     </div>
 
-    <div class="form-group">
+    <div :class="['form-group', allerros.image ? 'has-error' : '']">
       <label for="Image">Product Picture</label>
       <div
         class="imagePreviewWrapper"
@@ -63,9 +68,14 @@
 
       <input name="image" ref="fileInput" type="file" @input="pickFile" />
     </div>
-
+   <span v-if="success" :class="['label label-success']">Record submitted successfully!</span>
     <button type="submit" class="btn btn-primary">Submit</button>
     <button type="Reset" class="btn btn-primary">Reset</button>
+   <br/>
+      <span v-if="allerros.name" :class="[' alert alert-danger']">@{{ allerros.name[0] }}</span>
+       <!-- <span v-if="allerros.price" :class="[' alert alert-danger']">@{{ allerros.price[0] }}</span>
+        <span v-if="allerros.image" :class="[' alert alert-danger']">@{{ allerros.image[0] }}</span>
+              <span v-if="allerros.category_id" :class="[' alert alert-danger']">@{{ allerros.category_id[0] }}</span> -->
     <!-- </div> -->
   </form>
   <!-- </div> -->
@@ -86,6 +96,8 @@ export default {
         image: "",
         category_id: "",
       },
+            allerros: [],
+            success : false,    
     };
   },
   methods: {
@@ -128,7 +140,11 @@ export default {
           this.form.is_available = "";
           this.form.category_id = "";
           this.form.image = "";
+           this.allerros = [];
+            this.success = true;
+          
           if(resp.status === 200) {
+              
          
                this.$router.push({ name: "AdminProducts" });
             }
@@ -137,9 +153,15 @@ export default {
         
         .catch((e) => {
           console.log(e);
+               
+                           this.onFailure(e.response.data);
         });
        
          
+    },
+     onFailure(errorData) {
+       this.allerros =errorData.errors;
+        this.success = false;
     },
   },
 
