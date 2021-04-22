@@ -74,8 +74,8 @@
    <br/>
       <span v-if="allerros.name" :class="[' alert alert-danger']">@{{ allerros.name[0] }}</span>
        <span v-if="allerros.price" :class="[' alert alert-danger']">@{{ allerros.price[0] }}</span> 
-        <!-- <span v-if="allerros.image" :class="[' alert alert-danger']">@{{ allerros.image[0] }}</span>
-              <span v-if="allerros.category_id" :class="[' alert alert-danger']">@{{ allerros.category_id[0] }}</span>  -->
+        <span v-if="allerros.image" :class="[' alert alert-danger']">@{{ allerros.image[0] }}</span> 
+              <!-- <span v-if="allerros.category_id" :class="[' alert alert-danger']">@{{ allerros.category_id[0] }}</span>   -->
     <!-- </div> -->
   </form>
   <!-- </div> -->
