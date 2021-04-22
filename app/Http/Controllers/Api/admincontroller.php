@@ -35,20 +35,41 @@ class admincontroller extends Controller
         return response()->json($user);
     }
 
-    public function update($id, Request $req)
+    public function update($id, Request $request)
     {
-        $url = "";
-        $user = User::find($id);
-        $user->name = $req->name;
-        $user->email = $req->email;
-        $user->room_id = $req->room_id;
-        // $user->avatar=$req->file('image');
-        if ($image = $req->file('avatar')) {
+
+        $input = $request->all();
+        if ($image = $request->file('avatar')) {
             $destinationPath = 'storage/avatars/';
-            $profileImage = 'storage/avatars/'.$req->file('avatar')->getClientOriginalName(); 
+            $profileImage = 'storage/avatars/'.$request->file('avatar')->getClientOriginalName(); 
             $image->move($destinationPath, $profileImage);
-            $user->avatar = "$profileImage";
+            $input['avatar'] = "$profileImage";
         }
+        $update = $product->update($input);   
+        // $update = $product->update([
+        //     'name' => $input['name'],
+        //     'price' => $input['price'],
+        //     'image' => $input['image'],
+        //     'category_id' => $input['category_id']
+        // ]);    
+        if ($update){
+            return response()->json(["succes"=>$input]);
+        }else{
+            return response()->json(["error"=>$input]);
+
+        }   
+        // $url = "";
+        // $user = User::find($id);
+        // $user->name = $req->name;
+        // $user->email = $req->email;
+        // $user->room_id = $req->room_id;
+        // // $user->avatar=$req->file('image');
+        // if ($image = $req->file('avatar')) {
+        //     $destinationPath = 'storage/avatars/';
+        //     $profileImage = 'storage/avatars/'.$req->file('avatar')->getClientOriginalName(); 
+        //     $image->move($destinationPath, $profileImage);
+        //     $user->avatar = "$profileImage";
+        // }
         
 
         //     if($req->image)
@@ -61,12 +82,12 @@ class admincontroller extends Controller
         //     // $req->merge(['avatar' => $name]);
         //     }
         // $user->avatar=$url;
-        $user->save();
+        // $user->save();
 
         // $req->file('image')->store("avatars");
         // $user->update($req->all());
 
-        return response()->json('user updated');
+        // return response()->json('user updated');
     }
 
     public function store(Request $request)
