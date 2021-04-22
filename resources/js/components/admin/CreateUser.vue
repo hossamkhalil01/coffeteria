@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group">
-                <label for="Image">Product Picture</label>
+                <label for="Image">Your Profile</label>
                 <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
    <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
             </div>
