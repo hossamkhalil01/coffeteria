@@ -54,12 +54,14 @@
        <div class="form-group">
             <label for="Image">Product Picture</label>
             <!-- {{product.image}} -->
-            <!-- <div
+            <div
                 class="imagePreviewWrapper"
-                :style="{ 'background-image': url(`http://localhost:8000/storage/img/${product.image}`)'}"
+              
+               :style="{ 'background-image': `url(${previewImage})` }"
+              
                 @click="selectImage"
-            ></div> -->
-        
+            ></div>
+      
             <input name="image" ref="fileInput"  type="file" @input="pickFile" />
         </div>  
 
@@ -158,8 +160,20 @@ export default {
                 .get(`http://localhost:8000/api/products/${this.$route.params.id}`)
                 .then((res) => {
                     this.product = res.data;
+                    // $router.push({name:'AdminCreateProduct'});
                 });
         },
 
 }
 </script>
+<style scoped lang="scss">
+.imagePreviewWrapper {
+  width: 250px;
+  height: 250px;
+  display: block;
+  cursor: pointer;
+  margin: 0 auto 30px;
+  background-size: cover;
+  background-position: center center;
+}
+</style>
