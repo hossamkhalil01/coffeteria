@@ -124,7 +124,13 @@ class ProductController extends Controller
 
 
     public function addCategory(Request $request)
-    {     
+    {      $request->validate(
+        [
+            'label' => 'required',
+           
+        ]
+          
+      );
         Category::create($request->all());
 
         return ['message' => 'Success'];

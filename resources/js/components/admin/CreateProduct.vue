@@ -208,7 +208,7 @@ export default {
     background-size: cover;
     background-position: center center;
 }
-
+//********************start of heading style**************************************
 * {
     margin: 0;
     padding: 0;
@@ -315,4 +315,6 @@ body {
         background-position: 250px 0, 250px 0, 100px 0;
     }
 }
+
+//********************* end of syling header******************************************
 </style>
