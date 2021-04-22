@@ -37,6 +37,7 @@ class admincontroller extends Controller
 
     public function update($id, Request $request)
     {
+        $user = User::find($id);
 
         $input = $request->all();
         if ($image = $request->file('avatar')) {
@@ -45,7 +46,7 @@ class admincontroller extends Controller
             $image->move($destinationPath, $profileImage);
             $input['avatar'] = "$profileImage";
         }
-        $update = $product->update($input);   
+        $update = $user->update($input);   
         // $update = $product->update([
         //     'name' => $input['name'],
         //     'price' => $input['price'],
