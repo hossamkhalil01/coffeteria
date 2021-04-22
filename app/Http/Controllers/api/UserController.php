@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Null_;
-use App\Http\Resources\OrderResource;
-use DateTime;
-use DateTimeZone;
-use Illuminate\Support\Facades\Date;
+use App\Http\Resources\UserResource;
+
+
 
 class OrderController extends Controller
 {
@@ -19,16 +16,11 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($user_id)
+    public function index()
     {
         //
-        $user = User::find($user_id);
-
-        if ($user) {
-            return new OrderResource(Order::where("owner_id", "=", $user_id)->orderBy("created_at", "desc")->paginate(5));
-        } else {
-            return response()->json(["data" => []]);
-        }
+        $user = User::all();
+        return UserResource::collection(User::all());
     }
 
     /**

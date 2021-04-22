@@ -218,7 +218,7 @@ export default {
         });
     },
     onSuccess(message) {
-      this.$router.push({ name: "Order" });
+      this.$router.push({ name: "UserOrder" });
     },
     onFailure(errorData) {
       this.errors = errorData.errors;
