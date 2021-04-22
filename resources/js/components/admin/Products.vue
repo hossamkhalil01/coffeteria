@@ -379,7 +379,7 @@ a.coding {
 
 a.coding:before {
 	content: "ADD PRODUCT";
-	color: #2a80cf;
+	color: #1763aa;
 	position: absolute;
 	text-shadow: 0 0 3px #525717;
 	animation: encode 1s 1;
