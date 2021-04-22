@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\UploadedFile;
+
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\Http\Requests\ImageUploadRequest;
 
 class admincontroller extends Controller
 {
@@ -73,37 +76,94 @@ class admincontroller extends Controller
         return response()->json('user updated');
     }
 
-    public function store(Request $req)
+    public function store(Request $request)
     {
+
+
+        $input = $request->all();
+  
+if ($image = $request->file('avatar')) {
+    $destinationPath = 'storage/avatars/';
+    $profileImage = 'storage/avatars/'.$request->file('avatar')->getClientOriginalName(); 
+    $image->move($destinationPath, $profileImage);
+    $input['avatar'] = "$profileImage";
+}
+
+$add = User::create($input);
+dd($add);
+  if ($add){
+    return response()->json(["is_done"=>true]);
+  }else{
+    return response()->json(["is_done"=>false]);
         // $user = User::create([
         //     'name' => $req->input('name'),
         //     'email' => $req->input('email'),
         //     'password' => Hash::make($req->input('password')),
             
         //     'room_id' => $req->input('room_id'),
-        //     // 'avatar' => 'storage/avatars/default.png',
+        //     'avatar' => $req->file('avatar'),
+        // ]);
+       
+        // $user = new User();
+        // $user->name = $req->name;
+        // $user->email = $req->email;
+
+        // $user->password = Hash::make($req->password);
+        // $user->room_id=$req->room_id;
+        // $user->avatar = $req->avatar;
+        $name = "";
+        // $this->validate($request,[
+        //     'name' => 'required|string|max:191',
         // ]);
 
-        $user = new User();
-        $user->name = $req->name;
-        $user->email = $req->email;
+        // var_dump($request->image);
 
-        $user->password = Hash::make($req->password);
-        $user->room_id=$req->room_id;
-        // $user->avatar = $req->avatar;
+        // if ($request->avatar) {
+            // $image = $request->file('avatar');
+            // $destinationPath = 'storage/avatars/';
+            //     $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            //     $image->move($destinationPath, $profileImage);
+            //     $request->avatar = "$profileImage";
+
+                // $request->file('avatar')->store('avatar');
+            // $name = time() . '.' . explode('/', explode(':', substr($request->avatar, 0, strpos($request->avatar, ';')))[1])[1];
+            // $url = \Storage::putFileAs('avatars', $file, $name.'.'.$file->extension());
+            // return ['url'=>env('APP_URL').'/'.$url];
+            // $request->merge(['avatar' => $name]);
+        // }
+        // $file = $request->file('avatar');
+        // $name = Str::random(10);
+        // $url = \Storage::putFileAs('avatars', $file, $name.'.'.$file->extension());
+        // $avatar = $request->file('avatar');
+        //     $avatar_path =  '/' . $avatar;
+
+        //     //save the avatar
+        // //     $request->file('avatar')->storeAs('avatars', $avatar_path, '');
+        // if($request->avatar){
+        //     $image = $request->get('avatar');
+        //     $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+        //     \Image::make($request->get('avatar'))->save(public_path('avatars/').$name);
+           
+        // }
+
+        // $user=User::create($request->all());
+        
+       
         // $input=$req->all();
 
-        if ($image = $req->file('avatar')) {
-            $destinationPath = 'avatars/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $user->avatar = "$profileImage";
-            $user->save();
-        }
+        // if ($image = $req->file('avatar')) {
+        //     $destinationPath = 'avatars/';
+        //     $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //     $image->move($destinationPath, $profileImage);
+        //     $user->avatar = "$profileImage";
+        //     $user->save();
+        // }
         // User::create($input);
-        $user->save();
-        return response()->json('user created!');
+        // $user->save();
+        // return ['url'=>env('APP_URL').'/'.$url];
+        // return response()->json('user created!');
         // return $user;
 
     }
-}
+    
+    }}

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\roomcontroller;
 use App\Http\Controllers\Api\admincontroller;
+use App\Http\Controllers\imagecontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +44,5 @@ Route::patch('/admin/edituser/{id}', [admincontroller::class, 'update']);
 Route::get('/admin/getusers/{id}', [admincontroller::class, 'showuser']);
 Route::post('/admin/create', [admincontroller::class, 'store']);
 
+Route::post('upload', [imagecontroller::class,'upload']);
 Route::resource('/rooms', roomcontroller::class);

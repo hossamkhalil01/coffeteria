@@ -19,16 +19,16 @@
             <div class="form-group">
                 <lable>Room number</lable>
                 <select name="room_id" class="form-control" v-model="user.room_id">
-                    <option v-for="room in rooms" :value="room.id" >
+                    <option v-for="room in rooms" :value="room.id">
                         {{ room["number"] }}
                     </option>
                 </select>
             </div>
 
-            <div class="custom-file mb-3">
-                <input type="file" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*" >
-                <label class="custom-file-label" for="validatedCustomFile">Choose Cover Image ...</label>
-                <div class="invalid-feedback"></div>
+            <div class="form-group">
+                <label for="Image">Product Picture</label>
+                <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
+   <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
             </div>
 
             <button type="submit" name="submit" class="btn btn-primary">
@@ -55,60 +55,76 @@ export default {
                 name: "",
                 email: "",
                 password: "",
-                image: null,
-                room_id:"",
+                avatar: "",
+                room_id: "",
             },
+            url: null,
             rooms: [],
         };
     },
     methods: {
         adduser(e) {
-          e.preventDefault();
-                const existingObj = this;
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
+            e.preventDefault();
+            const existingObj = this;
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
                 }
-                const formData = new FormData()
-                formData.append('image', this.user.image)
-                formData.append('name', this.user.name)
-                formData.append('email', this.user.email)
-                formData.append('password', this.user.password)
-                formData.append('room_id', this.user.room_id)
-            axios.post(apiBase + "admin/create", formData, config).then((res) => {
-                this.$router.push({
-                    name: "AdminUsers",
-                });
-                //  this.user = res.data;
-            });
+            }
+            const formData = new FormData()
+            formData.append('avatar', this.user.avatar)
+            formData.append('name', this.user.name)
+            formData.append('email', this.user.email)
+            formData.append('password', this.user.password)
+            formData.append('room_id', this.user.room_id)
+            axios.post(apiBase + "admin/create", formData, config)
+            // .then((res) => {
+            //     this.$router.push({
+            //         name: "AdminUsers",
+            //     });
+            //     //  this.user = res.data;
+            // });
+        },
+        changeImage(files) {
+            const file = files[0];
+
+            const data = new FormData();
+            data.append("avatar", file);
+
+            const response = axios.post(
+                "http://localhost:8000/api/upload",
+                data
+            );
+            this.user.avatar = response.data.url;
         },
         onChange(e) {
-            this.user.image = e.target.files[0];
-            // console.log(this.form);
+                this.user.avatar = e.target.files[0];
+                this.imageName = e.target.files[0].name; 
+                this.url = URL.createObjectURL(this.user.avatar);
+                console.log(this.user);
+            },
+        selectImage() {
+            this.$refs.fileInput.click();
+        },
+        pickFile(e) {
+            // this.user.avatar = e.target.files[0].name
+            let input = this.$refs.fileInput;
+            let file = input.files;
+            if (file && file[0]) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    this.previewImage = e.target.result;
+                    this.user.avatar = this.previewImage;
+                };
+                reader.readAsDataURL(file[0]);
+                this.$emit("input", file[0]);
+            }
         },
 
         // console.log(e.target.files[0]);
         // this.user.avatar = e.target.files[0].name;
         // this.image = e.target.files[0];
 
-        selectImage() {
-            this.$refs.fileInput.click();
-        },
-        // pickFile() {
-        //     let input = this.$refs.fileInput;
-        //     let file = input.files;
-        //     if (file && file[0]) {
-        //         let reader = new FileReader();
-        //         reader.onload = (e) => {
-        //             // this.user.avatar=e.target.file[0].name;
-        //             this.previewImage = e.target.result;
-        //             this.user.avatar = this.previewImage;
-        //         };
-        //         reader.readAsDataURL(file[0]);
-        //         this.$emit("input", file[0]);
-        //     }
-        // },
         getrooms() {
             axios
                 .get(apiBase + "rooms")
