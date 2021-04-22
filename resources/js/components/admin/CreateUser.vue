@@ -77,13 +77,13 @@ export default {
             formData.append('email', this.user.email)
             formData.append('password', this.user.password)
             formData.append('room_id', this.user.room_id)
-            axios.post(apiBase + "admin/create", formData, config)
-            // .then((res) => {
-            //     this.$router.push({
-            //         name: "AdminUsers",
-            //     });
-            //     //  this.user = res.data;
-            // });
+            axios.post(apiBase + "admin/create", formData)
+            .then((res) => {
+                this.$router.push({
+                    name: "AdminUsers",
+                });
+                //  this.user = res.data;
+            });
         },
         changeImage(files) {
             const file = files[0];

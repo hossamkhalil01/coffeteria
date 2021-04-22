@@ -43,20 +43,13 @@ class admincontroller extends Controller
         $user->email = $req->email;
         $user->room_id = $req->room_id;
         // $user->avatar=$req->file('image');
-
-
-        // $fileUpload = new FileUpload;
-        // if ($req->hasFile('avatar')) {
-
-        //     $avatar = $req->file('avatar')->getClientOriginalName();
-        //     $avatar_path =  $user->id . '/' . $avatar;
-
-        //     //save the avatar
-        //     $req->file('avatar')->storeAs('avatars', $avatar_path, '');
-
-        //     // update the path
-        //     $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
-        // }
+        if ($image = $req->file('avatar')) {
+            $destinationPath = 'storage/avatars/';
+            $profileImage = 'storage/avatars/'.$req->file('avatar')->getClientOriginalName(); 
+            $image->move($destinationPath, $profileImage);
+            $user->avatar = "$profileImage";
+        }
+        
 
         //     if($req->image)
         //    {

@@ -31,20 +31,11 @@
           </select>
         </div>
 
-        <div
-          class="form-group"
-          :style="{ 'background-image': `url(${previewImage})` }"
-          @click="selectImage"
-        >
-          <lable>Image</lable>
-          <input
-            type="file"
-            ref="fileInput"
-            class="form-control"
-            name="avatar"
-            v-on:change="onImageChange"
-          />
-        </div>
+         <div class="form-group">
+                <label for="Image">Your Profile</label>
+                <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
+   <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
+            </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
@@ -60,14 +51,26 @@ export default {
       apiBase: apiBase,
       imgBase: imgBase,
       previewImage: null,
-      user: [],
+      user: {
+                name: "",
+                email: "",
+                password: "",
+                avatar: "",
+                room_id: "",
+            },
       rooms: [],
     };
   },
   methods: {
     updateUser() {
+       const formData = new FormData()
+            formData.append('avatar', this.user.avatar)
+            formData.append('name', this.user.name)
+            formData.append('email', this.user.email)
+            formData.append('password', this.user.password)
+            formData.append('room_id', this.user.room_id)
       axios
-        .patch(apiBase + `admin/edituser/${this.$route.params.id}`, this.user)
+        .patch(apiBase + `admin/edituser/${this.$route.params.id}`, formData)
         .then((res) => {
           this.$router.push({
             name: "AdminUsers",
@@ -75,20 +78,13 @@ export default {
           //  this.user = res.data;
         });
     },
-    onImageChange(e) {
-      var filereader = new FileReader();
-
-      filereader.readAsDataURL(e.target.files[0]);
-
-      filereader.onload = (e) => {
-        this.user.avatar = e.target.result;
-        // this.user.avatar = e.target.files[0].name;
-      };
-
-      // console.log(e.target.files[0]);
-      // this.user.avatar = e.target.files[0].name;
-      // this.image = e.target.files[0];
-    },
+   
+     onChange(e) {
+                this.user.avatar = e.target.files[0];
+                this.imageName = e.target.files[0].name; 
+                this.url = URL.createObjectURL(this.user.avatar);
+                console.log(this.user);
+            },
     selectImage() {
       this.$refs.fileInput.click();
     },
@@ -116,12 +112,12 @@ export default {
     },
   },
   created() {
-    axios
-      .get(apiBase + `admin/getusers/${this.$route.params.id}`)
-      .then((res) => {
-        // this.$router.push({name:'adminUsers'});
-        this.user = res.data;
-      });
+    // axios
+    //   .get(apiBase + `admin/getusers/${this.$route.params.id}`)
+    //   .then((res) => {
+    //     // this.$router.push({name:'adminUsers'});
+    //     this.user = res.data;
+    //   });
 
     this.getrooms();
   },
