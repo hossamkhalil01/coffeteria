@@ -6,9 +6,10 @@
           <div class="card-body">
             <router-link
               :to="{ name: 'AdminCreateProduct' }"
-              class="nav-item nav-link"
+              class="nav-item nav-link   coding mb-5" 
+              
             >
-              create Product
+              
             </router-link>
 
             <div class="card-body table-responsive p-0">
@@ -40,7 +41,7 @@
                                          <!-- <router-link  :to="{ name: 'AdminEditProduct' }"  class="nav-item nav-link">
                                         edit
                                               </router-link> -->
-                                    <router-link :to="{name: 'AdminEditProduct', params: { id: item.id }}" class="btn btn-success">Edit</router-link>
+                                    <router-link :to="{name: 'AdminEditProduct', params: { id: item.id }}" class="btn btn-warning">Edit</router-link>
                                          
                     <!-- <td>
                       <a
@@ -79,7 +80,7 @@
                 v-if="pagination_links.length > 0"
                 aria-label="Page navigation example"
               >
-                <ul class="pagination justify-content-center">
+                <ul class="pagination justify-content-center cube">
                   <li
                     :class="[pagination_links[0].url == null ? 'disabled' : '']"
                     class="page-item"
@@ -368,3 +369,54 @@ export default {
   
 };
 </script>
+<style scoped>
+a.coding {
+	text-transform: uppercase;
+	color: #171717;
+	text-decoration: none;
+	font-size: 25px;
+}
+
+a.coding:before {
+	content: "ADD PRODUCT";
+	color: #2a80cf;
+	position: absolute;
+	text-shadow: 0 0 3px #525717;
+	animation: encode 1s 1;
+}
+
+a.coding:hover:before {
+	animation: decode 1s 1;
+}
+
+@keyframes encode {
+	  0% { content: "\20B9 \03DE \20BE \03BE \2126 \2000 \03EA \03A3"; text-shadow: 0 0 6px #69320e; }
+	 10% { content: "\03BE \03F4 \03DE \03D1 \03A3 \2000 \03DE \03EA"; }
+	 20% { content: "\20BE \03BE \03DE \03EA \03D1 \2000 \2202 \03D1"; }
+	 30% { content: "\03DE \20BA \03A3 \03D1 \20BE \2000 \20BE \2202"; }
+	 40% { content: " A\0394 \20BA \03F4 \20BE \2000 \03A3 \20B9"; }
+	 50% { content: " AD\03F4 \03BE \03DE \2000 \03DE \20BA"; }
+	 60% { content: "ADD\03A3 \03D1 \0020 \20BE \2202"; }
+	 70% { content: "ADD P\0394 \0020 \03D1 \03EA"; }
+	 80% { content: "ADD PR \0020 \03EA \20BE"; }
+	 90% { content: "ADD PRO\03DE"; text-shadow: 0 0 6px #e84900;}
+	100% { content: "ADD PRODUCT"; text-shadow: 0 0 3px #0023e8;}
+}
+
+@keyframes decode {
+	  0% { content: "\20B9 \03DE \20BE \03BE \2126 \2000 \03EA \03A3"; text-shadow: 0 0 6px #27741d; }
+	 10% { content: "\03BE \03F4 \03DE \03D1 \03A3 \2000 \03DE \03EA"; }
+	 20% { content: "\20BE \03BE \03DE \03EA \03D1 \2000 \2202 \03D1"; }
+	 30% { content: "\03DE \20BA \03A3 \03D1 \20BE \2000 \20BE \2202"; }
+	 40% { content: "A\0394 \20BA \03F4 \20BE \2000 \03A3 \20B9"; }
+	 50% { content: "AD\03F4 \03BE \03DE \2000 \03DE \20BA"; }
+	 60% { content: "ADD\03A3 \03D1 \0020 \20BE \2202"; }
+	 70% { content: "ADD P\0394 \0020 \03D1 \03EA"; }
+	 80% { content: "ADD PR \0020 \03EA \20BE"; }
+	 90% { content: "ADD PRO\03DE"; text-shadow: 0 0 6px #e85d00; }
+	100% { content: "ADD PRODUCT"; text-shadow: 0 0 3px #00a6e8; }
+}
+
+
+
+</style>

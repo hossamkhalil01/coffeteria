@@ -21,7 +21,6 @@
             type="number"
             name="price"
             class="form-control"
-            min="1"
             id="Price"
             aria-describedby="emailHelp"
             placeholder="Enter Product price"

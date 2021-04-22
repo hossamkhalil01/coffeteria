@@ -45,26 +45,18 @@ class ProductController extends Controller
         // ]);
 
         // var_dump($request->image);
-///////////////////////////////////////
-$request->validate(
-    [
-        'name' => 'required',
-        'price' => 'required',
-        'image' => 'required',
-        'category_id' => 'required',
-    ]
-      
-  );
+        $request->validate(
+            [
+                'name' => 'required',
+                'price' => 'required',
+                'image' => 'required',
+                'category_id' => 'required',
+            ]
+              
+          );
 
+        
 
-
-
-
-
-
-
-
-/////////////////////////////
 
         if ($request->image) {
 
