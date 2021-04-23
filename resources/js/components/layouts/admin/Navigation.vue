@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="">
     <nav class="row navbar navbar-expand-lg navbar-light bg-light p-4">
       <div class="collapse navbar-collapse col-6 m-auto">
         <div class="navbar-nav">

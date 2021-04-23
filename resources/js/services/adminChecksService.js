@@ -1,8 +1,10 @@
 import * as request from "@helpers/requests.js";
-import { apiBase } from "@helpers/urls.js";
+import { ordersUrlBase, getOrderUrl } from "@helpers/urls.js";
 
-export const getChecksResource = (params, url = "") => {
-    if (!url) return request.get(apiBase + "orders", params);
-
+export const getChecksResource = (params = {}, url = ordersUrlBase) => {
     return request.get(url, params);
+};
+
+export const getOrderProducts = (orderId, params = {}, url = "") => {
+    return request.get(getOrderUrl(orderId), params);
 };

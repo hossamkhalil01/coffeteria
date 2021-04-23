@@ -182,6 +182,14 @@ class OrderController extends Controller
         return $this->prepare_orders_response(Order::where($filter));
     }
 
+    public function get_order($id, Request $request)
+    {
+        $order = Order::with('products')->find($id);
+
+        if (!$order) return $this->error_response("404", "order not found");
+
+        return response()->json(["data" => $order], 200);
+    }
     private function error_response($status, $msg)
     {
         return response(["data" => null, "message" => $msg], $status);

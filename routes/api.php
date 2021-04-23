@@ -35,6 +35,7 @@ Route::get("/rooms", [HomeController::class, "get_rooms"])->name("get_rooms");
 
 // checks
 Route::get("/orders", [OrderController::class, "get_orders"]);
+Route::get("/orders/{id}", [OrderController::class, "get_order"]);
 Route::apiResource("/users", UserController::class);
 
 Route::get("/{user_id}", [HomeController::class, "index"])->name("index");

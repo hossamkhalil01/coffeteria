@@ -39,7 +39,7 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'room_id' => $input['room_id'],
-            'avatar' => 'storage/avatars/default.png',
+            'avatar' => 'storage/images/avatars/default.png',
         ]);
 
         // check if avatar was selected
