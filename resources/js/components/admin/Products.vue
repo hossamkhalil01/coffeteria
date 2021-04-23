@@ -252,7 +252,7 @@ a.coding {
     font-size: 25px;
 }
 a.coding:before {
-    content: "ADD PRODUCT";
+    content: "ADD PRODUCT HERE 👉🏻";
     color: #1763aa;
     position: absolute;
     text-shadow: 0 0 3px #525717;
@@ -336,7 +336,7 @@ a.coding:hover:before {
         text-shadow: 0 0 6px #e85d00;
     }
     100% {
-        content: "ADD PRODUCT";
+        content: "ADD PRODUCT HERE 👉🏻";
         text-shadow: 0 0 3px #00a6e8;
     }
 }

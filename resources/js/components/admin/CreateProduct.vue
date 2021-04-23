@@ -18,7 +18,7 @@
                 <div :class="['form-group', allerros.name ? 'has-error' : '']">
                      <div class="row mb-4">
                     <div class="col-3" ms-4 >
-                    <label for="Name" class="col-3">Product</label>
+                    <label for="Name" class="col-3">Name</label>
                       </div>
                           <div class="col-8">
                     <input
@@ -37,7 +37,7 @@
                 <div :class="['form-group', allerros.price ? 'has-error' : '']">
                     <div class="row mb-4">
                     <div class="col-3" ms-4>
-                    <label for="Price">Product Price</label>
+                    <label for="Price"> Price</label>
                      </div>
                          <div class="col-8">
                     <input
@@ -61,7 +61,7 @@
                     ]"
                 >      <div class="row mb-3">
                          <div class="col-3" ms-2>
-                    <label for="Category">category</label>
+                    <label for="Category">Category</label>
                         </div>
                          <div class="col-7">
                     <select name="category_id" v-model="form.category_id">
@@ -103,17 +103,14 @@
                   </div>
                 </div>
                 </div>
-                <!-- <span v-if="success" :class="['label label-success']"
-                    >Record submitted successfully!</span
-                >
-             -->
               <div class="row mb-4">
                         <div class="col-3" >
 
-              <label for="is_available">Is Available </label>
+              <label for="is_available">Available </label>
                          </div>
                           <div class="col-8">
                     <input
+                         style="height: 20px; width: 30px;"
                         class="form-group"
                         name="is_available"
                         type="checkbox"
@@ -127,10 +124,10 @@
 
                       <div class="row  mb-4 ms-5 mt-5">
                          <div class="col-4">
-                <button type="submit" class="ms-5 btn btn-info m-3" style="height: 50px;width:10%;">Submit</button>
+               <button type="submit" class="btn btn-info " style="height: 50px;" >Submit</button>
                          </div>
                          <div class="col-3" >
-                <button type="Reset" class="ms-1 btn btn-danger" style="height: 50px;width:10%;">Reset</button>
+                   <button type="Reset" class=" btn btn-danger" style="height: 50px;" >Reset</button>
                       </div>
                    </div>
                    
@@ -168,9 +165,15 @@
             <span v-if="allerros.name" :class="[' alert alert-danger']"
                     >{{ allerros.name[0] }}</span
                 >
+                 <br/>
+                 <br/>
+                 <br/>
                 <span v-if="allerros.price" :class="[' alert alert-danger']"
                     >{{ allerros.price[0] }}</span
                 >
+                 <br/>
+                 <br/>
+                 <br/>
               
                 
                 <span
@@ -178,9 +181,13 @@
                     :class="[' alert alert-danger']"
                     >{{ allerros.category_id[0] }}</span
                 >
+                 <br/>
+                 <br/>
+                 <br/>
        
 </div>
 </div>
+
 </template>
 
 <script>
@@ -272,6 +279,14 @@ export default {
 .styling{
     background-color: aliceblue;
 }
+
+
+
+////////////////styling of labels //////////////////////////////////
+label{
+  font-weight:bold;
+  font-size:15px;color:#b44b4b;}
+//*************************styling of image************************** */
 .imagePreviewWrapper {
     width: 250px;
     height: 250px;
@@ -390,13 +405,13 @@ body {
 //**************************************styling of link************************** */
 a.coding {
     text-transform: uppercase;
-    color: #171717;
+    color: #0dcaf0;
     text-decoration: none;
     font-size: 25px;
 }
 a.coding:before {
-    content: "ADD PRODUCT";
-    color: #1763aa;
+    content: "ADD CATEGORY HERE 👉🏻";
+    color: #01778f;
     position: absolute;
     text-shadow: 0 0 3px #525717;
     animation: encode 1s 1;
@@ -469,17 +484,17 @@ a.coding:hover:before {
         content: "ADD\03A3 \03D1 \0020 \20BE \2202";
     }
     70% {
-        content: "ADD P\0394 \0020 \03D1 \03EA";
+        content: "ADD C\0394 \0020 \03D1 \03EA";
     }
     80% {
-        content: "ADD PR \0020 \03EA \20BE";
+        content: "ADD CA \0020 \03EA \20BE";
     }
     90% {
-        content: "ADD PRO\03DE";
+        content: "ADD CAT\03DE";
         text-shadow: 0 0 6px #e85d00;
     }
     100% {
-        content: "ADD PRODUCT";
+        content: "ADD CATEGORY HERE 👉🏻";
         text-shadow: 0 0 3px #00a6e8;
     }
 }
