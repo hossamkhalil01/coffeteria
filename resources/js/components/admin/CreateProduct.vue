@@ -1,5 +1,5 @@
 <template>
-<div class="styling">
+
    
     <div class="container">
        <div class="bg_move">
@@ -186,7 +186,7 @@
                  <br/>
        
 </div>
-</div>
+
 
 </template>
 

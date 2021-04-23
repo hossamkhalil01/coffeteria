@@ -1,4 +1,5 @@
 <template>
+
 <div class="container">
  
   <div class="bg_move">
@@ -34,6 +35,7 @@
           style="height: 50px;width:10%;"> {{ allerros.label[0] }}</span>
   </form>
   </div>
+
 </template>
 
 <script>
@@ -80,6 +82,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.styling{
+    background-color: aliceblue;
+}
 
 //********************start of heading style**************************************
 * {
