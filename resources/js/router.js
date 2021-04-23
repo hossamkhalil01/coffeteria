@@ -1,7 +1,6 @@
-import { createWebHistory, createRouter } from "vue-router";
-
 import NotFound from "@components/404.vue";
 import { role } from "@helpers/currentUser.js";
+import { createRouter, createWebHistory } from "vue-router";
 
 const loadComponent = (view, component) => {
     return () => import(`@components/${view}/${component}`);
@@ -21,7 +20,7 @@ const routes = [
             {
                 path: "/home",
                 name: "UserHome",
-                component: loadComponent("user", "Home"),
+                component: loadComponent("home", "Home"),
             },
             {
                 path: "/order",
@@ -53,7 +52,7 @@ const routes = [
         children: [
             {
                 path: "/admin/home",
-                component: loadComponent("admin", "Home"),
+                component: loadComponent("home", "Home"),
                 name: "AdminHome",
             },
             {
