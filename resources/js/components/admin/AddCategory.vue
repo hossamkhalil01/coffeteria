@@ -10,7 +10,7 @@
     <div class="form-group">
       <div class="row m-5">
         <div class="col-1" ms-2>
-      <label for="Name" style="font-weight:bold;font-size:20px;color:rgba(122, 0, 0, 1);">Category</label>
+      <label for="Name" style="font-weight:bold;font-size:20px;color:#b44b4b;">Category</label>
         </div>
         <div  class="col-3">
       <input

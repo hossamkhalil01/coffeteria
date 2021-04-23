@@ -1,17 +1,21 @@
-<template>
-    <div class="container">
-        <div>
-            <div class="bg_move">
+<template >
+    <div class="container" >
+       <div class="bg_move mb-4">
                 <i class="fas fa-palette"></i>
                 <h1>EDIT PRODUCT</h1>
             </div>
+
+        <div class="row ">
+             <div class="col-6">
+           
+            <div class="row col-6">
             <form v-on:submit.prevent="update(product.id)">
                 <div :class="['form-group', allerros.name ? 'has-error' : '']">
-                  <div class="row">
-                    <div class="col-1" ms-2>
+                  <div class="row mb-4">
+                    <div class="col-3" ms-4 >
                     <label for="Name">Name</label>
                     </div>
-                    <div class="col-3">
+                    <div class="col-8">
                     <input
                         type="text"
                         name=" name"
@@ -26,11 +30,11 @@
                 </div>
                 
                 <div :class="['form-group', allerros.price ? 'has-error' : '']">
-                   <div class="row">
-                    <div class="col-1" ms-2>
+                   <div class="row mb-4">
+                    <div class="col-3" ms-4>
                     <label for="Price">Price</label>
                     </div>
-                         <div class="col-3">
+                         <div class="col-8">
                     <input
                         type="number"
                         name="price"
@@ -43,36 +47,16 @@
                          </div>
                    </div>
                 </div>
-                   
-                      <div class="row">
-                        <div class="col-1" ms-2>
-                    <label for="is_available">Is Available </label>
-                        </div>
-                        <div class="col-3">
-                    <input
-                        class="form-group"
-                        name="is_available"
-                        type="checkbox"
-                        id="is_available"
-                        v-model="product.is_available"
-                        :checked="product.is_available"
-                    />
-                    <label for="checkbox">{{ checked }}</label>
-                </div>
-                </div>
-                
-
-
                 <div
                     :class="[
                         'form-group',
                         allerros.category_id ? 'has-error' : '',
                     ]"
-                >     <div class="row">
-                         <div class="col-1" ms-2>
+                >     <div class="row mb-4">
+                         <div class="col-3" ms-2>
                     <label for="Category">Category</label>
                          </div>
-                         <div class="col-4">
+                         <div class="col-8">
                     <select name="category_id" v-model="product.category_id">
                         <option
                             v-for="i in tabledata"
@@ -87,40 +71,99 @@
                 </div>
 
                 <div class="form-group">
+                    <div class="row mb-4">
+                         <div class="col-3" ms-2>
                     <label for="Image">Photo</label>
-
-                    <div
-                        class="imagePreviewWrapper"
-                        :style="{
-                            'background-image': `url(http://localhost:8000/storage/img/${product.image})`,
-                        }"
-                        @click="selectImage"
-                    ></div>
-
+                         </div>
+                      <div class="col-8">
                     <input
                         name="image"
                         ref="fileInput"
                         type="file"
                         @input="pickFile"
                     />
+                      </div>
                 </div>
+                </div>
+                 <div class="row mb-4">
+                        <div class="col-3" >
+                    <label for="is_available">Available </label>
+                        </div>
+                        <div class="col-8">
+                    <input
+                        style="height: 20px;width:30px"
+                        class="form-group"
+                        name="is_available"
+                        type="checkbox"
+                        id="is_available"
+                        v-model="product.is_available"
+                        :checked="product.is_available"
+                    />
+                    <label for="checkbox">{{ checked }}</label>
+                </div>
+                </div>
+                
+                   <div class="row  mb-4 ms-5 mt-5">
+                         <div class="col-4">
+                 
+              <button type="submit" class="btn btn-info " style="height: 50px;" >Submit</button>
+                         </div>
+                         <div class="col-3" >
+                <button type="Reset" class=" btn btn-danger" style="height: 50px;" >Reset</button>
+                         </div>
+                   </div>
+                   
+                    
+         
+            </form>
+        </div>
+        </div>
 
-              <button type="submit" class="ms-5 btn btn-info m-3" style="height: 50px;width:10%;">Submit</button>
-                <button type="Reset" class="ms-1 btn btn-danger" style="height: 50px;width:10%;">Reset</button>
+                      <div class="col-6">
+
+                      <div
+
+                       
+                        class="imagePreviewWrapper"
+                        :style="{
+                            'background-image': `url(http://localhost:8000/storage/img/${product.image})`,
+                        }"
+                        @click="selectImage"
+                    ></div>
+                       </div>
+
+
+
+
+
+
+        </div>
+                       
                 <span v-if="allerros.name" :class="[' alert alert-danger']">{{
                     allerros.name[0]
+                    
                 }}</span>
+                 <br/>
+                 <br/>
+                 <br/>
                 <span v-if="allerros.price" :class="[' alert alert-danger']">{{
                     allerros.price[0]
                 }}</span>
-
+                 <br/>
+                 <br/>
+                 <br/>
+                          
                 <span
                     v-if="allerros.category_id"
                     :class="[' alert alert-danger']"
                     >{{ allerros.category_id[0] }}</span
                 >
-            </form>
-        </div>
+                <br/>
+                 <br/>
+                 <br/>
+                 
+                          
+        
     </div>
 </template>
 
@@ -220,6 +263,9 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+#app{
+    background-color: aliceblue;
+}
 .imagePreviewWrapper {
     width: 250px;
     height: 250px;
@@ -231,19 +277,19 @@ export default {
 }
 //********************start of heading style**************************************
 
-body {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #111;
-}
+// body {
+//     display: -webkit-box;
+//     display: -ms-flexbox;
+//     display: flex;
+//     -webkit-box-pack: center;
+//     -ms-flex-pack: center;
+//     justify-content: center;
+//     -webkit-box-align: center;
+//     -ms-flex-align: center;
+//     align-items: center;
+//     min-height: 100vh;
+//     background: #111;
+// }
 
 .bg_move {
     display: -webkit-box;
@@ -328,4 +374,11 @@ body {
 }
 
 //********************* end of syling header******************************************
+
+
+//********************************styling of label******************************* */
+label{
+  font-weight:bold;
+  font-size:15px;color:#b44b4b;}
+
 </style>
