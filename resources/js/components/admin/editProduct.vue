@@ -3,7 +3,7 @@
     <div>
       <h2>Edit Product</h2>
       <form v-on:submit.prevent="update(product.id)">
-        <div class="form-group">
+        <div :class="['form-group', allerros.name ? 'has-error' : '']">
           <label for="Name">Product</label>
           <input
             type="text"
@@ -15,7 +15,7 @@
             v-model="product.name"
           />
         </div>
-        <div class="form-group">
+        <div :class="['form-group', allerros.price ? 'has-error' : '']">
           <label for="Price">Product Price</label>
           <input
             type="number"
@@ -41,7 +41,11 @@
         </div>
 
        
-    <div class="form-group">
+    <div 
+                    :class="[
+                        'form-group',
+                        allerros.category_id ? 'has-error' : '',
+                    ]">
       <label for="Category">category</label>
       <select name="category_id" v-model="product.category_id">
         <option v-for="i in tabledata" :value="i.id" :key="i.id">
@@ -72,6 +76,19 @@
 
         <button type="submit" class="btn btn-primary">update</button>
         <button type="Reset" class="btn btn-primary">Reset</button>
+            <span v-if="allerros.name" :class="[' alert alert-danger']"
+                    >{{ allerros.name[0] }}</span
+                >
+                 <span v-if="allerros.price" :class="[' alert alert-danger']"
+                    >{{ allerros.price[0] }}</span
+                >
+              
+                
+                <span
+                    v-if="allerros.category_id"
+                    :class="[' alert alert-danger']"
+                    >{{ allerros.category_id[0] }}</span
+                >
       </form>
     </div>
   </div>
@@ -95,6 +112,8 @@ export default {
         category_id: "",
       },
       //end of edit product
+        allerros: [],
+            success: false,
     };
   },
   methods: {
@@ -145,6 +164,8 @@ export default {
         .then((resp) => {
           console.log(resp);
           console.log("sha8alaaa");
+           this.allerros = [];
+            this.success = true;
             if(resp.status === 200) {
          
                this.$router.push({ name: "AdminProducts" });
@@ -154,8 +175,14 @@ export default {
         .catch((e) => {
           console.log(e);
           console.log("bazeeeeet");
+                 this.onFailure(e.response.data);
         });
+        
     },
+      onFailure(errorData) {
+            this.allerros = errorData.errors;
+            this.success = false;
+        },
        loadCategoryData() {
      axios
         .get("http://localhost:8000/api/categories")
