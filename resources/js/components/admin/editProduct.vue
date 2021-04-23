@@ -1,4 +1,5 @@
 <template >
+<div class="styling">
     <div class="container" >
        <div class="bg_move mb-4">
                 <i class="fas fa-palette"></i>
@@ -165,6 +166,7 @@
                           
         
     </div>
+    </div>
 </template>
 
 <script>
@@ -263,7 +265,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-#app{
+.styling{
     background-color: aliceblue;
 }
 .imagePreviewWrapper {

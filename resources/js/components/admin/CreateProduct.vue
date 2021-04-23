@@ -1,4 +1,5 @@
 <template>
+<div class="styling">
     <div class="container">
       
             <div class="bg_move">
@@ -66,9 +67,9 @@
                     </select>
                     <router-link
                         :to="{ name: 'AdminAddCategory' }"
-                        class="nav-item nav-link"
+                        class="nav-item nav-link coding mt-2 mb-2"
                     >
-                        add Category
+                    
                     </router-link>
                 </div>
 
@@ -111,7 +112,7 @@
           
         </div>
        
-    
+</div>
 </template>
 
 <script>
@@ -200,6 +201,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.styling{
+    background-color: aliceblue;
+}
 .imagePreviewWrapper {
     width: 250px;
     height: 250px;
@@ -318,4 +322,103 @@ body {
 }
 
 //********************* end of syling header******************************************
+
+
+//**************************************styling of link************************** */
+a.coding {
+    text-transform: uppercase;
+    color: #171717;
+    text-decoration: none;
+    font-size: 25px;
+}
+a.coding:before {
+    content: "ADD PRODUCT";
+    color: #1763aa;
+    position: absolute;
+    text-shadow: 0 0 3px #525717;
+    animation: encode 1s 1;
+}
+
+a.coding:hover:before {
+    animation: decode 1s 1;
+}
+
+@keyframes encode {
+    0% {
+        content: "\20B9 \03DE \20BE \03BE \2126 \2000 \03EA \03A3";
+        text-shadow: 0 0 6px #69320e;
+    }
+    10% {
+        content: "\03BE \03F4 \03DE \03D1 \03A3 \2000 \03DE \03EA";
+    }
+    20% {
+        content: "\20BE \03BE \03DE \03EA \03D1 \2000 \2202 \03D1";
+    }
+    30% {
+        content: "\03DE \20BA \03A3 \03D1 \20BE \2000 \20BE \2202";
+    }
+    40% {
+        content: " A\0394 \20BA \03F4 \20BE \2000 \03A3 \20B9";
+    }
+    50% {
+        content: " AD\03F4 \03BE \03DE \2000 \03DE \20BA";
+    }
+    60% {
+        content: "ADD\03A3 \03D1 \0020 \20BE \2202";
+    }
+    70% {
+        content: "ADD P\0394 \0020 \03D1 \03EA";
+    }
+    80% {
+        content: "ADD PR \0020 \03EA \20BE";
+    }
+    90% {
+        content: "ADD PRO\03DE";
+        text-shadow: 0 0 6px #e84900;
+    }
+    100% {
+        content: "ADD PRODUCT";
+        text-shadow: 0 0 3px #0023e8;
+    }
+}
+
+@keyframes decode {
+    0% {
+        content: "\20B9 \03DE \20BE \03BE \2126 \2000 \03EA \03A3";
+        text-shadow: 0 0 6px #27741d;
+    }
+    10% {
+        content: "\03BE \03F4 \03DE \03D1 \03A3 \2000 \03DE \03EA";
+    }
+    20% {
+        content: "\20BE \03BE \03DE \03EA \03D1 \2000 \2202 \03D1";
+    }
+    30% {
+        content: "\03DE \20BA \03A3 \03D1 \20BE \2000 \20BE \2202";
+    }
+    40% {
+        content: "A\0394 \20BA \03F4 \20BE \2000 \03A3 \20B9";
+    }
+    50% {
+        content: "AD\03F4 \03BE \03DE \2000 \03DE \20BA";
+    }
+    60% {
+        content: "ADD\03A3 \03D1 \0020 \20BE \2202";
+    }
+    70% {
+        content: "ADD P\0394 \0020 \03D1 \03EA";
+    }
+    80% {
+        content: "ADD PR \0020 \03EA \20BE";
+    }
+    90% {
+        content: "ADD PRO\03DE";
+        text-shadow: 0 0 6px #e85d00;
+    }
+    100% {
+        content: "ADD PRODUCT";
+        text-shadow: 0 0 3px #00a6e8;
+    }
+}
+//*************************************************************end of link styling****************************/
 </style>
