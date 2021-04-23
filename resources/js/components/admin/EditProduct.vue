@@ -37,6 +37,8 @@
                   <input
                     type="number"
                     name="price"
+                    max="200"
+                    min="1"
                     class="form-control"
                     id="Price"
                     aria-describedby="emailHelp"

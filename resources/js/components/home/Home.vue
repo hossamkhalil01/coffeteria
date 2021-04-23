@@ -57,7 +57,6 @@
 <script>
 import * as user from "@helpers/currentUser.js";
 import { apiBase, imgBase } from "@helpers/urls.js";
-import axios from "axios";
 import newordercomponent from "@components/user/newOrder";
 import latestOrderComponent from "@components/user/LatestOrder";
 import { csrf } from "@services/authenticationService.js";

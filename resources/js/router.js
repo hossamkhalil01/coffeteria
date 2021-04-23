@@ -2,6 +2,7 @@ import NotFound from "@components/404.vue";
 import { role } from "@helpers/currentUser.js";
 import { createRouter, createWebHistory } from "vue-router";
 
+
 const loadComponent = (view, component) => {
     return () => import(`@components/${view}/${component}`);
 };
@@ -86,9 +87,24 @@ const routes = [
                 component: loadComponent("admin", "AddCategory"),
             },
             {
+                path: "/admin/users",
+                name: "AdminUsers",
+                component: loadComponent("admin", "AllUsers"),
+            },
+            {
+                path: "/admin/edituser/:id",
+                name: "AdminEditUser",
+                component: loadComponent("admin", "EditUser"),
+            },
+            {
+                path: "/admin/createuser",
+                name: "AdminCreateUser",
+                component: loadComponent("admin", "CreateUser"),
+            },
+            {
                 path: "admin/product/edit",
                 name: "AdminEditProduct",
-                component: loadComponent("admin", "editProduct"),
+                component: loadComponent("admin", "EditProduct"),
             },
         ],
     },
@@ -97,6 +113,7 @@ const routes = [
         name: "NotFound",
         component: NotFound,
     },
+
     {
         path: "/:catchAll(.*)",
         redirect: { name: "NotFound" },

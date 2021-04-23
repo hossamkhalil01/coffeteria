@@ -110,7 +110,6 @@
 <script>
 import { apiBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
-import axios from "axios";
 import { csrf } from "@services/authenticationService.js";
 
 export default {

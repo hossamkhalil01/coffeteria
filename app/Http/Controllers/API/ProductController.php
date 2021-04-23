@@ -26,7 +26,7 @@ class ProductController extends Controller
 
         $currentPhoto = $Product->image;
 
-        $userPhoto = public_path('img/profile/') . $currentPhoto;
+        $userPhoto = public_path('img/') . $currentPhoto;
 
         if (file_exists($userPhoto)) {
 
@@ -43,8 +43,9 @@ class ProductController extends Controller
         $request->validate(
             [
                 'name' => 'required',
-                'price' => 'required',
+                'price' => 'required | max : 200',
                 'category_id' => 'required',
+
             ]
               
           );
@@ -82,7 +83,7 @@ class ProductController extends Controller
         $request->validate(
             [
                 'name' => 'required',
-                'price' => 'required',
+                'price' => 'required | max : 200',
                 'category_id' => 'required',
             ]
               
@@ -112,24 +113,6 @@ class ProductController extends Controller
         $product->update($request->all());
 
         return ['message' => 'Success'];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
   

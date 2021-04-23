@@ -168,7 +168,6 @@ export default {
           console.log("Error...");
         });
     },
-
     //Delete photo
     deletePhoto(id) {
       this.$swal

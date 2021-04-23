@@ -40,6 +40,7 @@
                       name="price"
                       class="form-control"
                       min="1"
+                      max="200"
                       id="Price"
                       aria-describedby="emailHelp"
                       placeholder="Enter Product price"
