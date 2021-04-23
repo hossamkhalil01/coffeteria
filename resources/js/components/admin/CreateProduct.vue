@@ -1,17 +1,26 @@
 <template>
 <div class="styling">
+   
     <div class="container">
-      
-            <div class="bg_move">
+       <div class="bg_move">
                 <i class="fas fa-palette"></i>
                 <h1>ADD PRODUCT</h1>
             </div>
+            
+        <div class="row ">
+             <div class="col-6">
+           
+            <div class="row col-6">
 
           
             <form v-on:submit.prevent="create_product">
               <div class="row">
                 <div :class="['form-group', allerros.name ? 'has-error' : '']">
+                     <div class="row mb-4">
+                    <div class="col-3" ms-4 >
                     <label for="Name" class="col-3">Product</label>
+                      </div>
+                          <div class="col-8">
                     <input
                         type="text"
                         name=" name"
@@ -21,11 +30,16 @@
                         placeholder="Enter Productname"
                         v-model="form.name"
                     />
-                </div>
+                  </div>
+                  </div>
                 </div>
 
                 <div :class="['form-group', allerros.price ? 'has-error' : '']">
+                    <div class="row mb-4">
+                    <div class="col-3" ms-4>
                     <label for="Price">Product Price</label>
+                     </div>
+                         <div class="col-8">
                     <input
                         type="number"
                         name="price"
@@ -36,17 +50,8 @@
                         placeholder="Enter Product price"
                         v-model="form.price"
                     />
-                </div>
-                <div>
-                    <label for="is_available">Is Available </label>
-                    <input
-                        class="form-group"
-                        name="is_available"
-                        type="checkbox"
-                        id="is_available"
-                        v-model="form.is_available"
-                    />
-                    <label for="checkbox">{{ checked }}</label>
+                        </div>
+                   </div>
                 </div>
 
                 <div
@@ -54,8 +59,11 @@
                         'form-group',
                         allerros.category_id ? 'has-error' : '',
                     ]"
-                >
+                >      <div class="row mb-3">
+                         <div class="col-3" ms-2>
                     <label for="Category">category</label>
+                        </div>
+                         <div class="col-7">
                     <select name="category_id" v-model="form.category_id">
                         <option
                             v-for="i in tabledata"
@@ -65,21 +73,25 @@
                             {{ i.label }}
                         </option>
                     </select>
+                         </div>
+                     <div class="col-1">
                     <router-link
                         :to="{ name: 'AdminAddCategory' }"
                         class="nav-item nav-link coding mt-2 mb-2"
                     >
                     
                     </router-link>
+                    </div>
+                 </div>
                 </div>
 
-                <div >
-                    <label for="Image">Product Picture</label>
-                    <div
-                        class="imagePreviewWrapper"
-                        :style="{ 'background-image': `url(${previewImage})` }"
-                        @click="selectImage"
-                    ></div>
+                <div class="form-group">
+                     <div class="row mb-4">
+                         <div class="col-3" ms-2>
+                    <label for="Image">Photo</label>
+                      </div>
+                      <div class="col-8">
+                  
 
                     <input
                         name="image"
@@ -88,14 +100,72 @@
                         @input="pickFile"
                     />
                 </div>
-                <span v-if="success" :class="['label label-success']"
+                  </div>
+                </div>
+                </div>
+                <!-- <span v-if="success" :class="['label label-success']"
                     >Record submitted successfully!</span
                 >
-            
+             -->
+              <div class="row mb-4">
+                        <div class="col-3" >
+
+              <label for="is_available">Is Available </label>
+                         </div>
+                          <div class="col-8">
+                    <input
+                        class="form-group"
+                        name="is_available"
+                        type="checkbox"
+                        id="is_available"
+                        v-model="form.is_available"
+                    />
+                    <label for="checkbox">{{ checked }}</label>
+                </div>
+                </div>
+
+
+                      <div class="row  mb-4 ms-5 mt-5">
+                         <div class="col-4">
                 <button type="submit" class="ms-5 btn btn-info m-3" style="height: 50px;width:10%;">Submit</button>
+                         </div>
+                         <div class="col-3" >
                 <button type="Reset" class="ms-1 btn btn-danger" style="height: 50px;width:10%;">Reset</button>
-                <br />
-                <span v-if="allerros.name" :class="[' alert alert-danger']"
+                      </div>
+                   </div>
+                   
+            </form>
+          
+        </div>
+             </div>
+
+                 <div class="col-6">
+
+        
+                            <div
+                        class="imagePreviewWrapper"
+                        :style="{ 'background-image': `url(${previewImage})` }"
+                        @click="selectImage"
+                    ></div>
+                       </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+            <span v-if="allerros.name" :class="[' alert alert-danger']"
                     >{{ allerros.name[0] }}</span
                 >
                 <span v-if="allerros.price" :class="[' alert alert-danger']"
@@ -108,10 +178,8 @@
                     :class="[' alert alert-danger']"
                     >{{ allerros.category_id[0] }}</span
                 >
-            </form>
-          
-        </div>
        
+</div>
 </div>
 </template>
 
@@ -214,12 +282,7 @@ export default {
     background-position: center center;
 }
 //********************start of heading style**************************************
-* {
-    margin: 0;
-    padding: 0;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
+
 
 html {
     font-size: 16px;
