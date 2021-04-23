@@ -6,7 +6,5 @@ export const post = async (url, body) => {
 };
 
 export const get = async (url, params) => {
-    return axios.get(`${apiBase}${url}`, null, {
-        params,
-    });
+    return axios.get(`${apiBase}${url}`, { params });
 };

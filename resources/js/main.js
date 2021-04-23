@@ -1,5 +1,5 @@
 import "bootstrap";
-
+import "./bootstrap";
 // Require Vue
 import { createApp } from "vue";
 import App from "@components/App.vue";
