@@ -29,11 +29,15 @@
                     <td>{{ item.price }}</td>
 
                     <td>
+                      <div  v-if="item.image !=null">
+
                       <img
+                       
                         :src="`http://localhost:8000/storage/img/${item.image}`"
                         class="profile-user-img img-fluid img-circle"
                         style="height: 40px; width: 40px"
                       />
+                      </div>
                     </td>
                     <td v-if="item.is_available == 1">Avaiblile</td>
                     <td v-else>Not Available😢</td>
