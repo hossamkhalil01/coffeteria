@@ -18,7 +18,7 @@ class admincontroller extends Controller
     //
     public function GetAllUsers()
     {
-        $users = User::where('is_admin', '=', 0)->get();
+        $users = User::where('is_admin', '=', 0)->with('room')->get();
         return response()->json($users);
     }
 

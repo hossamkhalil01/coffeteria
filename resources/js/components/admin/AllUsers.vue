@@ -19,13 +19,13 @@
             <tr v-for="user in users">
                 <td>{{ user.name }}</td>
                 <td>
-                    {{ user.room_id }}
+                    {{ user.room.number }}
                 </td>
                 <td>
                     <img :src="`../${user.avatar}`" class="profile-user-img img-fluid img-circle" style="height: 40px; width: 40px" />
                 </td>
                 <td>
-                    {{ user.room_id }}
+                    {{ user.room.land_mark }}
                 </td>
 
                 <td>
