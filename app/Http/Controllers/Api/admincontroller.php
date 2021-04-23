@@ -68,7 +68,7 @@ class admincontroller extends Controller
         $user = User::create($input);
 
          if ($image = $request->file('avatar')) {
-             env(APP_URL);
+            //  env(APP_URL);
             $destinationPath = 'storage/images/avatars/'.$user->id;
             $profileImage = $request->file('avatar')->getClientOriginalName(); 
             $image->move($destinationPath, $profileImage);
