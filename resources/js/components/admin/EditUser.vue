@@ -83,20 +83,7 @@ export default {
         selectImage() {
             this.$refs.fileInput.click();
         },
-        // pickFile() {
-        //     let input = this.$refs.fileInput;
-        //     let file = input.files;
-        //     if (file && file[0]) {
-        //         let reader = new FileReader();
-        //         reader.onload = (e) => {
-        //             // this.user.avatar=e.target.file[0].name;
-        //             this.previewImage = e.target.result;
-        //             this.user.avatar = this.previewImage;
-        //         };
-        //         reader.readAsDataURL(file[0]);
-        //         this.$emit("input", file[0]);
-        //     }
-        // },
+
         getrooms() {
             axios
                 .get(apiBase + "rooms")

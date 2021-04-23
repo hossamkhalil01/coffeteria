@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 <lable>password</lable>
-                <input type="password" class="form-control" name="email" v-model="user.password" />
+                <input type="password" class="form-control" name="password" v-model="user.password" />
             </div>
 
             <div class="form-group">
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="Image">Your Profile</label>
                 <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
-   <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*"  required>
+                <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*" required>
             </div>
 
             <button type="submit" name="submit" class="btn btn-primary">
@@ -78,52 +78,23 @@ export default {
             formData.append('password', this.user.password)
             formData.append('room_id', this.user.room_id)
             axios.post(apiBase + "admin/create", formData)
-            .then((res) => {
-                this.$router.push({
-                    name: "AdminUsers",
+                .then((res) => {
+                    this.$router.push({
+                        name: "AdminUsers",
+                    });
+                    //  this.user = res.data;
                 });
-                //  this.user = res.data;
-            });
         },
-        changeImage(files) {
-            const file = files[0];
 
-            const data = new FormData();
-            data.append("avatar", file);
-
-            const response = axios.post(
-                "http://localhost:8000/api/upload",
-                data
-            );
-            this.user.avatar = response.data.url;
-        },
         onChange(e) {
-                this.user.avatar = e.target.files[0];
-                this.imageName = e.target.files[0].name; 
-                this.url = URL.createObjectURL(this.user.avatar);
-                console.log(this.user);
-            },
+            this.user.avatar = e.target.files[0];
+            this.imageName = e.target.files[0].name;
+            this.url = URL.createObjectURL(this.user.avatar);
+            console.log(this.user);
+        },
         selectImage() {
             this.$refs.fileInput.click();
         },
-        pickFile(e) {
-            // this.user.avatar = e.target.files[0].name
-            let input = this.$refs.fileInput;
-            let file = input.files;
-            if (file && file[0]) {
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    this.previewImage = e.target.result;
-                    this.user.avatar = this.previewImage;
-                };
-                reader.readAsDataURL(file[0]);
-                this.$emit("input", file[0]);
-            }
-        },
-
-        // console.log(e.target.files[0]);
-        // this.user.avatar = e.target.files[0].name;
-        // this.image = e.target.files[0];
 
         getrooms() {
             axios
