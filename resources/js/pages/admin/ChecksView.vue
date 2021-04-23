@@ -49,9 +49,10 @@
   <!-- End of selection section -->
 
   <!-- Start of checks display  -->
-  <div>
+  <div class="mt-3">
     <!-- Start of checks table -->
     <Checks
+      :selected-check-Id="selectedCheck ? selectedCheck.id : 0"
       :checks="currentChecks"
       @checkSelected="updateSelectedCheck"
     ></Checks>
@@ -66,9 +67,9 @@
   <!-- Start of checks details section-->
   <div class="mt-5 mb-4">
     <order-products
+      v-if="selectedCheck"
       :products="checkProducts"
       :order="selectedCheck"
-      v-if="selectedCheck"
     ></order-products>
   </div>
   <!-- End of checks details section -->
@@ -123,6 +124,9 @@ export default {
 
     handleUserSelection: function (event) {
       this.selectedUserId = event.target.value;
+      // clear details selection
+      this.selectedCheck = null;
+      //update checks
       this.updateChecks();
     },
 
@@ -137,6 +141,8 @@ export default {
       this.toDate = event.target.value;
 
       if (this.fromDate) this.updateChecks();
+
+      // reset the selected Check
     },
     updateChecks: function () {
       const params = {

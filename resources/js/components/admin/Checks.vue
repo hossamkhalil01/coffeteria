@@ -18,12 +18,14 @@
         </thead>
         <tbody>
           <tr
+            id="selectedDiv"
             v-for="check in checks"
             :key="check.id"
-            :v-if="selectedCheckId == check.id"
+            :class="selectedCheckId == check.id ? 'bg-info text-light' : ''"
+            @click="checkSelected(check)"
           >
             <td>
-              <div id="dateDiv" @click="checkSelected(check)">
+              <div id="dateDiv">
                 <p class="fw-normal">{{ getDate(check.created_at) }}</p>
               </div>
             </td>
@@ -47,11 +49,10 @@ import { priceFormatter, dateFormatter } from "@helpers/formatters";
 export default {
   mounted() {},
   data() {
-    return {
-      selectedCheckId: null,
-    };
+    return {};
   },
   props: {
+    selectedCheckId: Number,
     checks: {
       type: Array,
       required: true,
@@ -73,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-#dateDiv {
+#selectedDiv {
   cursor: pointer;
 }
 </style>
