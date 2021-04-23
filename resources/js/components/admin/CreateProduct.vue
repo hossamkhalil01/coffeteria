@@ -81,9 +81,12 @@
                   <div class="col-8">
                     <input
                       name="image"
+                      id="product-image"
                       ref="fileInput"
                       type="file"
                       @input="pickFile"
+                      accept="image/*"
+                      required
                     />
                   </div>
                 </div>
@@ -155,6 +158,13 @@
     <br />
     <br />
     <br />
+
+    <span v-if="imageError" :class="[' alert alert-danger']"
+      >Please upload a valid image.</span
+    >
+    <br />
+    <br />
+    <br />
   </div>
 </template>
 
@@ -176,6 +186,7 @@ export default {
         category_id: "",
       },
       allerros: [],
+      imageError: false,
       success: false,
     };
   },
@@ -219,7 +230,22 @@ export default {
     },
 
     create_product() {
-      console.log("f", this.form);
+      var fileName = document.getElementById("product-image").value;
+
+      if (fileName == "") {
+        this.imageError = true;
+        return;
+      } else if (
+        fileName.split(".")[1].toUpperCase() == "PNG" ||
+        fileName.split(".")[1].toUpperCase() == "JPEG" ||
+        fileName.split(".")[1].toUpperCase() == "JPG"
+      ) {
+        this.imageError = false;
+      } else {
+        this.imageError = true;
+        return;
+      }
+
       axios
         .post(apiBase + "products", this.form)
         .then((resp) => {
