@@ -13,7 +13,7 @@
             <div class="row col-6">
 
           
-            <form v-on:submit.prevent="create_product">
+            <form v-on:submit.prevent="create_product" >
               <div class="row">
                 <div :class="['form-group', allerros.name ? 'has-error' : '']">
                      <div class="row mb-4">
@@ -127,7 +127,7 @@
                <button type="submit" class="btn btn-info " style="height: 50px;" >Submit</button>
                          </div>
                          <div class="col-3" >
-                   <button type="Reset" class=" btn btn-danger" style="height: 50px;" >Reset</button>
+                   <button type="Reset" @click.prevent="clear_form()" class=" btn btn-danger" style="height: 50px;" >Reset</button>
                       </div>
                    </div>
                    
@@ -210,7 +210,20 @@ export default {
         };
     },
     methods: {
-        //get Table data
+        //clear form
+        clear_form(){
+           this.form.name = "";
+                    this.form.price = "";
+                     this.form.is_available = 0;
+                    this.form.category_id = "";
+                    this.form.image = "";
+                    this.allerros = [];
+                    this.success = true;
+
+console.log("value",this.form.category_id);
+
+        },
+         //get Table data
         loadCategoryData() {
             axios
                 .get("http://localhost:8000/api/categories")
@@ -245,7 +258,7 @@ export default {
                     //reset form
                     this.form.name = "";
                     this.form.price = "";
-                    this.form.is_available = "";
+                    this.form.is_available = 0;
                     this.form.category_id = "";
                     this.form.image = "";
                     this.allerros = [];

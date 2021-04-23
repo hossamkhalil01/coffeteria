@@ -29,7 +29,7 @@
     </div>
     </div>
     <button type="submit" class="ms-5 btn btn-info m-3" style="height: 50px;width:10%;">Submit</button>
-    <button type="Reset" class="ms-1 btn btn-danger" style="height: 50px;width:10%;">Reset</button>
+  
     <br>
      <span v-if="allerros.label" :class="[' alert alert-danger ms-5']"
           style="height: 50px;width:10%;"> {{ allerros.label[0] }}</span>

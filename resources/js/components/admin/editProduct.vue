@@ -107,10 +107,10 @@
                    <div class="row  mb-4 ms-5 mt-5">
                          <div class="col-4">
                  
-              <button type="submit" class="btn btn-info " style="height: 50px;" >Submit</button>
+              <button type="submit" class="btn btn-info " style="height: 50px;" >Update</button>
                          </div>
                          <div class="col-3" >
-                <button type="Reset" class=" btn btn-danger" style="height: 50px;" >Reset</button>
+                <button type="Reset" @click.prevent="clear_form()" class=" btn btn-danger" style="height: 50px;" >Reset</button>
                          </div>
                    </div>
                    
@@ -190,6 +190,18 @@ export default {
         };
     },
     methods: {
+      clear_form(){
+           this.product.name = "";
+                    this.product.price = "";
+                    this.product.is_available = 0;
+                    this.product.category_id = "";
+                    this.product.image = "";
+                    this.allerros = [];
+                    this.success = true;
+
+
+
+        },
         loadCategoryData() {
             axios
                 .get("http://localhost:8000/api/categories")
