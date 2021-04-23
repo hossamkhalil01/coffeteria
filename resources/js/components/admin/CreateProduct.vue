@@ -1,10 +1,11 @@
 <template>
     <div class="container">
- 
+      
             <div class="bg_move">
                 <i class="fas fa-palette"></i>
                 <h1>ADD PRODUCT</h1>
             </div>
+
           
             <form v-on:submit.prevent="create_product">
               <div class="row">

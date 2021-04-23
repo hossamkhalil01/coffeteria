@@ -59,14 +59,14 @@
             <div
                 class="imagePreviewWrapper"
               
-               :style="{ 'background-image': `url(${previewImage})` }"
+               :style="{ 'background-image': `url(http://localhost:8000/storage/img/${product.image})` }"
               
                 @click="selectImage"
             ></div>
       
-            <!-- <input name="image" ref="fileInput"  type="file" @input="pickFile" /> -->
-            <input type="file" id="files" class="hidden" name="image" ref="fileInput"   @input="pickFile"/>
-             <label for="files">{{product.image}} </label>
+            <input name="image" ref="fileInput"  type="file" @input="pickFile" />
+            <!-- <input type="file" id="files" class="hidden" name="image" ref="fileInput"   @input="pickFile"/>
+             <label for="files">{{product.image}} </label> -->
             
         </div>  
 
@@ -83,7 +83,7 @@ export default {
   data() {
     return {
      
-      previewImage: null,
+      previewImage:null,
 
       //edit product
       product: {
@@ -172,7 +172,9 @@ export default {
                 .get(`http://localhost:8000/api/products/${this.$route.params.id}`)
                 .then((res) => {
                     this.product = res.data;
-                  
+                     this.previewImage=this.product.image;
+                        let input = this.$refs.fileInput;
+                         this.$emit("input", this.previewImage);
                 });
         },
 
@@ -188,9 +190,9 @@ export default {
   background-size: cover;
   background-position: center center;
 }
-input[type='file'] {
-  color: rgba(0, 0, 0, 0)
-}
+// input[type='file'] {
+//   color: rgba(0, 0, 0, 0)
+// }
 
 </style>
 

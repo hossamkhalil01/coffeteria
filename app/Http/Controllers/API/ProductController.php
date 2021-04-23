@@ -84,34 +84,91 @@ class ProductController extends Controller
     }
     public function update(Request $request, $id)
     {
-        //update user data
-        if ($request->isMethod('put')) {
+        // //update user data
+        // if ($request->isMethod('put')) {
 
-            $product  = Product::findOrfail($id);
-            $product->name = $request->get('name');
-            $product->price = $request->get('price');
-            $product->is_available = $request->get('is_available');
-            $product->category_id = $request->get('category_id');
+        //     $product  = Product::findOrfail($id);
+        //     $product->name = $request->get('name');
+        //     $product->price = $request->get('price');
+        //     $product->is_available = $request->get('is_available');
+        //     $product->category_id = $request->get('category_id');
             
-            $name = "";
+        //     $name = "";
     
     
-            if ($request->image) {
+        //     if ($request->image) {
     
-                $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-                \Image::make($request->image)->save('storage/img/' . $name);
+        //         $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+        //         \Image::make($request->image)->save('storage/img/' . $name);
     
-                $request->merge(['image' => $name]);
-            }
-            $product->image= $request->get('image');
+        //         $request->merge(['image' => $name]);
+        //     }
+        //     $product->image= $request->get('image');
 
            
-            // console.log($product);
-            $product->save();
-            return $product;
-        } else {
-            return ['message' => 'failed'];
+        //     // console.log($product);
+        //     $product->save();
+        //     return $product;
+        // } else {
+        //     return ['message' => 'failed'];
+        // }
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////
+        $request->validate(
+            [
+                'name' => 'required',
+                'price' => 'required',
+                'category_id' => 'required',
+            ]
+              
+          );
+        
+        $product= Product::find($id);
+
+    
+        $currentPhoto = $product->image;
+
+        if($request->image != $currentPhoto){
+
+            $name = time().'.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+            \Image::make($request->image)->save('storage/img/' . $name);
+            $request->merge(['image' => $name]);
+
+            $productPhoto = 'storage/img/'.$currentPhoto;
+
+            if(file_exists($productPhoto)){
+
+                @unlink($productPhoto);
+                
+            }
+           
         }
+
+        $product->update($request->all());
+
+        return ['message' => 'Success'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
   
     public function show($id)
