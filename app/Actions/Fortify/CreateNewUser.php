@@ -46,13 +46,13 @@ class CreateNewUser implements CreatesNewUsers
         if (request()->hasFile('avatar')) {
 
             $avatar = request()->file('avatar')->getClientOriginalName();
-            $avatar_path =  $avatar;
+            $avatar_path =  $user->id."/".$avatar;
 
             //save the avatar
             request()->file('avatar')->storeAs('avatars', $avatar_path, '');
 
             // update the path
-            $user->update(['avatar' => 'storage/avatars/' . $avatar_path]);
+            $user->update(['avatar' => 'storage/images/avatars/' . $avatar_path]);
         }
         return $user;
     }

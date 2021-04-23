@@ -41,14 +41,16 @@ class admincontroller extends Controller
 
         $input = $request->all();
         if ($image = $request->file('avatar')) {
-            $destinationPath = 'storage/avatars/';
-            $profileImage = 'storage/avatars/'.$request->file('avatar')->getClientOriginalName(); 
+            $destinationPath = 'storage/images/avatars/'.$user->id;
+            $profileImage = $request->file('avatar')->getClientOriginalName(); 
             $image->move($destinationPath, $profileImage);
-            $input['avatar'] = "$profileImage";
+            $input['avatar']= $destinationPath."/".$profileImage;
+            // $add->save();
+
         }
-        $update = $user->update($input);   
+        $user->update($input);   
         
-        if ($update){
+        if ($user){
             return response()->json(["succes"=>$input]);
         }else{
             return response()->json(["error"=>$input]);
@@ -63,17 +65,19 @@ class admincontroller extends Controller
 
 
         $input = $request->all();
-  
-        if ($image = $request->file('avatar')) {
-            $destinationPath = 'storage/avatars/';
-            $profileImage = 'storage/avatars/'.$request->file('avatar')->getClientOriginalName(); 
-            $image->move($destinationPath, $profileImage);
-            $input['avatar'] = "$profileImage";
-        }
+        $user = User::create($input);
 
-        $add = User::create($input);
-        dd($add);
-        if ($add){
+         if ($image = $request->file('avatar')) {
+             env(APP_URL);
+            $destinationPath = 'storage/images/avatars/'.$user->id;
+            $profileImage = $request->file('avatar')->getClientOriginalName(); 
+            $image->move($destinationPath, $profileImage);
+            $user->avatar = $destinationPath."/".$profileImage;
+            $user->save();
+
+        }
+        // dd($user);
+        if ($user){
             return response()->json(["is_done"=>true]);
         }else{
             return response()->json(["is_done"=>false]);

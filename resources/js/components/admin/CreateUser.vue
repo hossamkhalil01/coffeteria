@@ -4,21 +4,22 @@
         <form v-on:submit.prevent="adduser">
 
             <div class="form-group">
-                <lable>Name</lable>
+                <label>Name</label>
                 <input type="text" class="form-control item" name="name" placeholder="name" v-model="user.name" />
             </div>
 
             <div class="form-group">
-                <lable>Email</lable>
+                <label>Email</label>
                 <input type="email" class="form-control item" name="email" placeholder="email" v-model="user.email" />
             </div>
             <div class="form-group">
-                <lable>password</lable>
+                <label>password</label>
                 <input type="password" class="form-control item" placeholder="password" name="password" v-model="user.password" />
             </div>
 
             <div class="form-group">
-                <lable>Room number</lable>
+            
+                <label>Room number</label>
                 <select name="room_id" class="form-control item" v-model="user.room_id">
                     <option v-for="room in rooms" :value="room.id">
                         {{ room["number"] }}
@@ -85,6 +86,7 @@ export default {
                     });
                     //  this.user = res.data;
                 });
+            console.log(formData)
         },
 
         onChange(e) {

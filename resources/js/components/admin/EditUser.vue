@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="Image">Your Profile</label>
                 <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
-                <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*" required>
+                <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*" >
             </div>
 
             <button type="submit" class="btn btn-block create-account">Update</button>
