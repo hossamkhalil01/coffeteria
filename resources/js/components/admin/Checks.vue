@@ -49,20 +49,32 @@
       <!-- End User selection section -->
     </div>
     <!-- End of selection section -->
+
+    <!-- Start of checks display  -->
+    <div>
+      <!-- Start of checks table -->
+
+      <!-- End of checks table -->
+
+      <!-- Start of pagination section -->
+      <paginator @paginate="paginate" :links="paginationLinks"></paginator>
+      <!-- End of pagination section -->
+    </div>
+    <!-- End of checks display  -->
   </div>
 </template>
 
 <script>
 // configure datepickers
 // $("#fromDate").max = new Date().toISOString().split("T")[0];
-
-import { getChecks } from "@services/adminChecksService";
-import { getAllUsers } from "@services/usersService";
+import Paginator from "@layouts/Paginator";
+import { getChecksResource } from "@services/adminChecksService";
+import { getUsersResource } from "@services/usersService";
 
 export default {
   mounted() {
     this.updateChecks();
-    getAllUsers().then((res) => (this.users = res.data.data));
+    getUsersResource().then((res) => (this.users = res.data.data));
   },
   data() {
     return {
@@ -72,9 +84,24 @@ export default {
       selectedUserId: null,
       toDate: null,
       fromDate: null,
+      paginationLinks: [],
     };
   },
+  components: {
+    Paginator,
+  },
   methods: {
+    getChecks: function (params, url) {
+      getChecksResource(params, url)
+        .then((res) => {
+          this.currentChecks = res.data.data;
+          this.paginationLinks = res.data.meta.links;
+        })
+        .catch((err) => {
+          this.serverError = err.message;
+        });
+    },
+
     handleUserSelection: function (event) {
       this.selectedUserId = event.target.value;
       this.updateChecks();
@@ -99,11 +126,11 @@ export default {
         to: this.toDate,
         from: this.fromDate,
       };
-      getChecks(params)
-        .then((res) => (this.currentChecks = res.data.data))
-        .catch((err) => {
-          this.serverError = err.message;
-        });
+      this.getChecks(params);
+    },
+
+    paginate: function (url) {
+      this.getChecks({}, url);
     },
   },
   props: {},

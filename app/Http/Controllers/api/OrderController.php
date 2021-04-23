@@ -139,14 +139,14 @@ class OrderController extends Controller
 
             // check if user exists
             $user = User::find($owner_id);
+            if (!$user) return $this->error_response("404", "user not found");
 
-            if (!$user) $this->error_response("404", "user not found");
-            $orders = $user->orders;
+            $orders = $user->orders();
         } else {
-            $orders = Order::all();
+            $orders = Order::orderBy('created_at', 'desc');
         }
 
-        return new OrderResource($orders);
+        return $this->prepare_orders_response($orders);
     }
 
     public function get_orders_by_date(Request $request)
@@ -179,11 +179,17 @@ class OrderController extends Controller
 
         array_push($filter, ['created_at', '>=', $from], ['created_at', '<=', $to]);
 
-        return new OrderResource(Order::where($filter));
+        return $this->prepare_orders_response(Order::where($filter));
     }
 
     private function error_response($status, $msg)
     {
         return response(["data" => null, "message" => $msg], $status);
+    }
+
+    private function prepare_orders_response($orders)
+    {
+        return new OrderResource($orders->orderBy('created_at', 'desc')
+            ->paginate(5)->withQueryString());
     }
 }

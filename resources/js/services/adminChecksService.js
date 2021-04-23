@@ -1,9 +1,8 @@
 import * as request from "@helpers/requests.js";
+import { apiBase } from "@helpers/urls.js";
 
-export const getChecks = (params) => {
-    return request.get("orders", params);
+export const getChecksResource = (params, url = "") => {
+    if (!url) return request.get(apiBase + "orders", params);
+
+    return request.get(url, params);
 };
-
-// export const getChecksByParmas = ({ owner_id, from, to }) => {
-//     return request.get("orders", { owner_id, from, to });
-// };

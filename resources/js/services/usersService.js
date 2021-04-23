@@ -1,5 +1,8 @@
 import * as request from "@helpers/requests.js";
+import { apiBase } from "@helpers/urls.js";
 
-export const getAllUsers = () => {
-    return request.get("users");
+export const getUsersResource = (params, url = "") => {
+    if (!url) return request.get(apiBase + "users", params);
+
+    return request.get(url, params);
 };
