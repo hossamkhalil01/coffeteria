@@ -121,6 +121,7 @@ background-color: #dee9ff;
 }
 .registration-form {
     
+    
     padding: 50px 0;
 }
 
