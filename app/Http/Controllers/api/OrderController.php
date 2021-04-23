@@ -123,7 +123,7 @@ class OrderController extends Controller
             $from = new DateTime($validatedData["from"]);
             $to = date_add(new DateTime($validatedData["to"]), date_interval_create_from_date_string('1 day'));
 
-            return new OrderResource(Order::where([["owner_id", "=", $user_id], ["created_at", ">=", $from],  ["created_at", "<=", $to]])->paginate(5));
+            return new OrderResource(Order::where([["owner_id", "=", $user_id], ["created_at", ">=", $from],  ["created_at", "<=", $to]])->orderBy("created_at", "desc")->paginate(5));
         } else {
             return response()->json(["data" => []]);
         }

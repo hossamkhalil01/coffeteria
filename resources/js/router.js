@@ -21,7 +21,7 @@ const routes = [
             {
                 path: "/home",
                 name: "UserHome",
-                component: loadComponent("user", "Home"),
+                component: loadComponent("home", "Home"),
             },
             {
                 path: "/order",
@@ -53,7 +53,7 @@ const routes = [
         children: [
             {
                 path: "/admin/home",
-                component: loadComponent("admin", "Home"),
+                component: loadComponent("home", "Home"),
                 name: "AdminHome",
             },
             {

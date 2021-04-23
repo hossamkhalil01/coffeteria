@@ -3,23 +3,19 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <!-- start of latest order section -->
-        <div class="row justify-content-center">
-          <h3 class="fw-bold text-center mt-3">Latest Order</h3>
-          <div
-            class="col-lg-2 mt-3"
-            v-for="order_product in latest_order"
-            :key="order_product.id"
-          >
-            <img
-              src="https://www.telegraph.co.uk/content/dam/health-fitness/2020/01/09/TELEMMGLPICT000169578515_trans_NvBQzQNjv4BqbTl4D02iCM3NuMfK2RT0HTjsyN2j3JnAYXPi059mk8g.jpeg"
-              alt=""
-            />
-            <p class="product-name text-center">
-              {{ order_product.name }}
-            </p>
-          </div>
-        </div>
+        <latestOrderComponent
+          v-if="!checkUserIsAdmin()"
+          v-bind:latest_order="latest_order"
+        />
         <!-- end latest order section -->
+        <!-- start of users dropdwon section -->
+        <users-drop-down
+          v-if="checkUserIsAdmin()"
+          v-bind:users="users"
+          v-bind:user_error="user_error"
+          @userChoosen="addUser"
+        />
+        <!-- end of users dropdown section -->
         <div class="row justify-content-center">
           <hr class="text-center w-50" />
         </div>
@@ -47,7 +43,11 @@
       </div>
       <!-- start of order section -->
       <div class="col-md-5">
-        <newordercomponent v-bind:orderedproducts="orderedProducts" />
+        <newordercomponent
+          v-bind:orderedproducts="orderedProducts"
+          v-bind:user_id="user_id"
+          @userError="userError"
+        />
       </div>
       <!-- end of order section -->
     </div>
@@ -58,6 +58,9 @@
 import * as user from "@helpers/currentUser.js";
 import { apiBase, imgBase } from "@helpers/urls.js";
 import newordercomponent from "@components/user/newOrder";
+import latestOrderComponent from "@components/user/LatestOrder";
+import { csrf } from "@services/authenticationService.js";
+import UsersDropDown from "@components/admin/UsersDropDown";
 
 export default {
   mounted() {},
@@ -66,19 +69,33 @@ export default {
       apiBase: apiBase,
       imgBase: imgBase,
       user: user,
+      csrf: csrf,
       products: [],
       latest_order: [],
       orderedProducts: [],
+      users: [],
+      user_id: null,
+      user_error: false,
     };
   },
   components: {
     newordercomponent,
+    latestOrderComponent,
+    UsersDropDown,
   },
   created() {
-    axios.get(apiBase + this.user.id).then((response) => {
-      this.products = response.data.products;
-      this.latest_order = response.data.latest_order;
-    });
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
+    if (this.user.role !== "admin") {
+      axios.get(apiBase + this.user.id).then((response) => {
+        this.products = response.data.products;
+        this.latest_order = response.data.latest_order;
+      });
+    } else {
+      axios.get(apiBase + "admin/index").then((response) => {
+        this.products = response.data.products;
+        this.users = response.data.users;
+      });
+    }
   },
   methods: {
     currencyFormatter(price) {
@@ -98,6 +115,17 @@ export default {
         product.product_id = product.id;
         this.orderedProducts.push(product);
       }
+    },
+    checkUserIsAdmin() {
+      if (this.user.role !== "admin") return false;
+      return true;
+    },
+    addUser(user_id) {
+      this.user_error = false;
+      this.user_id = user_id;
+    },
+    userError() {
+      this.user_error = true;
     },
   },
 };

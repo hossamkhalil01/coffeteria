@@ -31,8 +31,12 @@ Route::apiResource("/products", ProductController::class);
 Route::get('/categories', [ProductController::class, 'getCategories']);
 
 Route::post('/addCategory', [ProductController::class, 'addCategory']);
+
+// orders routes
 Route::get("{user_id}/orders/range", [OrderController::class,  "get_orders_within_date_range"])->name("orders.range");
 Route::apiResource("{user_id}/orders", OrderController::class);
+// home routes
+Route::get("/admin/index", [HomeController::class, "admin_index"])->name("admin_index");
 Route::get("/rooms", [HomeController::class, "get_rooms"])->name("get_rooms");
 Route::get("/{user_id}", [HomeController::class, "index"])->name("index");
 Route::get('/admin/getusers', [admincontroller::class, 'GetAllUsers']);
