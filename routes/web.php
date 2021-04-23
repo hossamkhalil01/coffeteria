@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\auth\SocialLoginController;
+use App\Http\Controllers\auth\SocialLogin;
 
 /*
 |--------------------------------------------------------------------------
