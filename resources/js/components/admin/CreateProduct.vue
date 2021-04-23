@@ -90,8 +90,9 @@
                 <span v-if="success" :class="['label label-success']"
                     >Record submitted successfully!</span
                 >
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="Reset" class="btn btn-primary">Reset</button>
+            
+                <button type="submit" class="ms-5 btn btn-info m-3" style="height: 50px;width:10%;">Submit</button>
+                <button type="Reset" class="ms-1 btn btn-danger" style="height: 50px;width:10%;">Reset</button>
                 <br />
                 <span v-if="allerros.name" :class="[' alert alert-danger']"
                     >{{ allerros.name[0] }}</span
