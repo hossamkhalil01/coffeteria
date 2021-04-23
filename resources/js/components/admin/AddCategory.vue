@@ -1,29 +1,39 @@
 <template>
+<div class="container">
+ 
   <div class="bg_move">
                 <i class="fas fa-palette"></i>
                 <h1>ADD Category</h1>
             </div>
   <form v-on:submit.prevent="addCategory"  :class="['form-group', allerros.label? 'has-error' : '']">
+   
     <div class="form-group">
-      <label for="Name">Category</label>
+      <div class="row m-5">
+        <div class="col-1" ms-2>
+      <label for="Name" style="font-weight:bold;font-size:20px;color:#dc3545;">Category</label>
+        </div>
+        <div  class="col-3">
       <input
         type="text"
         name="label"
         class="form-control"
         id="Name"
+        style="height: 40px;border-radius:20;"
        
         aria-describedby="emailHelp"
         placeholder="Enter Categoryname"
         v-model="form.label"
       />
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <button type="Reset" class="btn btn-primary">Reset</button>
-
-     <span v-if="allerros.label" :class="[' alert alert-danger']"
-                    >@{{ allerros.label[0] }}</span
-                >
+    </div>
+    <button type="submit" class="ms-5 btn btn-info m-3" style="height: 50px;width:10%;">Submit</button>
+    <button type="Reset" class="ms-1 btn btn-danger" style="height: 50px;width:10%;">Reset</button>
+    <br>
+     <span v-if="allerros.label" :class="[' alert alert-danger ms-5']"
+          style="height: 50px;width:10%;"> @{{ allerros.label[0] }}</span>
   </form>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div>
       <h2>Edit Product</h2>
       <form v-on:submit.prevent="update(product.id)">
