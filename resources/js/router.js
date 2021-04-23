@@ -85,6 +85,11 @@ const routes = [
                 name: "AdminAddCategory",
                 component: loadComponent("admin", "AddCategory"),
             },
+            {
+                path: "admin/product/edit",
+                name: "AdminEditProduct",
+                component: loadComponent("admin", "editProduct"),
+            },
         ],
     },
     {
