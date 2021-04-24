@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\auth\SocialLoginController;
+use App\Http\Controllers\auth\SocialLogin;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,9 @@ use App\Http\Controllers\auth\SocialLoginController;
 |
 */
 
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
 // Socail auth routes
 Route::get('oauth/{driver}', [SocialLoginController::class, 'redirectToProvider'])
     ->name('social.oauth');

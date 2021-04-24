@@ -110,13 +110,13 @@
 <script>
 import { apiBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
-import axios from "axios";
+import { csrf } from "@services/authenticationService.js";
 
 export default {
   mounted() {},
   data() {
     return {
-      apiBase: apiBase,
+      csrf: csrf,
       user: user,
       rooms: [],
       totalPrice: 0,
@@ -129,6 +129,7 @@ export default {
   },
   props: {
     orderedproducts: Array,
+    user_id: Number,
   },
   updated() {
     if (this.orderedproducts.length > 0) {
@@ -136,6 +137,7 @@ export default {
     }
   },
   created() {
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
     axios.get(apiBase + "rooms").then((response) => {
       this.rooms = response.data;
     });
@@ -208,14 +210,31 @@ export default {
         ordered_products: ordered_products,
         total_price: this.totalPrice,
       };
-      axios
-        .post(apiBase + this.user.id + "/orders", formData)
-        .then((res) => {
-          this.onSuccess(res.data.message);
-        })
-        .catch((error) => {
-          this.onFailure(error.response.data);
-        });
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
+      if (!this.checkUserIsAdmin()) {
+        axios
+          .post(apiBase + this.user.id + "/orders", formData)
+          .then((res) => {
+            this.onSuccess(res.data.message);
+          })
+          .catch((error) => {
+            this.onFailure(error.response.data);
+          });
+      } else {
+        if (!this.user_id) {
+          console.log("errorrr");
+          this.$emit("userError");
+        } else {
+          axios
+            .post(apiBase + this.user_id + "/orders", formData)
+            .then((res) => {
+              this.$router.push({ name: "AdminChecks" });
+            })
+            .catch((error) => {
+              this.onFailure(error.response.data);
+            });
+        }
+      }
     },
     onSuccess(message) {
       this.$router.push({ name: "UserOrder" });
@@ -226,6 +245,10 @@ export default {
     },
     removeRoomError() {
       delete this.errors.room_id;
+    },
+    checkUserIsAdmin() {
+      if (this.user.role !== "admin") return false;
+      return true;
     },
   },
   computed: {

@@ -1,83 +1,88 @@
 <template>
-  <!-- Start of selection section -->
+  <div>
+    <!-- Start of selection section -->
 
-  <div class="mt-4 row justify-content-center">
-    <!-- Start error section -->
-    <div class="container-fluid row justify-content-center" v-if="serverError">
-      <div class="alert alert-danger col-3 text-center">
-        <li>{{ serverError }}</li>
+    <div class="mt-4 row justify-content-center">
+      <!-- Start error section -->
+      <div
+        class="container-fluid row justify-content-center"
+        v-if="serverError"
+      >
+        <div class="alert alert-danger col-3 text-center">
+          <li>{{ serverError }}</li>
+        </div>
       </div>
+      <!-- End errors section -->
+      <!-- Start date picker section -->
+      <div class="col-6 row justify-content-evenly">
+        <div class="col-3">
+          <label for="from" class="d-block">From</label>
+          <input
+            id="fromDatePicker"
+            class="btn btn-primary"
+            name="from"
+            type="date"
+            :onChange="handleFromDateSelection"
+          />
+        </div>
+        <div class="col-3">
+          <label for="from" class="d-block">To</label>
+          <input
+            id="toDatePicker"
+            class="btn btn-primary"
+            name="to"
+            type="date"
+            :onChange="handleToDateSelection"
+          />
+        </div>
+      </div>
+      <!-- End date picker section -->
+
+      <!-- Start User selection section -->
+      <div class="row justify-content-center mt-4">
+        <div class="col-3">
+          <select
+            class="form-select"
+            name="users"
+            aria-label="Default select example"
+            :onChange="handleUserSelection"
+          >
+            <option selected :value="null">Select a user</option>
+
+            <option v-for="user in users" :key="user.id" :value="user.id">
+              <img :src="user.avatar" /> {{ user.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- End User selection section -->
     </div>
-    <!-- End errors section -->
-    <!-- Start date picker section -->
-    <div class="col-6 row justify-content-evenly">
-      <div class="col-3">
-        <label for="from" class="d-block">From</label>
-        <input
-          id="fromDatePicker"
-          class="btn btn-primary"
-          name="from"
-          type="date"
-          :onChange="handleFromDateSelection"
-        />
-      </div>
-      <div class="col-3">
-        <label for="from" class="d-block">To</label>
-        <input
-          id="toDatePicker"
-          class="btn btn-primary"
-          name="to"
-          type="date"
-          :onChange="handleToDateSelection"
-        />
-      </div>
+    <!-- End of selection section -->
+
+    <!-- Start of checks display  -->
+    <div class="mt-3">
+      <!-- Start of checks table -->
+      <Checks
+        :selected-check-Id="selectedCheck ? selectedCheck.id : 0"
+        :checks="currentChecks"
+        @checkSelected="updateSelectedCheck"
+      ></Checks>
+      <!-- End of checks table -->
+
+      <!-- Start of pagination section -->
+      <paginator @paginate="paginate" :links="paginationLinks"></paginator>
+      <!-- End of pagination section -->
     </div>
-    <!-- End date picker section -->
+    <!-- End of checks display  -->
 
-    <!-- Start User selection section -->
-    <div class="row justify-content-center mt-4">
-      <div class="col-3">
-        <select
-          class="form-select"
-          name="users"
-          aria-label="Default select example"
-          :onChange="handleUserSelection"
-        >
-          <option selected :value="null">Select a user</option>
-
-          <option v-for="user in users" :key="user.id" :value="user.id">
-            <img :src="user.avatar" /> {{ user.name }}
-          </option>
-        </select>
-      </div>
+    <!-- Start of checks details section-->
+    <div class="mt-5 mb-4">
+      <order-products
+        v-if="selectedCheck"
+        :products="checkProducts"
+        :order="selectedCheck"
+      ></order-products>
     </div>
-    <!-- End User selection section -->
-  </div>
-  <!-- End of selection section -->
-
-  <!-- Start of checks display  -->
-  <div class="mt-3">
-    <!-- Start of checks table -->
-    <Checks
-      :selected-check-Id="selectedCheck ? selectedCheck.id : 0"
-      :checks="currentChecks"
-      @checkSelected="updateSelectedCheck"
-    ></Checks>
-    <!-- End of checks table -->
-
-    <!-- Start of pagination section -->
-    <paginator @paginate="paginate" :links="paginationLinks"></paginator>
-    <!-- End of pagination section -->
-  </div>
-  <!-- End of checks display  -->
-
-  <!-- Start of checks details section-->
-  <div class="mt-5 mb-4">
-    <order-products
-      v-if="selectedCheck"
-      :products="checkProducts"
-      :order="selectedCheck"
-    ></order-products>
   </div>
   <!-- End of checks details section -->
 </template>

@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
-    <div class="row justify-content-center">
-      <h3 class="fw-bold text-center mt-3">My Orders</h3>
+    <h3 class="fw-bold text-center mt-3">My Orders</h3>
+    <div class="row justify-content-center align-items-baseline mt-3">
       <!-- start of date pickers -->
-      <div class="col-md-3 mt-3">
+      <div class="col-md-3 text-center">
         <label for="date-from" class="me-3">Date From: </label>
         <input
           type="date"
@@ -13,7 +13,7 @@
           @change="getOrdersWithinRange"
         />
       </div>
-      <div class="col-md-3 mt-3">
+      <div class="col-md-3 text-center">
         <label for="date-to" class="me-3">Date To: </label>
         <input
           type="date"
@@ -41,7 +41,7 @@
             <tr v-for="order in orders" :key="order.id">
               <th scope="row">
                 <a href="#" @click.prevent="getOrderProducts(order)">{{
-                  Date(order.created_at)
+                  convertDate(order.created_at)
                 }}</a>
               </th>
               <td>{{ order.status }}</td>
@@ -120,8 +120,8 @@
       >
         <a href="">
           <img
-            src="https://www.telegraph.co.uk/content/dam/health-fitness/2020/01/09/TELEMMGLPICT000169578515_trans_NvBQzQNjv4BqbTl4D02iCM3NuMfK2RT0HTjsyN2j3JnAYXPi059mk8g.jpeg"
-            alt=""
+            :src="imgBase + ordered_product.image"
+            :alt="ordered_product.name"
           />
           <span class="badge rounded-pill bg-info text-dark">{{
             currencyFormatter(ordered_product.price)
@@ -148,16 +148,18 @@
 </template>
 
 <script>
-import { apiBase } from "@helpers/urls.js";
+import { apiBase, imgBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
-import axios from "axios";
+import { csrf } from "@services/authenticationService.js";
 
 export default {
   mounted() {},
   data() {
     return {
       apiBase: apiBase,
+      imgBase: imgBase,
       user: user,
+      csrf: csrf,
       orders: [],
       pagination_links: {},
       from: null,
@@ -180,18 +182,37 @@ export default {
       return formatter.format(price);
     },
     paginate(new_url) {
-      axios.get(new_url).then((response) => {
-        this.orders = response.data.data;
-        this.pagination_links = response.data.meta.links;
-      });
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
+      if (this.from && this.to) {
+        axios
+          .get(new_url, {
+            params: {
+              from: this.from,
+              to: this.to,
+            },
+          })
+          .then((response) => {
+            this.orders = response.data.data;
+            this.pagination_links = response.data.meta.links;
+          });
+      } else {
+        axios.get(new_url).then((response) => {
+          this.orders = response.data.data;
+          this.pagination_links = response.data.meta.links;
+        });
+      }
+      this.ordered_products = [];
     },
     getAllOrders() {
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios.get(apiBase + this.user.id + "/orders").then((response) => {
         this.orders = response.data.data;
         this.pagination_links = response.data.meta.links;
       });
+      this.ordered_products = [];
     },
     getOrdersWithinRange() {
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       if (this.from && this.to) {
         axios
           .get(apiBase + this.user.id + "/orders/range", {
@@ -211,8 +232,10 @@ export default {
       if (!this.from && !this.to) {
         this.getAllOrders();
       }
+      this.ordered_products = [];
     },
     cancelOrder(order) {
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .put(apiBase + this.user.id + "/orders/" + order.id, {
           status: "Cancelled",
@@ -222,12 +245,17 @@ export default {
         });
     },
     getOrderProducts(order) {
+      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .get(apiBase + this.user.id + "/orders/" + order.id)
         .then((response) => {
           this.clickedOrder = order;
           this.ordered_products = response.data.data.products;
         });
+    },
+    convertDate(order_date) {
+      const new_date = new Date(order_date);
+      return new_date.toString();
     },
   },
 };
