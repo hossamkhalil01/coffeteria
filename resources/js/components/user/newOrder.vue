@@ -111,11 +111,13 @@
 import { apiBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
 import { csrf } from "@services/authenticationService.js";
+import { priceFormatter } from "@helpers/formatters.js";
 
 export default {
   mounted() {},
   data() {
     return {
+      currencyFormatter: priceFormatter,
       csrf: csrf,
       user: user,
       rooms: [],
@@ -143,14 +145,6 @@ export default {
     });
   },
   methods: {
-    currencyFormatter(price) {
-      let formatter = Intl.NumberFormat("eg-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(price);
-    },
     increaseProductQuantity(product) {
       const newQuantity = product.quantity + 1;
       if (newQuantity >= 100) {
