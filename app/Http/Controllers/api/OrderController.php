@@ -202,7 +202,7 @@ class OrderController extends Controller
     }
 
     public function get_processing_orders(Request $request){
-        $order=Order::where('status','Processing')->with('products')->get();
+        $order=Order::where('status','Processing')->with('products','room','owner')->get();
         return response()->json($order);
 
     }

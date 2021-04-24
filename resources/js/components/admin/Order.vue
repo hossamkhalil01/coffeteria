@@ -3,8 +3,8 @@
 
     <!-- Start of checks table-->
     <div class="col-6 mb-3">
-<h1 >Orders</h1>
-        <table class="table table-hover" style="border: 1px solid">
+        <h1>Orders</h1>
+        <table class="table table-hover" style="border: 1px solid" v-for="order in orders">
             <thead>
                 <tr>
                     <th class="table-primary">Order Date</th>
@@ -13,28 +13,37 @@
                     <th class="table-primary">ext</th>
                     <th class="table-primary">Action</th>
                 </tr>
+                
             </thead>
 
-            <tbody>
-                <tr v-for="order in orders">
-                    <td>{{ order.created_at }}</td>
+            <tbody >
+                <tr>
+                    <td>{{ getDate(order.created_at) }}</td>
                     <td>
-                        {{ order.room_id }}
+                        {{ order.owner.name }}
                     </td>
                     <td>
-                        <img :src="``" class="profile-user-img img-fluid img-circle" style="height: 40px; width: 40px" />
+                        {{ order.room.number }}
                     </td>
                     <td>
+                        {{ order.room.land_mark }}
                     </td>
 
                     <td>
-                       
+
                         <a type="button" class="btn btn-danger" @click="deleteUser(user.id)">
-                            Delete
+                            Deliver
                         </a>
                     </td>
 
                 </tr>
+              
+                <div>
+                {{}}
+                </div>
+                
+               
+
             </tbody>
         </table>
 
@@ -44,15 +53,21 @@
 </template>
 
 <script>
-import { apiBase } from "@helpers/urls.js";
+import {
+    apiBase
+} from "@helpers/urls.js";
+import {
+    priceFormatter,
+    dateFormatter
+} from "@helpers/formatters";
+
 export default {
     mounted() {},
     data() {
         return {
-          orders:{
+            orders: {
 
-
-          }
+            }
         };
     },
     props: {
@@ -62,7 +77,7 @@ export default {
         },
     },
     methods: {
-       getorders() {
+        getorders() {
             axios
                 .get(apiBase + "admin/getorders")
                 .then((data) => (this.orders = data.data))
@@ -70,9 +85,17 @@ export default {
                     console.log("Error...");
                 });
         },
+        getDate: function (date) {
+            return dateFormatter(date);
+        },
+
+        getAmount: function (check) {
+            return priceFormatter(check.total_price);
+        },
     },
-    created(){
-      this.getorders()
+
+    created() {
+        this.getorders()
     }
 };
 </script>
