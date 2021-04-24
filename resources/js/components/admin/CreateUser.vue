@@ -48,7 +48,7 @@
         </div>
 
         <div class="form-group">
-          <label for="Image">Your Profile</label>
+          <label for="Image">Profile Picture (optional)</label>
           <div
             class="imagePreviewWrapper"
             :style="{ 'background-image': `url(${previewImage})` }"
@@ -61,7 +61,6 @@
             v-on:change="onChange"
             id="validatedCustomFile"
             accept="image/*"
-            required
           />
         </div>
 
@@ -104,7 +103,7 @@ export default {
         },
       };
       const formData = new FormData();
-      formData.append("avatar", this.user.avatar);
+      if (this.user.avatar) formData.append("avatar", this.user.avatar);
       formData.append("name", this.user.name);
       formData.append("email", this.user.email);
       formData.append("password", this.user.password);
@@ -113,9 +112,7 @@ export default {
         this.$router.push({
           name: "AdminUsers",
         });
-        //  this.user = res.data;
       });
-      console.log(formData);
     },
 
     onChange(e) {
