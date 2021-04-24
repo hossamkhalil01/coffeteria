@@ -38,6 +38,13 @@ Route::apiResource("{user_id}/orders", OrderController::class);
 // home routes
 Route::get("/admin/index", [HomeController::class, "admin_index"])->name("admin_index");
 Route::get("/rooms", [HomeController::class, "get_rooms"])->name("get_rooms");
+
+
+// checks
+Route::get("/orders", [OrderController::class, "get_orders"]);
+Route::get("/orders/{id}", [OrderController::class, "get_order"]);
+Route::apiResource("/users", UserController::class);
+
 Route::get("/{user_id}", [HomeController::class, "index"])->name("index");
 Route::get('/admin/getusers', [admincontroller::class, 'GetAllUsers']);
 
@@ -48,5 +55,5 @@ Route::patch('/admin/edituser/{id}', [admincontroller::class, 'update']);
 Route::get('/admin/getusers/{id}', [admincontroller::class, 'showuser']);
 Route::post('/admin/create', [admincontroller::class, 'store']);
 
-Route::post('upload', [imagecontroller::class,'upload']);
+Route::post('upload', [imagecontroller::class, 'upload']);
 Route::resource('/rooms', roomcontroller::class);
