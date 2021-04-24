@@ -8,7 +8,9 @@ export const getUsersResource = (params, url = "") => {
 
 export const getUserAvatar = (user) => {
     // not joined with social auths
-    if (!user.provider) return avatarsImgBase + user.avatar;
 
+    if (!user.provider) {
+        return avatarsImgBase + user.avatar;
+    }
     return user.avatar;
 };

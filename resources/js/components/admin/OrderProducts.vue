@@ -7,12 +7,54 @@
       <!-- start of order products -->
       <div class="row mt-5 justify-content-evenly">
         <div
+          class="card mb-4 col-md-1 me-3 p-2"
+          style="width: 15rem"
+          v-for="product in products"
+          :key="product.id"
+        >
+          <img
+            :src="productsImgBase + product.image"
+            class="card-img-top"
+            style="height: 50%"
+            :alt="product.name"
+          />
+
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <h5
+                class="col-6 card-title badge rounded-pill bg-info text-dark mt-2 mb-3"
+              >
+                {{ getPrice(product.price) }}
+              </h5>
+            </div>
+
+            <p class="card-text fw-bolder text-center">
+              <span>{{ product.pivot.quantity }}</span>
+              <span> x {{ product.name }} </span>
+            </p>
+
+            <p class="card-text lead fs-6 fw-bolder text-center">
+              Total:
+              {{ getPrice(product.price * product.pivot.quantity) }}
+            </p>
+            <!-- <a
+              href="{% url 'project_details' project.id %}"
+              class="btn btn-primary"
+              >More Details</a
+            > -->
+          </div>
+        </div>
+        <!-- <div
           class="col-2 border border-success ps-0 pe-0"
           v-for="product in products"
           :key="product.id"
         >
           <div>
-            <img :src="productsImgBase + product.image" :alt="product.name" />
+            <img
+              :src="productsImgBase + product.image"
+              :alt="product.name"
+              style="min-height: 150px"
+            />
             <div class="row justify-content-center">
               <p class="col-6 badge rounded-pill bg-info text-dark mt-2">
                 {{ getPrice(product.price) }}
@@ -27,7 +69,7 @@
             Total:
             {{ getPrice(product.price * product.pivot.quantity) }}
           </p>
-        </div>
+        </div> -->
       </div>
       <!-- end of order products -->
 
