@@ -21,11 +21,11 @@
             id="selectedDiv"
             v-for="check in checks"
             :key="check.id"
-            :class="selectedCheckId == check.id ? 'bg-info text-light' : ''"
+            :class="selectedCheckId == check.id ? 'bg-info text-light ' : ''"
             @click="checkSelected(check)"
           >
             <td>
-              <div id="dateDiv">
+              <div id="dateDiv ">
                 <p class="fw-normal">{{ getDate(check.created_at) }}</p>
               </div>
             </td>

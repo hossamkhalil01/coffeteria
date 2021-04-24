@@ -1,7 +1,7 @@
 <template>
   <!-- Start of selection section -->
 
-  <div class="row justify-content-center">
+  <div class="mt-4 row justify-content-center">
     <!-- Start error section -->
     <div class="container-fluid row justify-content-center" v-if="serverError">
       <div class="alert alert-danger col-3 text-center">
@@ -10,21 +10,21 @@
     </div>
     <!-- End errors section -->
     <!-- Start date picker section -->
-    <div class="container-fluid col-3 row justify-content-around">
-      <div class="col-6">
-        <label for="from" class="me-2">From</label>
+    <div class="col-6 row justify-content-evenly">
+      <div class="col-3">
+        <label for="from" class="d-block">From</label>
         <input
-          id="fromDate"
+          id="fromDatePicker"
           class="btn btn-primary"
           name="from"
           type="date"
           :onChange="handleFromDateSelection"
         />
       </div>
-      <div class="col-6">
-        <label for="from" class="me-2">To</label>
+      <div class="col-3">
+        <label for="from" class="d-block">To</label>
         <input
-          id="toDate"
+          id="toDatePicker"
           class="btn btn-primary"
           name="to"
           type="date"
@@ -35,8 +35,8 @@
     <!-- End date picker section -->
 
     <!-- Start User selection section -->
-    <div class="row justify-content-center mt-5">
-      <div class="container-fluid col-3">
+    <div class="row justify-content-center mt-4">
+      <div class="col-3">
         <select
           class="form-select"
           name="users"
@@ -83,8 +83,12 @@
 </template>
 
 <script>
-// configure datepickers
-// $("#fromDate").max = new Date().toISOString().split("T")[0];
+import { getTodayDateString } from "@helpers/formatters.js";
+$("document").ready(() => {
+  // configure datepicker
+  document.getElementById("toDatePicker").max = getTodayDateString();
+});
+
 import Paginator from "@layouts/Paginator";
 import Checks from "@components/admin/Checks";
 import OrderProducts from "@components/admin/OrderProducts";
@@ -186,3 +190,9 @@ export default {
   props: {},
 };
 </script>
+
+<style scoped>
+select {
+  cursor: pointer;
+}
+</style>

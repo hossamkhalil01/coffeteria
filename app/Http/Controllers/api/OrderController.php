@@ -127,7 +127,6 @@ class OrderController extends Controller
         }
     }
 
-
     public function get_orders(Request $request)
     {
         $filter = array();
@@ -160,7 +159,6 @@ class OrderController extends Controller
 
         return $this->prepare_orders_response(Order::where($filter));
     }
-
 
     public function get_order($id, Request $request)
     {
