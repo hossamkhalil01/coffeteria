@@ -21,7 +21,7 @@
                     class="form-control"
                     id="Name"
                     aria-describedby="emailHelp"
-                    placeholder="Enter Productname"
+                    placeholder="Enter Product name"
                     v-model="product.name"
                   />
                 </div>
@@ -78,7 +78,6 @@
                     type="file"
                     @input="pickFile"
                     accept="image/*"
-                    required
                   />
                 </div>
               </div>
@@ -124,6 +123,7 @@
 
       <div class="col-6">
         <div
+          v-if="product.id"
           class="imagePreviewWrapper"
           :style="{
             'background-image': `url(${productsImgBase + product.image})`,
@@ -163,7 +163,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { apiBase, productsImgBase } from "@helpers/urls.js";
 export default {
   data() {
@@ -226,21 +225,19 @@ export default {
     },
 
     update(id) {
-      console.log(id);
-      var fileName = document.getElementById("product-image").value;
+      let fileName = document.getElementById("product-image").value;
 
-      if (fileName == "") {
-        this.imageError = true;
-        return;
-      } else if (
-        fileName.split(".")[1].toUpperCase() == "PNG" ||
-        fileName.split(".")[1].toUpperCase() == "JPEG" ||
-        fileName.split(".")[1].toUpperCase() == "JPG"
-      ) {
-        this.imageError = false;
-      } else {
-        this.imageError = true;
-        return;
+      if (fileName != "") {
+        if (
+          fileName.split(".")[1].toUpperCase() == "PNG" ||
+          fileName.split(".")[1].toUpperCase() == "JPEG" ||
+          fileName.split(".")[1].toUpperCase() == "JPG"
+        ) {
+          this.imageError = false;
+        } else {
+          this.imageError = true;
+          return;
+        }
       }
       axios
         .put(apiBase + "products/" + id, this.product)

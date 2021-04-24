@@ -2,7 +2,6 @@ import NotFound from "@components/404.vue";
 import { role } from "@helpers/currentUser.js";
 import { createRouter, createWebHistory } from "vue-router";
 
-
 const loadComponent = (view, component) => {
     return () => import(`@components/${view}/${component}`);
 };
@@ -102,7 +101,7 @@ const routes = [
                 component: loadComponent("admin", "CreateUser"),
             },
             {
-                path: "admin/product/edit",
+                path: "admin/product/edit/:id",
                 name: "AdminEditProduct",
                 component: loadComponent("admin", "EditProduct"),
             },

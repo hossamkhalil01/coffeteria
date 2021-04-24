@@ -14,24 +14,24 @@
       </div>
       <!-- End errors section -->
       <!-- Start date picker section -->
-      <div class="col-6 row justify-content-evenly">
-        <div class="col-3">
+      <div class="row justify-content-center">
+        <div class="col-md-0 col-lg-1"></div>
+        <div class="col-md-12 col-lg-2">
           <label for="from" class="d-block">From</label>
           <input
             id="fromDatePicker"
-            class="btn btn-primary"
             name="from"
+            class="btn date-picker"
             type="date"
             :onChange="handleFromDateSelection"
           />
         </div>
-        <div class="col-3">
+        <div class="col-md-12 col-lg-2 me-lg-5">
           <label for="from" class="d-block">To</label>
           <input
             id="toDatePicker"
-            class="btn btn-primary"
-            name="to"
             type="date"
+            class="btn date-picker"
             :onChange="handleToDateSelection"
           />
         </div>
@@ -47,10 +47,10 @@
             aria-label="Default select example"
             :onChange="handleUserSelection"
           >
-            <option selected :value="null">Select a user</option>
+            <option id="selectUser" selected :value="null">Select User</option>
 
             <option v-for="user in users" :key="user.id" :value="user.id">
-              <img :src="getUserAvatar(user)" /> {{ user.name }}
+              {{ user.name }}
             </option>
           </select>
         </div>
@@ -91,7 +91,9 @@
 import { getTodayDateString } from "@helpers/formatters.js";
 $("document").ready(() => {
   // configure datepicker
-  document.getElementById("toDatePicker").max = getTodayDateString();
+  const today = getTodayDateString();
+  document.getElementById("toDatePicker").max = today;
+  document.getElementById("fromDatePicker").max = today;
 });
 
 import Paginator from "@layouts/Paginator";
@@ -200,5 +202,13 @@ export default {
 <style scoped>
 select {
   cursor: pointer;
+}
+
+.date-picker {
+  background-color: lightgray;
+}
+
+.date-picker:hover {
+  background-color: #0dcaf0;
 }
 </style>
