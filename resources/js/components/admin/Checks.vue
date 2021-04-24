@@ -47,7 +47,6 @@
 import { priceFormatter, dateFormatter } from "@helpers/formatters";
 
 export default {
-  mounted() {},
   data() {
     return {};
   },

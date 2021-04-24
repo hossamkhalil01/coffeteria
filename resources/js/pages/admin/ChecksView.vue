@@ -2,6 +2,13 @@
   <!-- Start of selection section -->
 
   <div class="row justify-content-center">
+    <!-- Start error section -->
+    <div class="container-fluid row justify-content-center" v-if="serverError">
+      <div class="alert alert-danger col-3 text-center">
+        <li>{{ serverError }}</li>
+      </div>
+    </div>
+    <!-- End errors section -->
     <!-- Start date picker section -->
     <div class="container-fluid col-3 row justify-content-around">
       <div class="col-6">
@@ -95,7 +102,7 @@ export default {
   data() {
     return {
       currentChecks: [],
-      serverError: "",
+      serverError: null,
       users: [],
       selectedUserId: null,
       selectedCheck: null,
@@ -116,33 +123,29 @@ export default {
         .then((res) => {
           this.currentChecks = res.data.data;
           this.paginationLinks = res.data.meta.links;
+
+          // reset the errors
+          this.serverError = null;
         })
         .catch((err) => {
-          this.serverError = err.message;
+          this.serverError = err.response.data.message;
         });
     },
 
     handleUserSelection: function (event) {
       this.selectedUserId = event.target.value;
-      // clear details selection
-      this.selectedCheck = null;
+
       //update checks
       this.updateChecks();
     },
 
     handleFromDateSelection: function (event) {
-      const fromDate = event.target.value;
       this.fromDate = event.target.value;
       if (this.toDate) this.updateChecks();
     },
     handleToDateSelection: function (event) {
-      const toDate = new Date(event.target.value);
-
       this.toDate = event.target.value;
-
       if (this.fromDate) this.updateChecks();
-
-      // reset the selected Check
     },
     updateChecks: function () {
       const params = {
@@ -150,10 +153,16 @@ export default {
         to: this.toDate,
         from: this.fromDate,
       };
+
+      //clear selected check
+      this.selectedCheck = null;
+
       this.getChecks(params);
     },
 
     paginate: function (url) {
+      //clear selected check
+      this.selectedCheck = null;
       this.getChecks({}, url);
     },
 
@@ -166,9 +175,11 @@ export default {
         .then((res) => {
           this.selectedCheck = res.data.data;
           this.checkProducts = res.data.data.products;
+          // reset the errors
+          this.serverError = null;
         })
         .catch((err) => {
-          this.serverError = err.message;
+          this.serverError = err.response.message;
         });
     },
   },

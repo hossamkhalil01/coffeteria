@@ -10,7 +10,6 @@ export const priceFormatter = (price) => {
 };
 
 export const dateFormatter = (dateString) => {
-    const date = Date(dateString);
-
+    const date = new Date(dateString);
     return dateFormat(date, "ddd, mmm d, yyyy, h:MM TT ");
 };
