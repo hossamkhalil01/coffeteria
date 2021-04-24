@@ -50,7 +50,7 @@
             <option selected :value="null">Select a user</option>
 
             <option v-for="user in users" :key="user.id" :value="user.id">
-              <img :src="user.avatar" /> {{ user.name }}
+              <img :src="getUserAvatar(user)" /> {{ user.name }}
             </option>
           </select>
         </div>
@@ -101,7 +101,7 @@ import {
   getChecksResource,
   getOrderProducts,
 } from "@services/adminChecksService";
-import { getUsersResource } from "@services/usersService";
+import { getUsersResource, getUserAvatar } from "@services/usersService";
 
 export default {
   mounted() {
@@ -110,6 +110,7 @@ export default {
   },
   data() {
     return {
+      getUserAvatar: getUserAvatar,
       currentChecks: [],
       serverError: null,
       users: [],

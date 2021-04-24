@@ -143,9 +143,6 @@ export default {
     });
   },
   methods: {
-    getAvatar() {
-      return this.user.avatar;
-    },
     currencyFormatter(price) {
       let formatter = Intl.NumberFormat("eg-US", {
         style: "currency",

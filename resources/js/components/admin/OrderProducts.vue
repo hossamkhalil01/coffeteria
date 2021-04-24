@@ -1,28 +1,33 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-8 justify-content-center border border-dark">
-      <h2 class="fw-bold text-center mt-4">Order Details</h2>
+      <h3 class="fw-bold text-center mt-4">Order Details</h3>
+      <hr />
 
       <!-- start of order products -->
-      <div
-        class="col-2 mt-3 border border-success"
-        v-for="product in products"
-        :key="product.id"
-      >
-        <a href="">
-          <img :src="product.image" :alt="product.name" />
-          <span class="badge rounded-pill bg-info text-dark">{{
-            getPrice(product.price)
-          }}</span>
-        </a>
-        <p class="product-name text-center">
-          <span>{{ product.pivot.quantity }}</span>
-          <span> x {{ product.name }} </span>
-        </p>
-        <p class="text-center">
-          Total:
-          {{ getPrice(product.price * product.pivot.quantity) }}
-        </p>
+      <div class="row mt-5 justify-content-evenly">
+        <div
+          class="col-2 border border-success ps-0 pe-0"
+          v-for="product in products"
+          :key="product.id"
+        >
+          <div>
+            <img :src="productsImgBase + product.image" :alt="product.name" />
+            <div class="row justify-content-center">
+              <p class="col-6 badge rounded-pill bg-info text-dark mt-2">
+                {{ getPrice(product.price) }}
+              </p>
+            </div>
+          </div>
+          <p class="product-name text-center fs-6">
+            <span>{{ product.pivot.quantity }}</span>
+            <span> x {{ product.name }} </span>
+          </p>
+          <p class="text-center lead fs-6">
+            Total:
+            {{ getPrice(product.price * product.pivot.quantity) }}
+          </p>
+        </div>
       </div>
       <!-- end of order products -->
 
@@ -38,10 +43,13 @@
 
 <script>
 import { priceFormatter } from "@helpers/formatters.js";
+import { productsImgBase } from "@helpers/urls";
 export default {
   mounted() {},
   data() {
-    return {};
+    return {
+      productsImgBase: productsImgBase,
+    };
   },
   props: {
     order: {
@@ -62,4 +70,8 @@ export default {
 </script>
 
 <style scoped>
+img {
+  width: 100%;
+  height: 50%;
+}
 </style>

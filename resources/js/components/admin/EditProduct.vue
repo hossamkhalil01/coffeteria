@@ -126,7 +126,7 @@
         <div
           class="imagePreviewWrapper"
           :style="{
-            'background-image': `url(${imgBase + product.image})`,
+            'background-image': `url(${productsImgBase + product.image})`,
           }"
           @click="selectImage"
         ></div>
@@ -164,13 +164,15 @@
 
 <script>
 import axios from "axios";
-import { apiBase, imgBase } from "@helpers/urls.js";
+import { apiBase, productsImgBase } from "@helpers/urls.js";
 export default {
   data() {
     return {
       apiBase: apiBase,
-      imgBase: imgBase,
+      productsImgBase: productsImgBase,
       previewImage: null,
+      tabledata: {},
+      checked: "",
 
       product: {
         id: null,
@@ -244,8 +246,6 @@ export default {
         .put(apiBase + "products/" + id, this.product)
 
         .then((resp) => {
-          console.log(resp);
-          console.log("success");
           this.allerros = [];
           this.success = true;
           if (resp.status === 200) {
@@ -253,8 +253,6 @@ export default {
           }
         })
         .catch((e) => {
-          console.log(e);
-          console.log("error occured");
           this.onFailure(e.response.data);
         });
     },

@@ -29,7 +29,7 @@
                     <td>
                       <div v-if="item.image != null">
                         <img
-                          :src="imgBase + item.image"
+                          :src="productsImgBase + item.image"
                           class="profile-user-img img-fluid img-circle"
                           style="height: 40px; width: 40px"
                         />
@@ -125,12 +125,12 @@
 
 <script>
 import axios from "axios";
-import { apiBase, imgBase } from "@helpers/urls.js";
+import { apiBase, productsImgBase } from "@helpers/urls.js";
 export default {
   data() {
     return {
       apiBase: apiBase,
-      imgBase: imgBase,
+      productsImgBase: productsImgBase,
       previewImage: null,
       tabledata: {},
       pagination_links: {},
