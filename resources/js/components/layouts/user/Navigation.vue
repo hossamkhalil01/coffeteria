@@ -20,7 +20,7 @@
           aria-expanded="false"
         >
           <img
-            :src="currentUser.avatar"
+            :src="getUserAvatar(currentUser)"
             alt="avatar"
             width="32"
             height="32"
@@ -56,11 +56,14 @@
 
 <script>
 import * as currentUser from "@helpers/currentUser.js";
+import { getUserAvatar } from "@services/usersService.js";
 import { csrf } from "@services/authenticationService.js";
+
 export default {
   data() {
     return {
       csrf: csrf,
+      getUserAvatar: getUserAvatar,
       currentUser: currentUser,
     };
   },

@@ -39,20 +39,20 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'room_id' => $input['room_id'],
-            'avatar' => 'storage/images/avatars/default.png',
+            'avatar' => 'default.png',
         ]);
 
         // check if avatar was selected
         if (request()->hasFile('avatar')) {
 
             $avatar = request()->file('avatar')->getClientOriginalName();
-            $avatar_path =  $user->id."/".$avatar;
+            $avatar_path =  $user->id . "/" . $avatar;
 
             //save the avatar
-            request()->file('avatar')->storeAs('avatars', $avatar_path, '');
+            request()->file('avatar')->storeAs('/images/avatars', $avatar_path, '');
 
             // update the path
-            $user->update(['avatar' => 'storage/images/avatars/' . $avatar_path]);
+            $user->update(['avatar' =>  $avatar_path]);
         }
         return $user;
     }

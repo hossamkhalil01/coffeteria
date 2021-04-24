@@ -41,23 +41,18 @@ class admincontroller extends Controller
 
         $input = $request->all();
         if ($image = $request->file('avatar')) {
-            $destinationPath = 'storage/images/avatars/'.$user->id;
-            $profileImage = $request->file('avatar')->getClientOriginalName(); 
+            $destinationPath = 'storage/images/avatars/' . $user->id;
+            $profileImage = $request->file('avatar')->getClientOriginalName();
             $image->move($destinationPath, $profileImage);
-            $input['avatar']= $destinationPath."/".$profileImage;
-            // $add->save();
-
+            $input['avatar'] = $user->id . "/" . $profileImage;
         }
-        $user->update($input);   
-        
-        if ($user){
-            return response()->json(["succes"=>$input]);
-        }else{
-            return response()->json(["error"=>$input]);
+        $user->update($input);
 
-        }   
-      
-      
+        if ($user) {
+            return response()->json(["succes" => $input]);
+        } else {
+            return response()->json(["error" => $input]);
+        }
     }
 
     public function store(Request $request)
@@ -67,23 +62,17 @@ class admincontroller extends Controller
         $input = $request->all();
         $user = User::create($input);
 
-         if ($image = $request->file('avatar')) {
-            //  env(APP_URL);
-            $destinationPath = 'storage/images/avatars/'.$user->id;
-            $profileImage = $request->file('avatar')->getClientOriginalName(); 
+        if ($image = $request->file('avatar')) {
+            $destinationPath = 'storage/images/avatars/' . $user->id;
+            $profileImage = $request->file('avatar')->getClientOriginalName();
             $image->move($destinationPath, $profileImage);
-            $user->avatar = $destinationPath."/".$profileImage;
+            $user->avatar = $user->id . "/" . $profileImage;
             $user->save();
-
         }
-        // dd($user);
-        if ($user){
-            return response()->json(["is_done"=>true]);
-        }else{
-            return response()->json(["is_done"=>false]);
-            
-
-
-            }
-    
-    }}
+        if ($user) {
+            return response()->json(["is_done" => true]);
+        } else {
+            return response()->json(["is_done" => false]);
+        }
+    }
+}

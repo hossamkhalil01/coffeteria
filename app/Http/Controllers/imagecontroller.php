@@ -11,12 +11,13 @@ use App\Models\User;
 class imagecontroller extends Controller
 {
     //
-    public function upload(ImageUploadRequest $request){
-        
-        
+    public function upload(ImageUploadRequest $request)
+    {
+
+
         $file = $request->file('avatar');
         $name = Str::random(10);
-        $url = \Storage::putFileAs('storage/avatars', $file, $name.'.'.$file->extension());
-        return ['url'=>env('APP_URL').'/'.$url];
+        $url = \Storage::putFileAs('storage/images/avatars', $file, $name . '.' . $file->extension());
+        return ['url' => env('APP_URL') . '/' . $url];
     }
 }
