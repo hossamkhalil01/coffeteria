@@ -4,20 +4,17 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Product;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\User;
-
 
 
 class ProductController extends Controller
 {
     public function index()
     {
-
-        return Product::latest()->paginate(2);
+        return Product::latest()->paginate(5);
     }
+
     public function destroy($id)
     {
         $Product = Product::findOrFail($id);
@@ -26,11 +23,11 @@ class ProductController extends Controller
 
         $currentPhoto = $Product->image;
 
-        $userPhoto = public_path('img/') . $currentPhoto;
+        $currentPhoto = public_path('storage/images/products') . $currentPhoto;
 
-        if (file_exists($userPhoto)) {
+        if (file_exists($currentPhoto)) {
 
-            @unlink($userPhoto);
+            @unlink($currentPhoto);
         }
 
         return [
@@ -47,16 +44,12 @@ class ProductController extends Controller
                 'category_id' => 'required',
 
             ]
-              
-          );
-
-        
-
+        );
 
         if ($request->image) {
 
             $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-            \Image::make($request->image)->save('storage/img/' . $name);
+            \Image::make($request->image)->save('storage/images/products/' . $name);
 
             $request->merge(['image' => $name]);
         }
@@ -73,9 +66,9 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-    
+
         $product  = Product::findOrfail($id);
-       
+
         return $product;
     }
     public function update(Request $request, $id)
@@ -86,52 +79,47 @@ class ProductController extends Controller
                 'price' => 'required | max : 200',
                 'category_id' => 'required',
             ]
-              
-          );
-        
-        $product= Product::find($id);
 
-    
+        );
+
+        $product = Product::find($id);
+
+
         $currentPhoto = $product->image;
 
-        if($request->image != $currentPhoto){
+        if ($request->image != $currentPhoto) {
 
-            $name = time().'.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-            \Image::make($request->image)->save('storage/img/' . $name);
+            $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+            \Image::make($request->image)->save('storage/images/products/' . $name);
             $request->merge(['image' => $name]);
 
-            $productPhoto = 'storage/img/'.$currentPhoto;
+            $productPhoto = 'storage/images/products/' . $currentPhoto;
 
-            if(file_exists($productPhoto)){
+            if (file_exists($productPhoto)) {
 
                 @unlink($productPhoto);
-                
             }
-           
         }
 
         $product->update($request->all());
 
         return ['message' => 'Success'];
-
     }
-  
+
     public function show($id)
     {
         $product = Product::find($id);
         return response()->json($product);
     }
-
-
-
     public function addCategory(Request $request)
-    {      $request->validate(
-        [
-            'label' => 'required',
-           
-        ]
-          
-      );
+    {
+        $request->validate(
+            [
+                'label' => 'required',
+
+            ]
+
+        );
         Category::create($request->all());
 
         return ['message' => 'Success'];

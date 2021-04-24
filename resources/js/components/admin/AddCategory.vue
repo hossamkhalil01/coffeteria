@@ -53,13 +53,12 @@
 
 <script>
 import axios from "axios";
-import { apiBase, imgBase } from "@helpers/urls.js";
+import { apiBase } from "@helpers/urls.js";
 export default {
   mounted() {},
   data() {
     return {
       apiBase: apiBase,
-      imgBase: imgBase,
       form: {
         label: "",
       },

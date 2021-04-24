@@ -29,7 +29,7 @@
             :key="product.id"
           >
             <a href="#" @click.prevent="addOrderedProducts(product)">
-              <img :src="imgBase + product.image" :alt="product.name" />
+              <img :src="productsImgBase + product.image" :alt="product.name" />
               <span class="badge rounded-pill bg-info text-dark">{{
                 currencyFormatter(product.price)
               }}</span>
@@ -56,7 +56,7 @@
 
 <script>
 import * as user from "@helpers/currentUser.js";
-import { apiBase, imgBase } from "@helpers/urls.js";
+import { apiBase, productsImgBase } from "@helpers/urls.js";
 import newordercomponent from "@components/user/newOrder";
 import latestOrderComponent from "@components/user/LatestOrder";
 import { csrf } from "@services/authenticationService.js";
@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       apiBase: apiBase,
-      imgBase: imgBase,
+      productsImgBase: productsImgBase,
       user: user,
       csrf: csrf,
       products: [],

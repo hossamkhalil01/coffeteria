@@ -5,7 +5,7 @@ use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\roomcontroller;
 use App\Http\Controllers\Api\admincontroller;
 use App\Http\Controllers\imagecontroller;
