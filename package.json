@@ -23,7 +23,8 @@
         "vue-loader": "^16.2.0"
     },
     "dependencies": {
-        "filereader": "^0.10.3",
+        "dateformat": "^4.5.1",
+        "jquery": "^3.6.0",
         "sass-loader": "^11.0.1",
         "v-pagination-3": "^0.1.2",
         "vform": "^1.0.1",

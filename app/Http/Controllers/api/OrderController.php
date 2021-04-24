@@ -128,4 +128,82 @@ class OrderController extends Controller
             return response()->json(["data" => []]);
         }
     }
+
+
+    public function get_orders(Request $request)
+    {
+        $owner_id = $request->query('owner_id');
+
+        // get all orders
+        if ($owner_id) {
+
+            // check if user exists
+            $user = User::find($owner_id);
+            if (!$user) return $this->error_response("404", "user not found");
+
+            $orders = $user->orders();
+        } else {
+            $orders = Order::orderBy('created_at', 'desc');
+        }
+
+        return $this->prepare_orders_response($orders);
+    }
+
+    public function get_orders_by_date(Request $request)
+    {
+
+        $filter = array();
+
+        $owner_id = $request->query('owner_id');
+
+        // check if user is provided
+        if ($owner_id) {
+            // check if the user exists
+            $user = User::find($owner_id);
+
+            if (!$user) $this->error_response("404", "user not found");
+            array_push($filter, ['owner_id', '=', $owner_id]);
+        }
+
+        // validate the date
+        $validatedDate = $request->validate(
+            [
+                "from" => "required|date",
+                "to" => "required|date|after_or_equal:from|before_or_equal:today"
+            ]
+        );
+
+
+        $from = new DateTime($validatedDate["from"]);
+        $to = date_add(new DateTime($validatedDate["to"]), date_interval_create_from_date_string('1 day'));
+
+        array_push($filter, ['created_at', '>=', $from], ['created_at', '<=', $to]);
+
+        return $this->prepare_orders_response(Order::where($filter));
+    }
+
+    public function get_order($id, Request $request)
+    {
+        $order = Order::with('products')->find($id);
+
+        if (!$order) return $this->error_response("404", "order not found");
+
+        return response()->json(["data" => $order], 200);
+    }
+    private function error_response($status, $msg)
+    {
+        return response(["data" => null, "message" => $msg], $status);
+    }
+
+    private function prepare_orders_response($orders)
+    {
+        return new OrderResource($orders->orderBy('created_at', 'desc')
+            ->paginate(5)->withQueryString());
+    }
+
+    public function get_processing_orders(Request $request){
+        $order=Order::where('status','Processing')->with('products')->get();
+        return response()->json($order);
+
+    }
 }

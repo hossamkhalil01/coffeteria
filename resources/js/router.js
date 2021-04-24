@@ -58,7 +58,7 @@ const routes = [
             },
             {
                 path: "/admin/checks",
-                component: loadComponent("admin", "Checks"),
+                component: loadPage("admin", "ChecksView"),
                 name: "AdminChecks",
             },
             {

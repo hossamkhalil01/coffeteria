@@ -1,6 +1,10 @@
 <template>
-  <Navigation />
-  <router-view />
+  <div class="container-fluid">
+    <Navigation />
+  </div>
+  <div class="container-fluid">
+    <router-view />
+  </div>
 </template>
 
 <script>

@@ -38,16 +38,16 @@
                         Delete
                     </a>
                 </td>
+                
             </tr>
         </tbody>
     </table>
+ 
 </div>
 </template>
 
 <script>
-import {
-    apiBase
-} from "@helpers/urls.js";
+import { apiBase } from "@helpers/urls.js";
 export default {
     data() {
         return {
@@ -67,30 +67,30 @@ export default {
         },
         deleteUser(id) {
 
-           this.$swal
-        .fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios.delete(apiBase + `admin/deleteuser/${id}`).then((response) => {
-                let i = this.users.map((data) => data.id).indexOf(id);
-                this.users.splice(i, 1);
-                 this.$swal.fire(
-                  "Deleted!",
-                  "Product is deleted successfully",
-                  "success"
-                );
-            });
-          };
-        });
-        
+            this.$swal
+                .fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                })
+                .then((result) => {
+                    if (result.value) {
+                        axios.delete(apiBase + `admin/deleteuser/${id}`).then((response) => {
+                            let i = this.users.map((data) => data.id).indexOf(id);
+                            this.users.splice(i, 1);
+                            this.$swal.fire(
+                                "Deleted!",
+                                "Product is deleted successfully",
+                                "success"
+                            );
+                        });
+                    };
+                });
+
         },
         getrooms() {
             axios
