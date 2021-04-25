@@ -1,7 +1,7 @@
 // base URLs
 export const domainBase = "http://localhost:8000/";
 export const apiBase = domainBase + "api/";
-export const publicBase = domainBase + "public/";
+export const publicBase = domainBase + "images/";
 export const imgBase = domainBase + "storage/images/";
 
 // images urls
