@@ -23,11 +23,11 @@ Homestead.json
 
 #Laravel Mix
 /public/js
-/public/css
+/public/css/app.css
 /public/build
 /public/mix-manifest.json
 
 #public storage
-public/storage
+#public/storage
 storage/app/public
 
