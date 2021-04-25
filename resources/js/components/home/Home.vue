@@ -59,6 +59,7 @@ import * as user from "@helpers/currentUser.js";
 import { apiBase, productsImgBase } from "@helpers/urls.js";
 import newordercomponent from "@components/user/newOrder";
 import latestOrderComponent from "@components/user/LatestOrder";
+import { priceFormatter } from "@helpers/formatters.js";
 import { csrf } from "@services/authenticationService.js";
 import UsersDropDown from "@components/admin/UsersDropDown";
 
@@ -68,6 +69,7 @@ export default {
     return {
       apiBase: apiBase,
       productsImgBase: productsImgBase,
+      currencyFormatter: priceFormatter,
       user: user,
       csrf: csrf,
       products: [],
@@ -98,14 +100,6 @@ export default {
     }
   },
   methods: {
-    currencyFormatter(price) {
-      let formatter = Intl.NumberFormat("eg-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(price);
-    },
     addOrderedProducts(product) {
       const foundProduct = this.orderedProducts.find((orderedProduct) => {
         return orderedProduct.id === product.id;

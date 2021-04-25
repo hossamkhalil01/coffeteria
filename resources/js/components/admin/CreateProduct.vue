@@ -5,7 +5,7 @@
       <h1>ADD PRODUCT</h1>
     </div>
 
-    <div class="row">
+    <div class="row mt-5">
       <div class="col-6">
         <div class="row col-6">
           <form v-on:submit.prevent="create_product">
@@ -452,17 +452,17 @@ a.coding:hover:before {
     content: "ADD\03A3 \03D1 \0020 \20BE \2202";
   }
   70% {
-    content: "ADD P\0394 \0020 \03D1 \03EA";
+    content: "ADD C\0394 \0020 \03D1 \03EA";
   }
   80% {
-    content: "ADD PR \0020 \03EA \20BE";
+    content: "ADD CA \0020 \03EA \20BE";
   }
   90% {
-    content: "ADD PRO\03DE";
+    content: "ADD CATE\03DE";
     text-shadow: 0 0 6px #e84900;
   }
   100% {
-    content: "ADD PRODUCT";
+    content: "ADD CATEGORY";
     text-shadow: 0 0 3px #0023e8;
   }
 }
