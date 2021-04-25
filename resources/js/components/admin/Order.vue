@@ -38,16 +38,24 @@
 
                 </tr>
 
-                <div>
-                    {{order.products.name}}
-                    <td v-for="product in order.products">
-                                    <img :src="`storage/img/${product.image}`">
+                <div style="display:inline-block">
+                    <tr >
+                        <td  v-for="product in order.products" >
+                            <img :src="`http://localhost:8000/storage/img/${product.image}`" style="width:100px">
+                           <br/>
+                            {{product.name}}
+                            <br/>
+                            {{product.pivot.quantity}}
 
-                        {{ product.price }}
-                        {{ product.name }}
-                        {{ product.image }}
 
-                    </td>
+                        </td>
+
+                    <h3 style="float:right">Total: {{order.total_price}}</h3>
+
+                    </tr>
+
+
+                   
                 </div>
 
             </tbody>
