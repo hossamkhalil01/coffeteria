@@ -124,7 +124,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { apiBase, productsImgBase } from "@helpers/urls.js";
 export default {
   data() {

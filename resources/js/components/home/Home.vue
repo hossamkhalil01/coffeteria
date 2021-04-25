@@ -60,7 +60,6 @@ import { apiBase, productsImgBase } from "@helpers/urls.js";
 import newordercomponent from "@components/user/newOrder";
 import latestOrderComponent from "@components/user/LatestOrder";
 import { priceFormatter } from "@helpers/formatters.js";
-import { csrf } from "@services/authenticationService.js";
 import UsersDropDown from "@components/admin/UsersDropDown";
 
 export default {
@@ -71,7 +70,6 @@ export default {
       productsImgBase: productsImgBase,
       currencyFormatter: priceFormatter,
       user: user,
-      csrf: csrf,
       products: [],
       latest_order: [],
       orderedProducts: [],
@@ -86,7 +84,6 @@ export default {
     UsersDropDown,
   },
   created() {
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
     if (this.user.role !== "admin") {
       axios.get(apiBase + this.user.id).then((response) => {
         this.products = response.data.products;

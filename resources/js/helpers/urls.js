@@ -1,8 +1,8 @@
 // base URLs
-export const base = "http://localhost:8000/";
-export const apiBase = base + "api/";
-export const publicBase = base + "public/";
-export const imgBase = base + "storage/images/";
+export const domainBase = "http://localhost:8000/";
+export const apiBase = domainBase + "api/";
+export const publicBase = domainBase + "public/";
+export const imgBase = domainBase + "storage/images/";
 
 // images urls
 export const productsImgBase = imgBase + "products/";

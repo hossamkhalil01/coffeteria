@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const post = async (url, body) => {
     return axios.post(url, body);
 };

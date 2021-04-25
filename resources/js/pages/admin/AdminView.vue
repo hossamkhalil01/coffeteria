@@ -16,10 +16,7 @@ export default {
   },
 
   data() {
-    return {
-      //   csrf: csrf,
-      //   user: user,
-    };
+    return {};
   },
 
   methods: {},
