@@ -1,7 +1,74 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@push('styles')
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Tangerine:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+@endpush
 
 @section('content')
-    <div class="container">
+    <!--header-->
+    <div class="header-w3l">
+        <h1 style="background-color: rgba(100, 109, 100, 0.835)">
+            <span>W</span>elcome
+            <span>B</span>ack
+        </h1>
+    </div>
+    <!--//header-->
+    <div class="main-content-agile">
+        <div class="sub-main-w3">
+            <img src="images/login/logo_cropped.jpg" alt="logo" width="100" height="100" />
+            <h2>Coffeteria</h2>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="pom-agile">
+                    <span class="fa fa-user-o" aria-hidden="true"></span>
+                    <input placeholder="Email" name="email" class="user" type="text" value="{{ old('email') }}" required>
+                </div>
+
+                <div class="pom-agile">
+                    <span class="fa fa-key" aria-hidden="true"></span>
+                    <input placeholder="Password" name="password" class="pass" type="password" required
+                        autocomplete="current-password">
+                </div>
+
+                <div class="sub-w3l">
+                    <div class="sub-agile">
+                        <input type="checkbox" id="brand1" name="remember" value=""
+                            {{ old('remember') ? 'checked' : '' }}>
+                        <label for="brand1">
+                            <span></span>Remember me?</label>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                @error('email')
+                    <div class="alert alert-danger  mt-4">
+                        <span class="" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    </div>
+                @enderror
+                <div class="right-w3l">
+                    <input type="submit" value="Login">
+                </div>
+                <div class="forgot-w3l">
+                    <a href="{{ route('password.request') }}">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--//main-->
+    <!--footer-->
+    <div class="footer">
+        <p>&copy; 2018 Portrait Login Form. All rights reserved | Design by
+            <a href="http://w3layouts.com">W3layouts</a>
+        </p>
+    </div>
+    <!--//footer-->
+@endsection
+
+{{-- <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -98,5 +165,4 @@
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    </div> --}}
