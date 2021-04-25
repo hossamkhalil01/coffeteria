@@ -13,10 +13,10 @@
                     <th class="table-primary">ext</th>
                     <th class="table-primary">Action</th>
                 </tr>
-                
+
             </thead>
 
-            <tbody >
+            <tbody>
                 <tr>
                     <td>{{ getDate(order.created_at) }}</td>
                     <td>
@@ -26,7 +26,7 @@
                         {{ order.room.number }}
                     </td>
                     <td>
-                        {{ order.room.land_mark }}
+                        {{ order.products.price }}
                     </td>
 
                     <td>
@@ -37,12 +37,18 @@
                     </td>
 
                 </tr>
-              
+
                 <div>
-                {{}}
+                    {{order.products.name}}
+                    <td v-for="product in order.products">
+                                    <img :src="`storage/img/${product.image}`">
+
+                        {{ product.price }}
+                        {{ product.name }}
+                        {{ product.image }}
+
+                    </td>
                 </div>
-                
-               
 
             </tbody>
         </table>
