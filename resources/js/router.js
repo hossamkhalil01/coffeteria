@@ -16,6 +16,16 @@ const routes = [
         name: "UserView",
         component: loadPage("user", "UserView"),
         redirect: { name: "UserHome" },
+        beforeEnter: (to, from, next) => {
+            // check if admin
+            if (role == "user") {
+                next();
+            } else {
+                next({
+                    name: "AdminHome",
+                });
+            }
+        },
         children: [
             {
                 path: "/home",
@@ -71,17 +81,17 @@ const routes = [
                 name: "AdminUsers",
             },
             {
-                path: "admin/products",
+                path: "/admin/products",
                 name: "AdminProducts",
                 component: loadComponent("admin", "Products"),
             },
             {
-                path: "admin/product/create",
+                path: "/admin/product/create",
                 name: "AdminCreateProduct",
                 component: loadComponent("admin", "CreateProduct"),
             },
             {
-                path: "admin/category/add",
+                path: "/admin/category/add",
                 name: "AdminAddCategory",
                 component: loadComponent("admin", "AddCategory"),
             },
@@ -101,7 +111,7 @@ const routes = [
                 component: loadComponent("admin", "CreateUser"),
             },
             {
-                path: "admin/product/edit/:id",
+                path: "/admin/product/edit/:id",
                 name: "AdminEditProduct",
                 component: loadComponent("admin", "EditProduct"),
             },
