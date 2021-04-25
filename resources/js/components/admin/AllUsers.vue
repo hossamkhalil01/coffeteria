@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>All users</h2>
+    <h2>All Users</h2>
     <router-link
       :to="{ name: 'AdminCreateUser' }"
       style="margin-right: 50px; float: right"
