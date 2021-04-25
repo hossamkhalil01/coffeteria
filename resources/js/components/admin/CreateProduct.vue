@@ -170,7 +170,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { apiBase } from "@helpers/urls.js";
 export default {
   mounted() {},

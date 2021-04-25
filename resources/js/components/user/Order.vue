@@ -149,7 +149,6 @@
 import { apiBase, productsImgBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
 import { priceFormatter, dateFormatter } from "@helpers/formatters.js";
-import { csrf } from "@services/authenticationService.js";
 
 export default {
   mounted() {},
@@ -158,7 +157,6 @@ export default {
       apiBase: apiBase,
       productsImgBase: productsImgBase,
       user: user,
-      csrf: csrf,
       currencyFormatter: priceFormatter,
       dateFormatter: dateFormatter,
       orders: [],
@@ -175,7 +173,6 @@ export default {
   },
   methods: {
     paginate(new_url) {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       if (this.from && this.to) {
         axios
           .get(new_url, {
@@ -197,7 +194,6 @@ export default {
       this.ordered_products = [];
     },
     getAllOrders() {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios.get(apiBase + this.user.id + "/orders").then((response) => {
         this.orders = response.data.data;
         this.pagination_links = response.data.meta.links;
@@ -205,7 +201,6 @@ export default {
       this.ordered_products = [];
     },
     getOrdersWithinRange() {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       if (this.from && this.to) {
         axios
           .get(apiBase + this.user.id + "/orders/range", {
@@ -228,7 +223,6 @@ export default {
       this.ordered_products = [];
     },
     cancelOrder(order) {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .put(apiBase + this.user.id + "/orders/" + order.id, {
           status: "Cancelled",
@@ -238,7 +232,6 @@ export default {
         });
     },
     getOrderProducts(order) {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .get(apiBase + this.user.id + "/orders/" + order.id)
         .then((response) => {

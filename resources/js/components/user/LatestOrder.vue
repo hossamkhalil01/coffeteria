@@ -21,8 +21,6 @@
 <script>
 import * as user from "@helpers/currentUser.js";
 import { apiBase, productsImgBase } from "@helpers/urls.js";
-import axios from "axios";
-import { csrf } from "@services/authenticationService.js";
 
 export default {
   mounted() {},
@@ -31,7 +29,6 @@ export default {
       apiBase: apiBase,
       productsImgBase: productsImgBase,
       user: user,
-      csrf: csrf,
     };
   },
   props: {
