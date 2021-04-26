@@ -120,6 +120,11 @@ const routes = [
                 name: "AdminEditProduct",
                 component: loadComponent("admin", "EditProduct"),
             },
+            {
+                path: "/admin/profile",
+                name: "AdminProfile",
+                component: loadComponent("user", "userProfile"),
+            },
         ],
     },
     {
