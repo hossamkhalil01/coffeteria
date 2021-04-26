@@ -5,7 +5,7 @@
     >
       <div class="container-fluid align-items-baseline me-auto">
         <router-link :to="{ name: 'AdminHome' }" class="nav-item nav-link me-4">
-          <img src="/images/logo.jpg" width="100" height="50" />
+          <img src="/images/logo.png" width="100" height="50" />
         </router-link>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

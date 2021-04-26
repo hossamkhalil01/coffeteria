@@ -23,7 +23,7 @@ Homestead.json
 
 #Laravel Mix
 /public/js
-/public/css
+/public/css/app.css
 /public/build
 /public/mix-manifest.json
 
