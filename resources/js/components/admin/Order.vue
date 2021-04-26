@@ -34,7 +34,7 @@
 
                     <td>
 
-                        <a type="button" class="btn btn-danger" @click="deleteUser(user.id)">
+                        <a type="submit" class="btn btn-danger" @click.prevent="Deliver(order.id)">
                             Deliver
                         </a>
                     </td>
@@ -86,7 +86,11 @@ export default {
     data() {
         return {
             orders: {
+      
+            },
 
+            order:{
+                status:""
             }
         };
     },
@@ -112,6 +116,19 @@ export default {
         getAmount: function (check) {
             return priceFormatter(check.total_price);
         },
+        Deliver(id){
+            // const formData = new FormData()
+            
+            // formData.append("status",this.order.status)
+            // formData.append("_method", "patch");
+             axios
+                .patch(apiBase + `order/deliver/${id}`)
+                
+                .catch(() => {
+                    console.log("Error...");
+                });
+
+        }
     },
 
     created() {

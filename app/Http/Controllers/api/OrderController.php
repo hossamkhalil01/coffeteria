@@ -207,4 +207,24 @@ class OrderController extends Controller
         return response()->json($order);
 
     }
+
+
+    public function deliver_order($id, Request $request){
+        $order=Order::find($id);
+        $order->status="Delivered";
+        // $edit= $request->all();
+        //  $edit=$order['status']='Delivered';
+        // dd($edit);
+        $order->update();
+       
+        if ($order){
+            return response()->json(["succes"=>$order]);
+            dd($order);
+        }else{
+            return response()->json(["error"=>$order]);
+            dd($order);
+
+        }   
+
+    }
 }

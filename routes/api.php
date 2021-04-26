@@ -51,6 +51,9 @@ Route::get('/admin/getusers', [admincontroller::class, 'GetAllUsers']);
 
 Route::get("/admin/getorders", [OrderController::class, "get_processing_orders"]);
 
+Route::patch("/order/deliver/{id}", [OrderController::class, "deliver_order"]);
+
+
 Route::delete('/admin/deleteuser/{id}', [admincontroller::class, 'destroy']);
 
 Route::patch('/admin/edituser/{id}', [admincontroller::class, 'update']);
