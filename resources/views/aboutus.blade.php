@@ -1,6 +1,7 @@
 @extends('layouts.auth')
 
 @section('content')
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <style>
     body {
         background-image: none;
@@ -50,6 +51,10 @@
     .content-row {
         background-color: #eadfd2;
     }
+
+    .avatar-img {
+        border-radius: 50%;
+    }
 </style>
 <div class="container-fluid p-0 m-0">
     <div class="row justify-content-center image-row">
@@ -72,9 +77,23 @@
                 <hr>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-2">
-                <img src="" alt="">
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-2 text-center">
+                <img src="{{asset('images/avatars/avatar1.jpg')}}" class="avatar-img" alt="">
+                <p class="text-center">Hossam Khalil</p>
+                <i class="fab fa-github"></i>
+            </div>
+            <div class="col-md-2 text-center">
+                <img src="{{asset('images/avatars/avatar2.jpg')}}" class="avatar-img" alt="">
+                <p class="text-center">Leena Sherif</p>
+            </div>
+            <div class="col-md-2 text-center">
+                <img src="{{asset('images/avatars/avatar3.jpg')}}" class="avatar-img" alt="">
+                <p class="text-center">Sarah Magdy</p>
+            </div>
+            <div class="col-md-2 text-center">
+                <img src="{{asset('images/avatars/avatar4.jpg')}}" class="avatar-img" alt="">
+                <p class="text-center">Mai Maher</p>
             </div>
         </div>
     </div>
