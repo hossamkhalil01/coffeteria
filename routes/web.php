@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\SocialLoginController;
 
@@ -23,6 +24,8 @@ Route::get('oauth/{driver}', [SocialLoginController::class, 'redirectToProvider'
 
 Route::get('oauth/{driver}/callback', [SocialLoginController::class, 'handleProviderCallback'])
     ->name('social.callback');
+
+Route::get('/aboutus', [HomeController::class, 'aboutus'])->name('aboutus');
 
 // main app vue routes
 Route::get('{any}', function () {
