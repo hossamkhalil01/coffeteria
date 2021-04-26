@@ -42,6 +42,11 @@ const routes = [
                 name: "newOrder",
                 component: loadComponent("user", "newOrder"),
             },
+            {
+                path: "/profile",
+                name: "UserProfile",
+                component: loadComponent("user", "userProfile"),
+            },
         ],
     },
     {
