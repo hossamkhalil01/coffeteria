@@ -28,13 +28,14 @@
                     <td>
                         {{ order.room.number }}
                     </td>
-                    <td>
-                        {{ order.products.price }}
+                     <td>
+                        {{ order.room.land_mark }}
                     </td>
+                 
 
                     <td>
 
-                        <a type="submit" class="btn btn-danger" @click.prevent="Deliver(order.id)">
+                        <a type="submit" class="btn btn-deliver" @click.prevent="Deliver(order.id)">
                             Deliver
                         </a>
                     </td>
@@ -139,6 +140,11 @@ export default {
 
 
 <style>
+
+.btn-deliver{
+   background-color: #3a83f4;
+color: white;
+}
 .product-image{
     width: 100px;
 border-radius: 75px;
@@ -165,7 +171,7 @@ height: 43px;
 border: 1px solid;
 border-radius: 48%;
 text-align: center;
-margin: -90px 77px;
+margin: -103px 77px;
 position: absolute;
 background-color: #eee;
 padding: 9px 3px;

@@ -1,6 +1,6 @@
 <template>
 <div class="form-container">
-    <div class="row registration-form">
+    <div class="row registration-form ">
         <form v-on:submit.prevent="adduser">
 
             <div class="form-group">
