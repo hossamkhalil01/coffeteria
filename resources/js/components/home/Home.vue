@@ -29,7 +29,7 @@
             :key="product.id"
           >
             <a href="#" @click.prevent="addOrderedProducts(product)">
-              <img :src="imgBase + product.image" :alt="product.name" />
+              <img :src="productsImgBase + product.image" :alt="product.name" />
               <span class="badge rounded-pill bg-info text-dark">{{
                 currencyFormatter(product.price)
               }}</span>
@@ -56,10 +56,10 @@
 
 <script>
 import * as user from "@helpers/currentUser.js";
-import { apiBase, imgBase } from "@helpers/urls.js";
+import { apiBase, productsImgBase } from "@helpers/urls.js";
 import newordercomponent from "@components/user/newOrder";
 import latestOrderComponent from "@components/user/LatestOrder";
-import { csrf } from "@services/authenticationService.js";
+import { priceFormatter } from "@helpers/formatters.js";
 import UsersDropDown from "@components/admin/UsersDropDown";
 
 export default {
@@ -67,9 +67,9 @@ export default {
   data() {
     return {
       apiBase: apiBase,
-      imgBase: imgBase,
+      productsImgBase: productsImgBase,
+      currencyFormatter: priceFormatter,
       user: user,
-      csrf: csrf,
       products: [],
       latest_order: [],
       orderedProducts: [],
@@ -84,7 +84,6 @@ export default {
     UsersDropDown,
   },
   created() {
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
     if (this.user.role !== "admin") {
       axios.get(apiBase + this.user.id).then((response) => {
         this.products = response.data.products;
@@ -92,20 +91,13 @@ export default {
       });
     } else {
       axios.get(apiBase + "admin/index").then((response) => {
+        console.log(apiBase)
         this.products = response.data.products;
         this.users = response.data.users;
       });
     }
   },
   methods: {
-    currencyFormatter(price) {
-      let formatter = Intl.NumberFormat("eg-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(price);
-    },
     addOrderedProducts(product) {
       const foundProduct = this.orderedProducts.find((orderedProduct) => {
         return orderedProduct.id === product.id;

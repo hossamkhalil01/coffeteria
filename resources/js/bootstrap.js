@@ -1,3 +1,6 @@
+import { domainBase } from "@helpers/urls.js";
+import { csrf } from "@services/authenticationService.js";
+
 window._ = require("lodash");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -9,8 +12,8 @@ window.$ = require("jquery");
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-window.axios.defaults.baseURL = "http://localhost:8000";
-
+window.axios.defaults.baseURL = domainBase;
+window.axios.defaults.headers.common["X-CSRF-TOKEN"] = csrf;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

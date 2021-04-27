@@ -7,7 +7,10 @@
       v-for="order_product in latest_order"
       :key="order_product.id"
     >
-      <img :src="imgBase + order_product.image" :alt="order_product.name" />
+      <img
+        :src="productsImgBase + order_product.image"
+        :alt="order_product.name"
+      />
       <p class="product-name text-center">
         {{ order_product.name }}
       </p>
@@ -17,18 +20,15 @@
 </template>
 <script>
 import * as user from "@helpers/currentUser.js";
-import { apiBase, imgBase } from "@helpers/urls.js";
-import axios from "axios";
-import { csrf } from "@services/authenticationService.js";
+import { apiBase, productsImgBase } from "@helpers/urls.js";
 
 export default {
   mounted() {},
   data() {
     return {
       apiBase: apiBase,
-      imgBase: imgBase,
+      productsImgBase: productsImgBase,
       user: user,
-      csrf: csrf,
     };
   },
   props: {

@@ -41,7 +41,7 @@
             <tr v-for="order in orders" :key="order.id">
               <th scope="row">
                 <a href="#" @click.prevent="getOrderProducts(order)">{{
-                  convertDate(order.created_at)
+                  dateFormatter(order.created_at)
                 }}</a>
               </th>
               <td>{{ order.status }}</td>
@@ -118,15 +118,13 @@
         v-for="ordered_product in ordered_products"
         :key="ordered_product.id"
       >
-        <a href="">
-          <img
-            :src="imgBase + ordered_product.image"
-            :alt="ordered_product.name"
-          />
-          <span class="badge rounded-pill bg-info text-dark">{{
-            currencyFormatter(ordered_product.price)
-          }}</span>
-        </a>
+        <img
+          :src="productsImgBase + ordered_product.image"
+          :alt="ordered_product.name"
+        />
+        <span class="badge rounded-pill bg-info text-dark">{{
+          currencyFormatter(ordered_product.price)
+        }}</span>
         <p class="product-name text-center">
           {{ ordered_product.name }}
         </p>
@@ -148,18 +146,19 @@
 </template>
 
 <script>
-import { apiBase, imgBase } from "@helpers/urls.js";
+import { apiBase, productsImgBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
-import { csrf } from "@services/authenticationService.js";
+import { priceFormatter, dateFormatter } from "@helpers/formatters.js";
 
 export default {
   mounted() {},
   data() {
     return {
       apiBase: apiBase,
-      imgBase: imgBase,
+      productsImgBase: productsImgBase,
       user: user,
-      csrf: csrf,
+      currencyFormatter: priceFormatter,
+      dateFormatter: dateFormatter,
       orders: [],
       pagination_links: {},
       from: null,
@@ -173,16 +172,7 @@ export default {
     this.getAllOrders();
   },
   methods: {
-    currencyFormatter(price) {
-      let formatter = Intl.NumberFormat("eg-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(price);
-    },
     paginate(new_url) {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       if (this.from && this.to) {
         axios
           .get(new_url, {
@@ -204,7 +194,6 @@ export default {
       this.ordered_products = [];
     },
     getAllOrders() {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios.get(apiBase + this.user.id + "/orders").then((response) => {
         this.orders = response.data.data;
         this.pagination_links = response.data.meta.links;
@@ -212,7 +201,6 @@ export default {
       this.ordered_products = [];
     },
     getOrdersWithinRange() {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       if (this.from && this.to) {
         axios
           .get(apiBase + this.user.id + "/orders/range", {
@@ -235,7 +223,6 @@ export default {
       this.ordered_products = [];
     },
     cancelOrder(order) {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .put(apiBase + this.user.id + "/orders/" + order.id, {
           status: "Cancelled",
@@ -245,17 +232,12 @@ export default {
         });
     },
     getOrderProducts(order) {
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       axios
         .get(apiBase + this.user.id + "/orders/" + order.id)
         .then((response) => {
           this.clickedOrder = order;
           this.ordered_products = response.data.data.products;
         });
-    },
-    convertDate(order_date) {
-      const new_date = new Date(order_date);
-      return new_date.toString();
     },
   },
 };

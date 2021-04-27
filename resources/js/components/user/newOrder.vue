@@ -27,22 +27,27 @@
             />
           </div>
           <div class="col-sm-4">
-            <a href="#" @click.prevent="increaseProductQuantity(product)">+</a>
+            <a
+              href="#"
+              @click.prevent="increaseProductQuantity(product)"
+              class="icon-links"
+              ><i class="fas fa-plus fa-sm"></i
+            ></a>
             <a
               href="#"
               @click.prevent="decreaseProductQunatity(product)"
-              class="ms-3"
-              >-</a
-            >
+              class="ms-3 icon-links"
+              ><i class="fas fa-minus fa-sm"></i
+            ></a>
             <p style="display: inline" class="ms-3">
               {{ product.price }}
             </p>
             <a
               href="#"
               @click.prevent="removeFromOrderedProducts(product)"
-              class="ms-3"
-              >delete</a
-            >
+              class="ms-3 icon-links delete"
+              ><i class="fas fa-trash-alt"></i
+            ></a>
           </div>
         </div>
         <div class="row d-flex justify-content-center">
@@ -110,13 +115,13 @@
 <script>
 import { apiBase } from "@helpers/urls.js";
 import * as user from "@helpers/currentUser.js";
-import { csrf } from "@services/authenticationService.js";
+import { priceFormatter } from "@helpers/formatters.js";
 
 export default {
   mounted() {},
   data() {
     return {
-      csrf: csrf,
+      currencyFormatter: priceFormatter,
       user: user,
       rooms: [],
       totalPrice: 0,
@@ -137,23 +142,11 @@ export default {
     }
   },
   created() {
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
     axios.get(apiBase + "rooms").then((response) => {
       this.rooms = response.data;
     });
   },
   methods: {
-    getAvatar() {
-      return this.user.avatar;
-    },
-    currencyFormatter(price) {
-      let formatter = Intl.NumberFormat("eg-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(price);
-    },
     increaseProductQuantity(product) {
       const newQuantity = product.quantity + 1;
       if (newQuantity >= 100) {
@@ -210,7 +203,6 @@ export default {
         ordered_products: ordered_products,
         total_price: this.totalPrice,
       };
-      axios.defaults.headers.common["X-CSRF-TOKEN"] = this.csrf.content;
       if (!this.checkUserIsAdmin()) {
         axios
           .post(apiBase + this.user.id + "/orders", formData)
@@ -222,7 +214,6 @@ export default {
           });
       } else {
         if (!this.user_id) {
-          console.log("errorrr");
           this.$emit("userError");
         } else {
           axios
@@ -271,5 +262,14 @@ export default {
 
 .border {
   border-radius: 2%;
+}
+
+.icon-links {
+  text-decoration: none;
+  color: black;
+}
+
+.delete {
+  color: rgb(139, 0, 0);
 }
 </style>

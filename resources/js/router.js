@@ -2,7 +2,6 @@ import NotFound from "@components/404.vue";
 import { role } from "@helpers/currentUser.js";
 import { createRouter, createWebHistory } from "vue-router";
 
-
 const loadComponent = (view, component) => {
     return () => import(`@components/${view}/${component}`);
 };
@@ -17,6 +16,16 @@ const routes = [
         name: "UserView",
         component: loadPage("user", "UserView"),
         redirect: { name: "UserHome" },
+        beforeEnter: (to, from, next) => {
+            // check if admin
+            if (role == "user") {
+                next();
+            } else {
+                next({
+                    name: "AdminHome",
+                });
+            }
+        },
         children: [
             {
                 path: "/home",
@@ -32,6 +41,11 @@ const routes = [
                 path: "/neworder",
                 name: "newOrder",
                 component: loadComponent("user", "newOrder"),
+            },
+            {
+                path: "/profile",
+                name: "UserProfile",
+                component: loadComponent("user", "userProfile"),
             },
         ],
     },
@@ -72,17 +86,17 @@ const routes = [
                 name: "AdminUsers",
             },
             {
-                path: "admin/products",
+                path: "/admin/products",
                 name: "AdminProducts",
                 component: loadComponent("admin", "Products"),
             },
             {
-                path: "admin/product/create",
+                path: "/admin/product/create",
                 name: "AdminCreateProduct",
                 component: loadComponent("admin", "CreateProduct"),
             },
             {
-                path: "admin/category/add",
+                path: "/admin/category/add",
                 name: "AdminAddCategory",
                 component: loadComponent("admin", "AddCategory"),
             },
@@ -102,9 +116,14 @@ const routes = [
                 component: loadComponent("admin", "CreateUser"),
             },
             {
-                path: "admin/product/edit",
+                path: "/admin/product/edit/:id",
                 name: "AdminEditProduct",
                 component: loadComponent("admin", "EditProduct"),
+            },
+            {
+                path: "/admin/profile",
+                name: "AdminProfile",
+                component: loadComponent("user", "userProfile"),
             },
         ],
     },

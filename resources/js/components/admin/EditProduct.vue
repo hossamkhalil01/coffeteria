@@ -21,7 +21,7 @@
                     class="form-control"
                     id="Name"
                     aria-describedby="emailHelp"
-                    placeholder="Enter Productname"
+                    placeholder="Enter Product name"
                     v-model="product.name"
                   />
                 </div>
@@ -78,7 +78,6 @@
                     type="file"
                     @input="pickFile"
                     accept="image/*"
-                    required
                   />
                 </div>
               </div>
@@ -124,9 +123,10 @@
 
       <div class="col-6">
         <div
+          v-if="product.id"
           class="imagePreviewWrapper"
           :style="{
-            'background-image': `url(${imgBase + product.image})`,
+            'background-image': `url(${productsImgBase + product.image})`,
           }"
           @click="selectImage"
         ></div>
@@ -163,14 +163,15 @@
 </template>
 
 <script>
-import axios from "axios";
-import { apiBase, imgBase } from "@helpers/urls.js";
+import { apiBase, productsImgBase } from "@helpers/urls.js";
 export default {
   data() {
     return {
       apiBase: apiBase,
-      imgBase: imgBase,
+      productsImgBase: productsImgBase,
       previewImage: null,
+      tabledata: {},
+      checked: "",
 
       product: {
         id: null,
@@ -224,28 +225,24 @@ export default {
     },
 
     update(id) {
-      console.log(id);
-      var fileName = document.getElementById("product-image").value;
+      let fileName = document.getElementById("product-image").value;
 
-      if (fileName == "") {
-        this.imageError = true;
-        return;
-      } else if (
-        fileName.split(".")[1].toUpperCase() == "PNG" ||
-        fileName.split(".")[1].toUpperCase() == "JPEG" ||
-        fileName.split(".")[1].toUpperCase() == "JPG"
-      ) {
-        this.imageError = false;
-      } else {
-        this.imageError = true;
-        return;
+      if (fileName != "") {
+        if (
+          fileName.split(".")[1].toUpperCase() == "PNG" ||
+          fileName.split(".")[1].toUpperCase() == "JPEG" ||
+          fileName.split(".")[1].toUpperCase() == "JPG"
+        ) {
+          this.imageError = false;
+        } else {
+          this.imageError = true;
+          return;
+        }
       }
       axios
         .put(apiBase + "products/" + id, this.product)
 
         .then((resp) => {
-          console.log(resp);
-          console.log("success");
           this.allerros = [];
           this.success = true;
           if (resp.status === 200) {
@@ -253,8 +250,6 @@ export default {
           }
         })
         .catch((e) => {
-          console.log(e);
-          console.log("error occured");
           this.onFailure(e.response.data);
         });
     },

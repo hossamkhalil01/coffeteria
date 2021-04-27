@@ -1,82 +1,101 @@
 <template>
-  <!-- Start of selection section -->
-
-  <div class="row justify-content-center">
-    <!-- Start date picker section -->
-    <div class="container-fluid col-3 row justify-content-around">
-      <div class="col-6">
-        <label for="from" class="me-2">From</label>
-        <input
-          id="fromDate"
-          class="btn btn-primary"
-          name="from"
-          type="date"
-          :onChange="handleFromDateSelection"
-        />
-      </div>
-      <div class="col-6">
-        <label for="from" class="me-2">To</label>
-        <input
-          id="toDate"
-          class="btn btn-primary"
-          name="to"
-          type="date"
-          :onChange="handleToDateSelection"
-        />
-      </div>
-    </div>
-    <!-- End date picker section -->
-
-    <!-- Start User selection section -->
-    <div class="row justify-content-center mt-5">
-      <div class="container-fluid col-3">
-        <select
-          class="form-select"
-          name="users"
-          aria-label="Default select example"
-          :onChange="handleUserSelection"
-        >
-          <option selected :value="null">Select a user</option>
-
-          <option v-for="user in users" :key="user.id" :value="user.id">
-            <img :src="user.avatar" /> {{ user.name }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <!-- End User selection section -->
-  </div>
-  <!-- End of selection section -->
-
-  <!-- Start of checks display  -->
   <div>
-    <!-- Start of checks table -->
-    <Checks
-      :checks="currentChecks"
-      @checkSelected="updateSelectedCheck"
-    ></Checks>
-    <!-- End of checks table -->
+    <!-- Start of selection section -->
 
-    <!-- Start of pagination section -->
-    <paginator @paginate="paginate" :links="paginationLinks"></paginator>
-    <!-- End of pagination section -->
-  </div>
-  <!-- End of checks display  -->
+    <div class="mt-4 row justify-content-center">
+      <!-- Start error section -->
+      <div
+        class="container-fluid row justify-content-center"
+        v-if="serverError"
+      >
+        <div class="alert alert-danger col-3 text-center">
+          <li>{{ serverError }}</li>
+        </div>
+      </div>
+      <!-- End errors section -->
+      <!-- Start date picker section -->
+      <div class="row justify-content-center">
+        <div class="col-md-0 col-lg-1"></div>
+        <div class="col-md-12 col-lg-2">
+          <label for="from" class="d-block">From</label>
+          <input
+            id="fromDatePicker"
+            name="from"
+            class="btn date-picker"
+            type="date"
+            :onChange="handleFromDateSelection"
+          />
+        </div>
+        <div class="col-md-12 col-lg-2 me-lg-5">
+          <label for="from" class="d-block">To</label>
+          <input
+            id="toDatePicker"
+            type="date"
+            class="btn date-picker"
+            :onChange="handleToDateSelection"
+          />
+        </div>
+      </div>
+      <!-- End date picker section -->
 
-  <!-- Start of checks details section-->
-  <div class="mt-5 mb-4">
-    <order-products
-      :products="checkProducts"
-      :order="selectedCheck"
-      v-if="selectedCheck"
-    ></order-products>
+      <!-- Start User selection section -->
+      <div class="row justify-content-center mt-4">
+        <div class="col-3">
+          <select
+            class="form-select"
+            name="users"
+            aria-label="Default select example"
+            :onChange="handleUserSelection"
+          >
+            <option id="selectUser" selected :value="null">Select User</option>
+
+            <option v-for="user in users" :key="user.id" :value="user.id">
+              {{ user.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- End User selection section -->
+    </div>
+    <!-- End of selection section -->
+
+    <!-- Start of checks display  -->
+    <div class="mt-3">
+      <!-- Start of checks table -->
+      <Checks
+        :selected-check-Id="selectedCheck ? selectedCheck.id : 0"
+        :checks="currentChecks"
+        @checkSelected="updateSelectedCheck"
+      ></Checks>
+      <!-- End of checks table -->
+
+      <!-- Start of pagination section -->
+      <paginator @paginate="paginate" :links="paginationLinks"></paginator>
+      <!-- End of pagination section -->
+    </div>
+    <!-- End of checks display  -->
+
+    <!-- Start of checks details section-->
+    <div class="mt-5 mb-4">
+      <order-products
+        v-if="selectedCheck"
+        :products="checkProducts"
+        :order="selectedCheck"
+      ></order-products>
+    </div>
   </div>
   <!-- End of checks details section -->
 </template>
 
 <script>
-// configure datepickers
-// $("#fromDate").max = new Date().toISOString().split("T")[0];
+import { getTodayDateString } from "@helpers/formatters.js";
+$("document").ready(() => {
+  // configure datepicker
+  const today = getTodayDateString();
+  document.getElementById("toDatePicker").max = today;
+  document.getElementById("fromDatePicker").max = today;
+});
+
 import Paginator from "@layouts/Paginator";
 import Checks from "@components/admin/Checks";
 import OrderProducts from "@components/admin/OrderProducts";
@@ -84,7 +103,7 @@ import {
   getChecksResource,
   getOrderProducts,
 } from "@services/adminChecksService";
-import { getUsersResource } from "@services/usersService";
+import { getUsersResource, getUserAvatar } from "@services/usersService";
 
 export default {
   mounted() {
@@ -93,8 +112,9 @@ export default {
   },
   data() {
     return {
+      getUserAvatar: getUserAvatar,
       currentChecks: [],
-      serverError: "",
+      serverError: null,
       users: [],
       selectedUserId: null,
       selectedCheck: null,
@@ -115,27 +135,28 @@ export default {
         .then((res) => {
           this.currentChecks = res.data.data;
           this.paginationLinks = res.data.meta.links;
+
+          // reset the errors
+          this.serverError = null;
         })
         .catch((err) => {
-          this.serverError = err.message;
+          this.serverError = err.response.data.message;
         });
     },
 
     handleUserSelection: function (event) {
       this.selectedUserId = event.target.value;
+
+      //update checks
       this.updateChecks();
     },
 
     handleFromDateSelection: function (event) {
-      const fromDate = event.target.value;
       this.fromDate = event.target.value;
       if (this.toDate) this.updateChecks();
     },
     handleToDateSelection: function (event) {
-      const toDate = new Date(event.target.value);
-
       this.toDate = event.target.value;
-
       if (this.fromDate) this.updateChecks();
     },
     updateChecks: function () {
@@ -144,10 +165,16 @@ export default {
         to: this.toDate,
         from: this.fromDate,
       };
+
+      //clear selected check
+      this.selectedCheck = null;
+
       this.getChecks(params);
     },
 
     paginate: function (url) {
+      //clear selected check
+      this.selectedCheck = null;
       this.getChecks({}, url);
     },
 
@@ -160,12 +187,28 @@ export default {
         .then((res) => {
           this.selectedCheck = res.data.data;
           this.checkProducts = res.data.data.products;
+          // reset the errors
+          this.serverError = null;
         })
         .catch((err) => {
-          this.serverError = err.message;
+          this.serverError = err.response.message;
         });
     },
   },
   props: {},
 };
 </script>
+
+<style scoped>
+select {
+  cursor: pointer;
+}
+
+.date-picker {
+  background-color: lightgray;
+}
+
+.date-picker:hover {
+  background-color: #0dcaf0;
+}
+</style>

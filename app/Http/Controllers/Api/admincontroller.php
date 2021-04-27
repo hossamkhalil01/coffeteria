@@ -47,12 +47,10 @@ class admincontroller extends Controller
             'room_id' => ['required']
         ]);
         if ($image = $request->file('avatar')) {
-            $destinationPath = 'storage/images/avatars/'.$user->id;
-            $profileImage = $request->file('avatar')->getClientOriginalName(); 
+            $destinationPath = 'storage/images/avatars/' . $user->id;
+            $profileImage = $request->file('avatar')->getClientOriginalName();
             $image->move($destinationPath, $profileImage);
-            $input['avatar']= $destinationPath."/".$profileImage;
-            // $add->save();
-
+            $input['avatar'] = $user->id . "/" . $profileImage;
         }
         $user->update($input);   
         
@@ -61,9 +59,7 @@ class admincontroller extends Controller
         }else{
             return response()->json(["error"=>$input]);
 
-        }   
-      
-      
+        }
     }
 
     public function store(Request $request)
@@ -82,13 +78,12 @@ class admincontroller extends Controller
         $input['password']=Hash::make($input['password']);
         $user = User::create($input);
 
-         if ($image = $request->file('avatar')) {
-            $destinationPath = 'storage/images/avatars/'.$user->id;
-            $profileImage = $request->file('avatar')->getClientOriginalName(); 
+        if ($image = $request->file('avatar')) {
+            $destinationPath = 'storage/images/avatars/' . $user->id;
+            $profileImage = $request->file('avatar')->getClientOriginalName();
             $image->move($destinationPath, $profileImage);
-            $user->avatar = $destinationPath."/".$profileImage;
+            $user->avatar = $user->id . "/" . $profileImage;
             $user->save();
-
         }
 
         // return response()->json(["message" => "user Created"]);

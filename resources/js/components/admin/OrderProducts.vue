@@ -1,28 +1,46 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-8 justify-content-center border border-dark">
-      <h2 class="fw-bold text-center mt-4">Order Details</h2>
+      <h3 class="fw-bold text-center mt-4">Order Details</h3>
+      <hr />
 
       <!-- start of order products -->
-      <div
-        class="col-2 mt-3 border border-success"
-        v-for="product in products"
-        :key="product.id"
-      >
-        <a href="">
-          <img :src="product.image" :alt="product.name" />
-          <span class="badge rounded-pill bg-info text-dark">{{
-            getPrice(product.price)
-          }}</span>
-        </a>
-        <p class="product-name text-center">
-          <span>{{ product.pivot.quantity }}</span>
-          <span> x {{ product.name }} </span>
-        </p>
-        <p class="text-center">
-          Total:
-          {{ getPrice(product.price * product.pivot.quantity) }}
-        </p>
+      <div class="row mt-5 justify-content-evenly">
+        <div
+          class="card mb-4 col-md-1 me-3 p-2"
+          style="width: 15rem"
+          v-for="product in products"
+          :key="product.id"
+        >
+          <img
+            :src="productsImgBase + product.image"
+            class="card-img-top"
+            style="height: 50%"
+            :alt="product.name"
+          />
+
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <h5
+                class="col-6 card-title badge rounded-pill bg-info text-dark mt-2 mb-3"
+              >
+                {{ getPrice(product.price) }}
+              </h5>
+            </div>
+
+            <p class="card-text fw-bolder text-center">
+              <span>{{ product.pivot.quantity }}</span>
+              <span> x {{ product.name }} </span>
+            </p>
+
+            <p class="card-text lead fs-6 fw-bolder text-center">
+              Total:
+              {{ getPrice(product.price * product.pivot.quantity) }}
+            </p>
+           
+          </div>
+        </div>
+       
       </div>
       <!-- end of order products -->
 
@@ -38,10 +56,13 @@
 
 <script>
 import { priceFormatter } from "@helpers/formatters.js";
+import { productsImgBase } from "@helpers/urls";
 export default {
   mounted() {},
   data() {
-    return {};
+    return {
+      productsImgBase: productsImgBase,
+    };
   },
   props: {
     order: {
@@ -62,4 +83,8 @@ export default {
 </script>
 
 <style scoped>
+img {
+  width: 100%;
+  height: 50%;
+}
 </style>
