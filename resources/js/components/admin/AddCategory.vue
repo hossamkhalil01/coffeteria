@@ -67,11 +67,9 @@ export default {
   },
   methods: {
     addCategory() {
-      console.log("f", this.form);
       axios
         .post(apiBase + "addCategory", this.form)
         .then((resp) => {
-          console.log(resp);
           this.allerros = [];
           this.success = true;
           //reset form
@@ -81,7 +79,6 @@ export default {
           }
         })
         .catch((e) => {
-          console.log(e);
           this.onFailure(e.response.data);
         });
     },

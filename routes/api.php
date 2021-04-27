@@ -48,7 +48,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::patch('/admin/edituser/{id}', [admincontroller::class, 'update'])->middleware([CheckAdmin::class]);
 
-    Route::get('/admin/getusers/{id}', [admincontroller::class, 'showuser']);
+    Route::get("/admin/getorders", [OrderController::class, "get_processing_orders"])->middleware([CheckAdmin::class]);
+
+    Route::patch("/order/deliver/{id}", [OrderController::class, "deliver_order"])->middleware([CheckAdmin::class]);
+
+    Route::get('/admin/getusers/{id}', [admincontroller::class, 'showuser'])->middleware([CheckAdmin::class]);
     Route::post('/admin/create', [admincontroller::class, 'store'])->middleware([CheckAdmin::class]);
     Route::post('upload', [imagecontroller::class, 'upload']);
     Route::resource('/rooms', roomcontroller::class);

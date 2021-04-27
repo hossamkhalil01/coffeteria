@@ -37,39 +37,8 @@
               Total:
               {{ getPrice(product.price * product.pivot.quantity) }}
             </p>
-            <!-- <a
-              href="{% url 'project_details' project.id %}"
-              class="btn btn-primary"
-              >More Details</a
-            > -->
           </div>
         </div>
-        <!-- <div
-          class="col-2 border border-success ps-0 pe-0"
-          v-for="product in products"
-          :key="product.id"
-        >
-          <div>
-            <img
-              :src="productsImgBase + product.image"
-              :alt="product.name"
-              style="min-height: 150px"
-            />
-            <div class="row justify-content-center">
-              <p class="col-6 badge rounded-pill bg-info text-dark mt-2">
-                {{ getPrice(product.price) }}
-              </p>
-            </div>
-          </div>
-          <p class="product-name text-center fs-6">
-            <span>{{ product.pivot.quantity }}</span>
-            <span> x {{ product.name }} </span>
-          </p>
-          <p class="text-center lead fs-6">
-            Total:
-            {{ getPrice(product.price * product.pivot.quantity) }}
-          </p>
-        </div> -->
       </div>
       <!-- end of order products -->
 

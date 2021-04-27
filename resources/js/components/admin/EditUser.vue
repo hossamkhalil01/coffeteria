@@ -3,17 +3,20 @@
     <div class="row registration-form">
       <form @submit.prevent="updateUser">
         <div class="form-group">
-          <label>Name</label>
+          <lable>Name</lable>
           <input
             type="text"
             class="form-control item"
             name="name"
             v-model="user.name"
           />
+          <span class="text-danger" v-if="errors.name">
+            {{ errors.name[0] }}
+          </span>
         </div>
 
         <div class="form-group">
-          <label>email</label>
+          <lable>email</lable>
           <input
             type="email"
             class="form-control item"
@@ -23,7 +26,7 @@
         </div>
 
         <div class="form-group">
-          <label>Room number</label>
+          <lable>Room number</lable>
           <select
             name="room_id"
             class="form-control item"
@@ -33,6 +36,10 @@
               {{ room["number"] }}
             </option>
           </select>
+
+          <span class="text-danger" v-if="errors.room_id">
+            {{ errors.room_id[0] }}
+          </span>
         </div>
 
         <div class="form-group">
@@ -76,6 +83,8 @@ export default {
         room_id: "",
       },
       rooms: [],
+      errors: [],
+      success: "",
     };
   },
   methods: {
@@ -94,9 +103,13 @@ export default {
             name: "AdminUsers",
           });
           //  this.user = res.data;
+        })
+        .catch((e) => {
+          if (e.response.status === 422) {
+            this.errors = e.response.data.errors;
+          }
         });
     },
-
     onChange(e) {
       this.user.avatar = e.target.files[0];
       this.imageName = e.target.files[0].name;
@@ -105,14 +118,11 @@ export default {
     selectImage() {
       this.$refs.fileInput.click();
     },
-
     getrooms() {
       axios
         .get(apiBase + "rooms")
         .then((data) => (this.rooms = data.data))
-        .catch(() => {
-          console.log("Error...");
-        });
+        .catch(() => {});
     },
   },
   created() {
@@ -126,7 +136,6 @@ export default {
         this.user.avatar = res.data.avatar;
         this.user.room_id = res.data.room_id;
       });
-
     this.getrooms();
   },
 };

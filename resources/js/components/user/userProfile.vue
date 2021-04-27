@@ -50,9 +50,7 @@ export default {
       coffeeBeansImage: coffeeBeansImage,
     };
   },
-  created() {
-    console.log(this.currentUser);
-  },
+  created() {},
 };
 </script>
 <style scoped>

@@ -193,4 +193,29 @@ class OrderController extends Controller
         return new OrderResource($orders->orderBy('created_at', 'desc')
             ->paginate(5)->withQueryString());
     }
+
+    public function get_processing_orders(Request $request){
+        $order=Order::where('status','Processing')->with('products','room','owner')->get();
+        // dd($order);
+        return response()->json($order);
+
+    }
+
+
+    public function deliver_order($id, Request $request){
+        $order=Order::find($id);
+        $order->status="Delivered";
+       
+        $order->update();
+       
+        if ($order){
+            return response()->json(["succes"=>$order]);
+            dd($order);
+        }else{
+            return response()->json(["error"=>$order]);
+            dd($order);
+
+        }   
+
+    }
 }

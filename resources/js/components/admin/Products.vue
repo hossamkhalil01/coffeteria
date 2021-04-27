@@ -163,9 +163,7 @@ export default {
       axios
         .get(apiBase + "categories")
         .then(({ data }) => (this.tabledata = data))
-        .catch(() => {
-          console.log("Error...");
-        });
+        .catch(() => {});
     },
     //Delete photo
     deletePhoto(id) {

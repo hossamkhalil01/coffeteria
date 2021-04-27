@@ -1,26 +1,30 @@
 <template>
-  <div class="container">
-    <h2>All Users</h2>
+  <div class="container col-8 mb-3" style="text-align: center; margin-top: 5%">
+    <h2 style="float: left; margin-bottom: 30px">All users</h2>
     <router-link
       :to="{ name: 'AdminCreateUser' }"
       style="margin-right: 50px; float: right"
-      class="btn btn-success"
+      class="btn btn-add"
       >Add user</router-link
     >
     <br />
     <br />
-    <table class="table table-hover" style="border: 1px solid">
+    <table
+      class="table table-hover"
+      style="border: 1px solid; text-align: center"
+    >
       <thead>
-        <tr class="">
-          <th class="table-primary">User</th>
-          <th class="table-primary text-center">Room</th>
-          <th class="table-primary text-center">Landmark</th>
-          <th class="table-primary text-center">Action</th>
+        <tr>
+          <th class="table-primary">Name</th>
+          <th class="table-primary">Room</th>
+
+          <th class="table-primary">land mark</th>
+          <th class="table-primary">Action</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr v-for="user in users">
+        <tr :v-for="user in users" :key="user.id">
           <td>
             <img
               :src="getUserAvatar(user)"
@@ -62,19 +66,74 @@
         </tr>
       </tbody>
     </table>
+
+    <nav>
+      <ul class="pagination" style="margin-left: 45%">
+        <li class="page-item">
+          <a
+            style="color: #212529"
+            class="page-link"
+            href="javascript:void(0)"
+            @click="prev"
+          >
+            <strong> Prev </strong>
+          </a>
+        </li>
+        <li class="page-item">
+          <a
+            style="color: #212529"
+            class="page-link"
+            href="javascript:void(0)"
+            @click="next"
+          >
+            <strong> Next </strong>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
 import { apiBase } from "@helpers/urls.js";
+import { ref, onMounted } from "@vue/runtime-core";
 import { getUserAvatar } from "@services/usersService.js";
+
 export default {
   data() {
     return {
-      getUserAvatar: getUserAvatar,
       apiBase: apiBase,
-      users: {},
+      users: [],
       rooms: [],
+      getUserAvatar: getUserAvatar,
+    };
+  },
+  setup() {
+    const users = ref([]);
+    const page = ref(1);
+    const lastpage = ref(0);
+    const load = async () => {
+      const response = await axios.get(
+        `${apiBase}admin/getusers?page=${page.value}`
+      );
+      this.users.value = response.data.data;
+      lastpage.value = response.data.last_page;
+    };
+    onMounted(load);
+    const next = async () => {
+      if (page.value === lastpage.value) return;
+      page.value++;
+      await load();
+    };
+    const prev = async () => {
+      if (page.value === 1) return;
+      page.value--;
+      await load();
+    };
+    return {
+      users,
+      next,
+      prev,
     };
   },
   methods: {
@@ -122,10 +181,16 @@ export default {
         });
     },
   },
-
   created() {
     this.getrooms();
     this.getUsers();
   },
 };
 </script>
+
+<style>
+.btn-add {
+  background-color: #6f439b;
+  color: white;
+}
+</style>
