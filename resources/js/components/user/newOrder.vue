@@ -45,7 +45,7 @@
             <a
               href="#"
               @click.prevent="removeFromOrderedProducts(product)"
-              class="ms-3 icon-links"
+              class="ms-3 icon-links delete"
               ><i class="fas fa-trash-alt"></i
             ></a>
           </div>
@@ -267,5 +267,9 @@ export default {
 .icon-links {
   text-decoration: none;
   color: black;
+}
+
+.delete {
+  color: rgb(139, 0, 0);
 }
 </style>
