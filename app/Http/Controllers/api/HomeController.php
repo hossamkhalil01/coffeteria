@@ -47,4 +47,9 @@ class HomeController extends Controller
             return response()->json([]);
         }
     }
+
+    function aboutus()
+    {
+        return view('aboutus');
+    }
 }

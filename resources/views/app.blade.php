@@ -31,6 +31,7 @@
 
 
     <!-- Scripts -->
+    <script src="https://kit.fontawesome.com/238788ce14.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="{{ mix('js/main.js') }}"></script>
 

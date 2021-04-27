@@ -42,6 +42,11 @@ const routes = [
                 name: "newOrder",
                 component: loadComponent("user", "newOrder"),
             },
+            {
+                path: "/profile",
+                name: "UserProfile",
+                component: loadComponent("user", "userProfile"),
+            },
         ],
     },
     {
@@ -114,6 +119,11 @@ const routes = [
                 path: "/admin/product/edit/:id",
                 name: "AdminEditProduct",
                 component: loadComponent("admin", "EditProduct"),
+            },
+            {
+                path: "/admin/profile",
+                name: "AdminProfile",
+                component: loadComponent("user", "userProfile"),
             },
         ],
     },
