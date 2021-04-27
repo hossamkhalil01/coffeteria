@@ -43,9 +43,7 @@ class admincontroller extends Controller
         $input = $request->all();
         $request->validate([
             'name' => ['required'], 
-            // 'email' => ['required', 'email', 'unique:users'],
-            'password'=>['required', 'min:8'],
-            // 'avatar' => ['required'],
+            
             'room_id' => ['required']
         ]);
         if ($image = $request->file('avatar')) {
@@ -94,6 +92,6 @@ class admincontroller extends Controller
         }
 
         // return response()->json(["message" => "user Created"]);
-        // dd($user);
+     
        
     }}

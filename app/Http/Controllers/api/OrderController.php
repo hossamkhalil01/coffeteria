@@ -212,9 +212,7 @@ class OrderController extends Controller
     public function deliver_order($id, Request $request){
         $order=Order::find($id);
         $order->status="Delivered";
-        // $edit= $request->all();
-        //  $edit=$order['status']='Delivered';
-        // dd($edit);
+       
         $order->update();
        
         if ($order){
