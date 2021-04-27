@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\UploadedFile;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Requests\ImageUploadRequest;
@@ -51,7 +52,7 @@ class admincontroller extends Controller
         $user->update($input);   
         
         if ($user){
-            return response()->json(["succes"=>$input]);
+            return response()->json(["error"=>$input]);
         }else{
             return response()->json(["error"=>$input]);
 
@@ -65,6 +66,14 @@ class admincontroller extends Controller
 
 
         $input = $request->all();
+        $request->validate([
+            'name' => ['required'], 
+            'email' => ['required', 'email', 'unique:users'],
+            'password'=>['required', 'min:8'],
+            // 'avatar' => ['required'],
+            'room_id' => ['required']
+        ]);
+        $input['password']=Hash::make($input['password']);
         $user = User::create($input);
 
          if ($image = $request->file('avatar')) {
@@ -76,14 +85,16 @@ class admincontroller extends Controller
             $user->save();
 
         }
+
+        // return response()->json(["message" => "user Created"]);
         // dd($user);
-        if ($user){
-            return response()->json(["is_done"=>true]);
-        }else{
-            return response()->json(["is_done"=>false]);
+        // if ($user){
+        //     return response()->json(["error"=>true]);
+        // }else{
+        //     return response()->json(["error"=>false]);
             
 
 
-            }
+        //     }
     
     }}

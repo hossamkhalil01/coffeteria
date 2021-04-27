@@ -6,25 +6,40 @@
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" class="form-control item" name="name" placeholder="name" v-model="user.name" />
+                <span class="text-danger" v-if="errors.name">
+                    {{ errors.name[0] }}
+                </span>
+
             </div>
 
             <div class="form-group">
                 <label>Email</label>
                 <input type="email" class="form-control item" name="email" placeholder="email" v-model="user.email" />
+                <span class="text-danger" v-if="errors.email">
+                    {{ errors.email[0] }}
+                </span>
             </div>
             <div class="form-group">
                 <label>password</label>
                 <input type="password" class="form-control item" placeholder="password" name="password" v-model="user.password" />
+                <span class="text-danger" v-if="errors.password">
+                    {{ errors.password[0] }}
+                </span>
+
             </div>
 
             <div class="form-group">
-            
+
                 <label>Room number</label>
                 <select name="room_id" class="form-control item" v-model="user.room_id">
                     <option v-for="room in rooms" :value="room.id">
                         {{ room["number"] }}
                     </option>
                 </select>
+
+                <span class="text-danger" v-if="errors.room_id">
+                    {{ errors.room_id[0] }}
+                </span>
             </div>
 
             <div class="form-group">
@@ -32,6 +47,9 @@
                 <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
                 <input type="file" name="avatar" class="custom-file-input" v-on:change="onChange" id="validatedCustomFile" accept="image/*" required>
             </div>
+
+            <span v-if="errors.label" :class="[' alert alert-danger ms-5']" style="height: 50px; width: 10%">
+                {{ errors.label[0] }}</span>
 
             <button type="submit" name="submit" class="btn btn-block create-account">
                 Create User
@@ -62,6 +80,8 @@ export default {
             },
             url: null,
             rooms: [],
+            errors: [],
+            success: "",
         };
     },
     methods: {
@@ -81,14 +101,18 @@ export default {
             formData.append('room_id', this.user.room_id)
             axios.post(apiBase + "admin/create", formData)
                 .then((res) => {
+
                     this.$router.push({
                         name: "AdminUsers",
-                    });
-                    //  this.user = res.data;
+                    })
+                }).catch((e) => {
+                    
+                    if (e.response.status === 422) {
+                        this.errors = e.response.data.errors;
+                    }
                 });
-            console.log(formData)
         },
-
+     
         onChange(e) {
             this.user.avatar = e.target.files[0];
             this.imageName = e.target.files[0].name;
@@ -115,15 +139,14 @@ export default {
 </script>
 
 <style>
-body {
-    
+body {}
+
+.form-container {
+    background-color: #dee9ff;
 }
-.form-container{
-background-color: #dee9ff;
-}
+
 .registration-form {
-    
-    
+
     padding: 50px 0;
 }
 
@@ -132,8 +155,8 @@ background-color: #dee9ff;
     max-width: 600px;
     margin: auto;
     padding: 50px 70px;
-    border-radius:30px;
-   
+    border-radius: 30px;
+
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
 }
 
