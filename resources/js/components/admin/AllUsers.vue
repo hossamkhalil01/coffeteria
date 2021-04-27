@@ -1,7 +1,7 @@
 <template>
 <div class="container col-8 mb-3" style="text-align: center;margin-top:5%">
     <h2 style="float: left;margin-bottom: 30px;">All users</h2>
-    <router-link :to="{ name: 'AdminCreateUser' }" style="margin-right: 50px; float: right" class="btn btn-success">Add user</router-link>
+    <router-link :to="{ name: 'AdminCreateUser' }" style="margin-right: 50px; float: right" class="btn btn-add">Add user</router-link>
     <br />
     <br />
     <table class="table table-hover " style="border: 1px solid;text-align: center;">
@@ -154,3 +154,10 @@ export default {
     },
 };
 </script>
+
+<style>
+.btn-add{
+    background-color:#6f439b;
+    color: white;
+}
+</style>

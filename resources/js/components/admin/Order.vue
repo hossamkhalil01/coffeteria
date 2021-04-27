@@ -173,7 +173,7 @@ border-radius: 48%;
 text-align: center;
 margin: -103px 77px;
 position: absolute;
-background-color: #eee;
+background-color: #cecbcb;
 padding: 9px 3px;
 font-size: 15px;
 }
