@@ -1,5 +1,5 @@
 // base URLs
-export const domainBase = "http://localhost:8000/";
+export const domainBase = process.env.MIX_APP_URL + "/";
 export const apiBase = domainBase + "api/";
 export const publicBase = domainBase + "images/";
 export const imgBase = domainBase + "storage/images/";

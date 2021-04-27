@@ -46,7 +46,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand ms-3" href="{{ url('/') }}">
-                    <img src="/images/logo.jpg" width="100" height="50">
+                    <img src="/images/logo.png" width="100" height="50">
                 </a>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -86,7 +86,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                     document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
