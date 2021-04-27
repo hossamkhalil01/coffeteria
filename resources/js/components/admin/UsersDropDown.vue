@@ -41,8 +41,6 @@ export default {
   created() {},
   methods: {
     userChoosen() {
-      console.log("hello");
-      console.log(this.user_id);
       this.$emit("userChoosen", this.user_id);
     },
   },

@@ -201,9 +201,7 @@ export default {
       axios
         .get(apiBase + "categories")
         .then(({ data }) => (this.tabledata = data))
-        .catch(() => {
-          console.log("Error...");
-        });
+        .catch(() => {});
     },
 
     selectImage() {
@@ -261,9 +259,7 @@ export default {
       axios
         .get(apiBase + "categories")
         .then(({ data }) => (this.tabledata = data))
-        .catch(() => {
-          console.log("Error...");
-        });
+        .catch(() => {});
     },
   },
   created() {

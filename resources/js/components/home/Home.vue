@@ -91,7 +91,6 @@ export default {
       });
     } else {
       axios.get(apiBase + "admin/index").then((response) => {
-        console.log(apiBase)
         this.products = response.data.products;
         this.users = response.data.users;
       });

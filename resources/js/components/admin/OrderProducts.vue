@@ -37,10 +37,8 @@
               Total:
               {{ getPrice(product.price * product.pivot.quantity) }}
             </p>
-           
           </div>
         </div>
-       
       </div>
       <!-- end of order products -->
 

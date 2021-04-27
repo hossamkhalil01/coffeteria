@@ -200,17 +200,13 @@ export default {
       this.form.image = "";
       this.allerros = [];
       this.success = true;
-
-      console.log("value", this.form.category_id);
     },
     //get Table data
     loadCategoryData() {
       axios
         .get(apiBase + "categories")
         .then(({ data }) => (this.tabledata = data))
-        .catch(() => {
-          console.log("Error...");
-        });
+        .catch(() => {});
     },
     selectImage() {
       this.$refs.fileInput.click();
@@ -249,7 +245,6 @@ export default {
       axios
         .post(apiBase + "products", this.form)
         .then((resp) => {
-          console.log(resp);
           //reset form
           this.form.name = "";
           this.form.price = "";
@@ -265,8 +260,6 @@ export default {
         })
 
         .catch((e) => {
-          console.log(e);
-
           this.onFailure(e.response.data);
         });
     },
