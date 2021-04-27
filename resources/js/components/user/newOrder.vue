@@ -27,22 +27,27 @@
             />
           </div>
           <div class="col-sm-4">
-            <a href="#" @click.prevent="increaseProductQuantity(product)">+</a>
+            <a
+              href="#"
+              @click.prevent="increaseProductQuantity(product)"
+              class="icon-links"
+              ><i class="fas fa-plus fa-sm"></i
+            ></a>
             <a
               href="#"
               @click.prevent="decreaseProductQunatity(product)"
-              class="ms-3"
-              >-</a
-            >
+              class="ms-3 icon-links"
+              ><i class="fas fa-minus fa-sm"></i
+            ></a>
             <p style="display: inline" class="ms-3">
               {{ product.price }}
             </p>
             <a
               href="#"
               @click.prevent="removeFromOrderedProducts(product)"
-              class="ms-3"
-              >delete</a
-            >
+              class="ms-3 icon-links"
+              ><i class="fas fa-trash-alt"></i
+            ></a>
           </div>
         </div>
         <div class="row d-flex justify-content-center">
@@ -257,5 +262,10 @@ export default {
 
 .border {
   border-radius: 2%;
+}
+
+.icon-links {
+  text-decoration: none;
+  color: black;
 }
 </style>
