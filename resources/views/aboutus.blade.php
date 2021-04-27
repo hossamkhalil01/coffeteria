@@ -5,6 +5,7 @@
 <style>
     body {
         background-image: none;
+        background-color: #eadfd2;
     }
 
     h1 {
@@ -40,7 +41,7 @@
 
     .header-row {
         position: absolute;
-        top: 30%;
+        top: 20%;
         left: 30%;
     }
 
@@ -54,6 +55,17 @@
 
     .avatar-img {
         border-radius: 50%;
+    }
+
+    .icons-link,
+    .icons-link:hover,
+    .icons-link:active {
+        text-decoration: none;
+        color: black
+    }
+
+    .icons-link:hover {
+        cursor: pointer;
     }
 </style>
 <div class="container-fluid p-0 m-0">
@@ -81,19 +93,22 @@
             <div class="col-md-2 text-center">
                 <img src="{{asset('images/avatars/avatar1.jpg')}}" class="avatar-img" alt="">
                 <p class="text-center">Hossam Khalil</p>
-                <i class="fab fa-github"></i>
+                <a href="https://github.com/hossamkhalil01" target="_blank" class="icons-link"><i class="fab fa-github fa-lg mt-2"></i></a>
             </div>
             <div class="col-md-2 text-center">
                 <img src="{{asset('images/avatars/avatar2.jpg')}}" class="avatar-img" alt="">
                 <p class="text-center">Leena Sherif</p>
+                <a href="https://github.com/leenasherif239" target="_blank" class="icons-link"><i class="fab fa-github fa-lg mt-2"></i></a>
             </div>
             <div class="col-md-2 text-center">
                 <img src="{{asset('images/avatars/avatar3.jpg')}}" class="avatar-img" alt="">
                 <p class="text-center">Sarah Magdy</p>
+                <a href="https://github.com/SarahOuf" target="_blank" class="icons-link"><i class="fab fa-github fa-lg mt-2"></i></a>
             </div>
             <div class="col-md-2 text-center">
                 <img src="{{asset('images/avatars/avatar4.jpg')}}" class="avatar-img" alt="">
                 <p class="text-center">Mai Maher</p>
+                <a href="https://github.com/Maymaher" target="_blank" class="icons-link"><i class="fab fa-github fa-lg mt-2"></i></a>
             </div>
         </div>
     </div>
