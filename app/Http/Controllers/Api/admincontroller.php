@@ -41,6 +41,13 @@ class admincontroller extends Controller
         $user = User::find($id);
 
         $input = $request->all();
+        $request->validate([
+            'name' => ['required'], 
+            // 'email' => ['required', 'email', 'unique:users'],
+            'password'=>['required', 'min:8'],
+            // 'avatar' => ['required'],
+            'room_id' => ['required']
+        ]);
         if ($image = $request->file('avatar')) {
             $destinationPath = 'storage/images/avatars/'.$user->id;
             $profileImage = $request->file('avatar')->getClientOriginalName(); 
@@ -70,6 +77,7 @@ class admincontroller extends Controller
             'name' => ['required'], 
             'email' => ['required', 'email', 'unique:users'],
             'password'=>['required', 'min:8'],
+            'confirm_password'=>'required|same:password',
             // 'avatar' => ['required'],
             'room_id' => ['required']
         ]);
@@ -77,7 +85,6 @@ class admincontroller extends Controller
         $user = User::create($input);
 
          if ($image = $request->file('avatar')) {
-            //  env(APP_URL);
             $destinationPath = 'storage/images/avatars/'.$user->id;
             $profileImage = $request->file('avatar')->getClientOriginalName(); 
             $image->move($destinationPath, $profileImage);
@@ -88,13 +95,5 @@ class admincontroller extends Controller
 
         // return response()->json(["message" => "user Created"]);
         // dd($user);
-        // if ($user){
-        //     return response()->json(["error"=>true]);
-        // }else{
-        //     return response()->json(["error"=>false]);
-            
-
-
-        //     }
-    
+       
     }}

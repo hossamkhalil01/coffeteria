@@ -29,6 +29,15 @@
             </div>
 
             <div class="form-group">
+                <label>confirm password</label>
+                <input type="password" class="form-control item" placeholder="password" name="confirm_password" v-model="user.confirm_password" />
+              
+ <span class="text-danger" v-if="errors.confirm_password">
+                    {{ errors.confirm_password[0] }}
+                </span>
+            </div>
+
+            <div class="form-group">
 
                 <label>Room number</label>
                 <select name="room_id" class="form-control item" v-model="user.room_id">
@@ -75,6 +84,7 @@ export default {
                 name: "",
                 email: "",
                 password: "",
+                confirm_password: "",
                 avatar: "",
                 room_id: "",
             },
@@ -98,6 +108,8 @@ export default {
             formData.append('name', this.user.name)
             formData.append('email', this.user.email)
             formData.append('password', this.user.password)
+            formData.append('confirm_password', this.user.confirm_password)
+
             formData.append('room_id', this.user.room_id)
             axios.post(apiBase + "admin/create", formData)
                 .then((res) => {
@@ -106,13 +118,13 @@ export default {
                         name: "AdminUsers",
                     })
                 }).catch((e) => {
-                    
+
                     if (e.response.status === 422) {
                         this.errors = e.response.data.errors;
                     }
                 });
         },
-     
+
         onChange(e) {
             this.user.avatar = e.target.files[0];
             this.imageName = e.target.files[0].name;

@@ -5,11 +5,16 @@
             <div class="form-group">
                 <lable>Name</lable>
                 <input type="text" class="form-control item" name="name" v-model="user.name" />
+           <span class="text-danger" v-if="errors.name">
+                    {{ errors.name[0] }}
+                </span>
             </div>
 
             <div class="form-group">
                 <lable>email</lable>
                 <input type="email" class="form-control item" name="email" v-model="user.email" />
+           
+          
             </div>
 
             <div class="form-group">
@@ -19,6 +24,10 @@
                         {{ room["number"] }}
                     </option>
                 </select>
+
+                <span class="text-danger" v-if="errors.room_id">
+                    {{ errors.room_id[0] }}
+                </span>
             </div>
 
             <div class="form-group">
@@ -52,6 +61,8 @@ export default {
                 room_id: "",
             },
             rooms: [],
+             errors: [],
+            success: "",
         };
     },
     methods: {
@@ -71,6 +82,11 @@ export default {
                         name: "AdminUsers",
                     });
                     //  this.user = res.data;
+                }).catch((e) => {
+                    
+                    if (e.response.status === 422) {
+                        this.errors = e.response.data.errors;
+                    }
                 });
         },
 
