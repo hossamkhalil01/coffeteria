@@ -30,9 +30,9 @@
 
             <div class="form-group">
                 <label>confirm password</label>
-                <input type="password" class="form-control item" placeholder="password" name="confirm_password" v-model="user.confirm_password" />
-              
- <span class="text-danger" v-if="errors.confirm_password">
+                <input type="password" class="form-control item" placeholder="confirm password" name="confirm_password" v-model="user.confirm_password" />
+
+                <span class="text-danger" v-if="errors.confirm_password">
                     {{ errors.confirm_password[0] }}
                 </span>
             </div>
@@ -158,7 +158,7 @@ body {}
 }
 
 .registration-form {
-
+    height: auto;
     padding: 50px 0;
 }
 

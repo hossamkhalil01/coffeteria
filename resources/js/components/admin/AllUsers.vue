@@ -43,11 +43,28 @@
         </tbody>
     </table>
  
+
+
+ <nav>
+    <ul class="pagination" style="margin-left: 45%">
+      <li class="page-item">
+        <a style="color: #212529" class="page-link" href="javascript:void(0)" @click="prev">
+          <strong> Prev </strong>
+        </a>
+      </li>
+      <li class="page-item">
+        <a style="color: #212529" class="page-link" href="javascript:void(0)" @click="next">
+          <strong> Next </strong>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>
 </template>
 
 <script>
 import { apiBase } from "@helpers/urls.js";
+import { ref, onMounted } from "@vue/runtime-core";
 export default {
     data() {
         return {
@@ -56,6 +73,37 @@ export default {
             rooms: [],
         };
     },
+    setup() {
+        const users = ref([]);
+    const page = ref(1);
+    const lastpage = ref(0);
+    const load = async () => {
+      const response = await axios.get(
+        `http://localhost:8000/api/admin/getusers?page=${page.value}`
+      );
+      users.value = response.data.data;
+      lastpage.value = response.data.last_page;
+    };
+    onMounted(load);
+    const next = async () => {
+      if (page.value === lastpage.value) return;
+      page.value++;
+      await load();
+    };
+    const prev = async () => {
+      if (page.value === 1) return;
+      page.value--;
+      await load();
+    };
+
+    return {
+      users,
+      // userspage,
+      next,
+      prev,
+      // id: 0,
+    };
+  },
     methods: {
         getUsers() {
             axios
