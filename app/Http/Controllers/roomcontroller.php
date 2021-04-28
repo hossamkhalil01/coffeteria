@@ -12,12 +12,9 @@ class roomcontroller extends Controller
 
 {
     //
-    public function index(){
-        $rooms=Room::all();
+    public function index()
+    {
+        $rooms = Room::all();
         return response()->json($rooms);
-
-
     }
-
-    
 }

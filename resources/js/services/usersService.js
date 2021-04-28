@@ -13,3 +13,7 @@ export const getUserAvatar = (user) => {
     }
     return user.avatar;
 };
+
+export const updateUser = (user) => {
+    return request.patch(apiBase + `users/${user.id}`, user);
+};

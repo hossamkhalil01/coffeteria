@@ -47,6 +47,11 @@ const routes = [
                 name: "UserProfile",
                 component: loadComponent("user", "userProfile"),
             },
+            {
+                path: "/profile/settings",
+                name: "UserProfileSettings",
+                component: loadComponent("user", "UserProfileSettings"),
+            },
         ],
     },
     {
@@ -124,6 +129,11 @@ const routes = [
                 path: "/admin/profile",
                 name: "AdminProfile",
                 component: loadComponent("user", "userProfile"),
+            },
+            {
+                path: "/admin/profile/settings",
+                name: "AdminProfileSettings",
+                component: loadComponent("user", "UserProfileSettings"),
             },
         ],
     },

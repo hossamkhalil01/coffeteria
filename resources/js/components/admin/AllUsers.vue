@@ -1,5 +1,5 @@
 <template>
-  <div class="container col-8 mb-3" style="text-align: center; margin-top: 5%">
+  <div class="container col-8 mb-3" style="margin-top: 5%">
     <h2 style="float: left; margin-bottom: 30px">All users</h2>
     <router-link
       :to="{ name: 'AdminCreateUser' }"
@@ -9,22 +9,18 @@
     >
     <br />
     <br />
-    <table
-      class="table table-hover"
-      style="border: 1px solid; text-align: center"
-    >
+    <table class="table table-hover" style="border: 1px solid">
       <thead>
-        <tr>
-          <th class="table-primary">Name</th>
-          <th class="table-primary">Room</th>
-
-          <th class="table-primary">land mark</th>
-          <th class="table-primary">Action</th>
+        <tr class="">
+          <th class="table-primary">User</th>
+          <th class="table-primary text-center">Room</th>
+          <th class="table-primary text-center">Landmark</th>
+          <th class="table-primary text-center">Action</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr :v-for="user in users" :key="user.id">
+        <tr v-for="user in users" :key="user.id">
           <td>
             <img
               :src="getUserAvatar(user)"
@@ -98,7 +94,6 @@
 import { apiBase } from "@helpers/urls.js";
 import { ref, onMounted } from "@vue/runtime-core";
 import { getUserAvatar } from "@services/usersService.js";
-
 export default {
   data() {
     return {
@@ -116,7 +111,7 @@ export default {
       const response = await axios.get(
         `${apiBase}admin/getusers?page=${page.value}`
       );
-      this.users.value = response.data.data;
+      users.value = response.data.data;
       lastpage.value = response.data.last_page;
     };
     onMounted(load);
@@ -140,7 +135,7 @@ export default {
     getUsers() {
       axios
         .get(apiBase + "admin/getusers")
-        .then((data) => (this.users = data.data))
+        .then((res) => (this.users = res.data.data))
         .catch(() => {
           console.log("Error...");
         });
