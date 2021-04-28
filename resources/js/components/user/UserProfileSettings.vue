@@ -1,11 +1,11 @@
 <template>
   <div class="container rounded bg-white mb-3">
-    <div class="row p-5">
+    <div class="row p-5 pb-3">
       <h4 class="mt-1">Profile Settings</h4>
 
-      <div class="d-flex flex-column align-items-center text-center">
+      <div class="row justify-content-center text-center">
         <img
-          class="rounded-circle mt-3"
+          class="rounded-circle profile-img mt-3"
           :src="getUserAvatar(currentUser)"
         /><span class="font-weight-bold">{{ currentUser.name }}</span
         ><span class="text-black-50">{{ currentUser.email }}</span
@@ -156,5 +156,9 @@ export default {
 }
 .labels {
   font-size: 15px;
+}
+.profile-img {
+  max-width: 20%;
+  max-height: 50%;
 }
 </style>
