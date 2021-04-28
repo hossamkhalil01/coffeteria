@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
-
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -48,8 +48,11 @@ class ProductController extends Controller
 
         if ($request->image) {
 
+            $path = "storage/images/products/";
             $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-            \Image::make($request->image)->save('storage/images/products/' . $name);
+            // check if dir exists
+            File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+            \Image::make($request->image)->save($path . $name);
 
             $request->merge(['image' => $name]);
         }
@@ -89,8 +92,12 @@ class ProductController extends Controller
 
         if ($request->image != $currentPhoto) {
 
+            $path = "storage/images/products/";
+
             $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-            \Image::make($request->image)->save('storage/images/products/' . $name);
+            File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+
+            \Image::make($request->image)->save($path . $name);
             $request->merge(['image' => $name]);
 
             $productPhoto = 'storage/images/products/' . $currentPhoto;
