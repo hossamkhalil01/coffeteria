@@ -11,7 +11,7 @@
           No orders available yet!
         </p>
       </div>
-      <div v-for="order in orders">
+      <div v-for="order in orders" :key="order.id">
         <table
           class="table table-hover"
           style="border: 1px solid; margin: 2px 0px"
@@ -57,9 +57,9 @@
           class="col-12 mb-3"
         >
           <div class="product-container">
-            <td v-for="product in order.products">
+            <td v-for="product in order.products" :key="product.id">
               <img
-                :src="`http://localhost:8000/storage/img/${product.image}`"
+                :src="`${productsImgBase}${product.image}`"
                 class="product-image"
               />
               <div class="price">{{ product.price }} LE</div>
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { apiBase } from "@helpers/urls.js";
+import { apiBase, productsImgBase } from "@helpers/urls.js";
 import { priceFormatter, dateFormatter } from "@helpers/formatters";
 
 export default {
@@ -88,17 +88,9 @@ export default {
   data() {
     return {
       orders: [],
-
-      // order:{
-      //     status:""
-      // }
+      apiBase: apiBase,
+      productsImgBase: productsImgBase,
     };
-  },
-  props: {
-    checks: {
-      type: Array,
-      required: true,
-    },
   },
   methods: {
     getorders() {
@@ -115,10 +107,6 @@ export default {
       return priceFormatter(check.total_price);
     },
     Deliver(id) {
-      // const formData = new FormData()
-
-      // formData.append("status",this.order.status)
-      // formData.append("_method", "patch");
       axios
         .patch(apiBase + `order/deliver/${id}`)
         .then((res) => {

@@ -34,7 +34,7 @@
               <router-link
                 :to="{ name: 'AdminOrder' }"
                 class="nav-item nav-link"
-                >Manual Order</router-link
+                >Orders</router-link
               >
             </li>
             <li class="nav-item ms-4">
@@ -69,7 +69,13 @@
                 >Profile</router-link
               >
             </li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li>
+              <router-link
+                :to="{ name: 'AdminProfileSettings' }"
+                class="dropdown-item"
+                >Settings</router-link
+              >
+            </li>
             <li><hr class="dropdown-divider" /></li>
             <li>
               <form action="/logout" method="post">
@@ -91,7 +97,6 @@ import * as currentUser from "@helpers/currentUser.js";
 import { getUserAvatar } from "@services/usersService.js";
 import { publicBase } from "@helpers/urls.js";
 import { csrf } from "@services/authenticationService.js";
-
 export default {
   data() {
     return {
@@ -101,7 +106,6 @@ export default {
       publicBase: publicBase,
     };
   },
-
   methods: {},
 };
 </script>
