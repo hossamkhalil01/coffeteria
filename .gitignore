@@ -28,6 +28,6 @@ Homestead.json
 /public/mix-manifest.json
 
 #public storage
-public/storage
-storage/app/public
+#public/storage
+#storage/app/public
 
